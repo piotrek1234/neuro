@@ -1,0 +1,4 @@
+    addPlayer
+    removePlayer
+    end
+    restart

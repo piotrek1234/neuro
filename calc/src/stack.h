@@ -11,19 +11,26 @@
 
 #include "token.h"
 #include <vector>
+#include <map>
 
 class CALC_DLL( Stack ) {
 public:
     Stack();
     void addToken(Token* token);
     int getSize();
-    void throwToken();
+    void deleteToken(unsigned int id);
     vector<int> getCurrentTokensIds();
-    vector<int> getNextTokensIds();
+    vector<int> getNextTokensIds(int num);
     Token* getToken(int id);
+    Color getColor();
     
 private:
+    //TODO change to sharedptr
     vector<Token*> tokens;
+    vector<int> currentTokens;
+    Color color;
+    vector<int>::iterator findInCurrent(int id);
+    vector<Token*>::iterator findInTokens(int id);
     
 };
 

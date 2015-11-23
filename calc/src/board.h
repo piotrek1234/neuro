@@ -14,7 +14,6 @@
 class CALC_DLL( Board ) {
 public:
     Board()
-    
 private:
     
 };
