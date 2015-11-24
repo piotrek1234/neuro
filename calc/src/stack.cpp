@@ -1,5 +1,10 @@
 #include "stack.h"
 
+void Stack::Stack()
+{
+    
+}
+
 void Stack::addToken(Token* token)
 {
     this.tokens.push_back(token);    
