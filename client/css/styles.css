@@ -35,3 +35,14 @@ body {
     padding: 5px;
 }
 
+.popup{
+    background-color: blanchedalmond;
+    position: fixed;
+    top: 30%;
+    right: 40%;
+    width: 20%;
+    margin: 0px auto;
+    padding: 16px;
+    border-radius: 15px;
+    text-align: center;
+}

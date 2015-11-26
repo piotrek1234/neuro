@@ -1,4 +1,25 @@
-2015-10-24 20:06:12: (log.c.166) server started 
-2015-10-24 20:07:23: (server.c.1558) server stopped by UID = 1000 PID = 19817 
-2015-10-25 21:52:37: (log.c.166) server started 
-2015-10-25 21:53:25: (server.c.1558) server stopped by UID = 1000 PID = 2369 
+2015-11-26 17:25:40: (log.c.166) server started 
+2015-11-26 17:58:47: (server.c.1558) server stopped by UID = 1000 PID = 3405 
+2015-11-26 17:58:51: (log.c.166) server started 
+2015-11-26 18:02:51: (server.c.1558) server stopped by UID = 1000 PID = 3493 
+2015-11-26 18:03:04: (log.c.166) server started 
+2015-11-26 18:12:19: (mod_proxy.c.1019) establishing connection failed: Connection refused 
+2015-11-26 18:12:19: (mod_proxy.c.919) proxy-server disabled: 127.0.0.1 50007 8 
+2015-11-26 18:12:19: (mod_proxy.c.1327) no proxy-handler found for: /srvmyapp/ajax/calcpy/getCommands/ 
+2015-11-26 18:12:19: (server.c.1558) server stopped by UID = 1000 PID = 3747 
+2015-11-26 18:12:23: (log.c.166) server started 
+2015-11-26 18:14:19: (server.c.1558) server stopped by UID = 1000 PID = 3889 
+2015-11-26 18:14:23: (log.c.166) server started 
+2015-11-26 18:17:59: (mod_proxy.c.1019) establishing connection failed: Connection refused 
+2015-11-26 18:17:59: (mod_proxy.c.919) proxy-server disabled: 127.0.0.1 50007 9 
+2015-11-26 18:17:59: (mod_proxy.c.1327) no proxy-handler found for: /srvmyapp/ajax/current/get/ 
+2015-11-26 18:17:59: (server.c.1558) server stopped by UID = 1000 PID = 4005 
+2015-11-26 18:18:03: (log.c.166) server started 
+2015-11-26 18:38:42: (server.c.1558) server stopped by UID = 1000 PID = 4465 
+2015-11-26 18:38:46: (log.c.166) server started 
+2015-11-26 18:40:36: (mod_proxy.c.1019) establishing connection failed: Connection refused 
+2015-11-26 18:40:36: (mod_proxy.c.919) proxy-server disabled: 127.0.0.1 50007 8 
+2015-11-26 18:40:36: (mod_proxy.c.1327) no proxy-handler found for: /srvmyapp/ajax/calcpy/getCommands/ 
+2015-11-26 18:40:36: (server.c.1558) server stopped by UID = 1000 PID = 4559 
+2015-11-26 18:40:39: (log.c.166) server started 
+2015-11-26 18:50:19: (server.c.1558) server stopped by UID = 1000 PID = 4985 

@@ -31,7 +31,27 @@
 	<button ng-click="clickNewCommand()" >
 	  {{'START_NEW_COMMAND' | translate }}
 	</button>
-
-
   </li>
 </ul>
+
+<div class="hidden popup" id="welcomePopup">
+  <div><h1>Witamy!</h1></div>
+  <div><label>Podaj imie</label></div>
+  <div><input type=text id="playerName"></div>
+  <div><input type=submit value="Potwierdź" onclick="sendName();" id="sendName"></div>
+</div>
+
+<div class="hidden popup" id="infoGamePopup">
+  <div><h1>Obecny stan gry</h1></div>
+  <div id="playersInfo"><label>Ilość graczy:</label><label id="playersNum"></label></div>
+  <div id="stateInfo"><label>Stan gry:</label><label id="state"></label></div>
+  <div id="timeInfo"><label>Czas trwania gry:</label><label id="time"></label></div>
+  <div><input type=submit value="Dołącz" onclick="joinGame();" id="joinGameButton"></div>
+</div>
+
+<div class="hidden popup" id="endPopup">
+  <div><h1>Koniec gry</h1></div>
+  <div><label>Wygrał</label></div>
+  <div><label id="winner"></label></div>
+  <div><input type=submit value="Zagraj ponownie" onclick="newGame();"></div>
+</div>
