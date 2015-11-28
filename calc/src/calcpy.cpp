@@ -15,10 +15,12 @@
 
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-
+#include <string>
 #include "calc.hpp"
+#include "game.h"
 
 using namespace boost::python;
+using namespace std;
 
 /** Python intreface to CommandManager
  */
@@ -36,6 +38,16 @@ public:
     }
     mt4cpp::CommandDesc::State getState(long id) { return CommandManager::getInstance().findCommandDesc(id).state_; }
     double getProgress(long id) { return CommandManager::getInstance().findCommandDesc(id).progress_; }
+	
+	void addPlayer(std::string name)
+	{
+		Game::getInstance().addPlayer(name);
+	}
+	
+	std::vector<std::string> getPlayers()
+	{
+		return Game::getInstance().getPlayersNames();
+	}
 };
 
 /**
@@ -59,6 +71,10 @@ BOOST_PYTHON_MODULE( calc )
 	class_<std::vector<long> >("CommandKeys")
 		.def(vector_indexing_suite<std::vector<long> >() )
 		;
+		
+	class_<std::vector<std::string> >("vectorOfStrings")
+		.def(vector_indexing_suite<std::vector<std::string> >() )
+		;
 
     class_<CommandManagerPy>("CommandManager")
         .def( "getIds", &CommandManagerPy::getIds )
@@ -66,6 +82,8 @@ BOOST_PYTHON_MODULE( calc )
         .def( "break", &CommandManagerPy::breakCmd )
         .def( "getState", &CommandManagerPy::getState )
         .def( "getProgress", &CommandManagerPy::getProgress )
+		.def( "addPlayer", &CommandManagerPy::addPlayer )
+		.def( "getPlayers", &CommandManagerPy::getPlayers )
         ;
 
 }

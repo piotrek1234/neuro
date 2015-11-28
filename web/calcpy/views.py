@@ -29,3 +29,12 @@ def startCommand(params):
     cmd_id = cmdmgr.start()
     return cmd_id
 
+def addPlayer(name):
+    """add player command"""
+    cmdmgr = calc.CommandManager()
+    cmd_id = cmdmgr.addPlayer(name)
+
+def getPlayers():
+    """get players list command"""
+    cmdmgr = calc.CommandManager()
+    return cmdmgr.getPlayers()
