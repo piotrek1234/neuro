@@ -1,10 +1,5 @@
 #include "tokenputable.h"
 
-TokenPutable::TokenPutable()
-{
-
-}
-
 TokenPutable::~TokenPutable()
 {
 

@@ -9,7 +9,8 @@ public:
     ModShoot();
     virtual ~ModShoot();
     virtual void visit(TokenCreature* tc);
-    virtual void visit(TokenModule*){}   //celowo nic: moduły nie strzelają
+    virtual void visit(TokenModule*){}   // moduły nie strzelają
+    virtual void visit(TokenHQ*){}  //sztaby nie strzelają
 };
 
 #endif // MODSHOOT_H

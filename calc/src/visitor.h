@@ -6,6 +6,7 @@
 */
 class TokenCreature;
 class TokenModule;
+class TokenHQ;
 
 class Visitor
 {
@@ -14,6 +15,7 @@ public:
     virtual ~Visitor();
     virtual void visit(TokenCreature*)=0;
     virtual void visit(TokenModule*)=0;
+    virtual void visit(TokenHQ*)=0;
 };
 
 #endif // VISITOR_H

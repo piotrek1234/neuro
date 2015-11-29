@@ -17,6 +17,7 @@ public:
     virtual ~ModMove();
     virtual void visit(TokenCreature* tc);
     virtual void visit(TokenModule* tm);
+    virtual void visit(TokenHQ* th);
 };
 
 #endif // MODMOVE_H

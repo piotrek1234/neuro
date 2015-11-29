@@ -1,27 +1,33 @@
+/*
+ * http://www.redblobgames.com/grids/hexagons/implementation.html
+ */
 #ifndef HEX_H
 #define HEX_H
 
-#ifdef CALC_EXPORTS
-/** Workaround for Windows DLL library exports */
-#define CALC_DLL(X) __declspec(dllexport)X
-#else
-/** Workaround for Unix Shared Library exports */
-#define CALC_DLL(X) X
-#endif
+#include <vector>
 
-class CALC_DLL( Hex ) {
+///todo: podorzucać wyjątki
+
+class Hex
+{
 public:
-    Hex(int q_, int r_, int s_);
-    int getq() const;
-    int getr() const;
-    int gets() const;
-    Hex hex_add(Hex a, Hex b);
-    bool compare(const Hex a, const Hex b);
-    
+    Hex(int q, int r) : q_(q), r_(r), s_(-q_-r_){}
+    ~Hex();
+    int getQ() const { return q_; }
+    int getR() const { return r_; }
+    int getS() const { return s_; }
+    Hex operator+(const Hex& val) const;
+    Hex operator-(const Hex& val) const;
+    bool operator==(const Hex& val) const;
+    bool operator!=(const Hex& val) const { return !operator==(val); }
+
+    static Hex direction(int dir_id) { return hex_directions_[dir_id % 6]; }
+    Hex getNeighbor(int dir_id) const { return *this + hex_directions_[dir_id]; }
+    bool isValid() const;
+
 private:
-    const int q, r, s;
-    
+    const int q_, r_, s_;
+    static const std::vector<Hex> hex_directions_;
 };
 
-
-#endif
+#endif // HEX_H
