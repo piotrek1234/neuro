@@ -16,8 +16,8 @@ except BaseException:
 MYAPP_VER_STRING = str(MYAPP_VER_MAJOR) + '.' + str(MYAPP_VER_MINOR) + '.' + MYAPP_VER_COMPILATION
 
 #web
-WWW_BROWSER_WINDOWS='firefox'
-WWW_BROWSER_LINUX='firefox'
+WWW_BROWSER_WINDOWS='chrome'
+WWW_BROWSER_LINUX='google-chrome'
 WEB_SRV_PREFIX = 'srvmyapp'
 WEB_SRV_HOST = '127.0.0.1'
 WEB_SRV_PORT = '50007'

@@ -1,7 +1,7 @@
 /// @file app.js
 /// @brief main client module, AngularJS application with routing
 
-angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices'] )
+angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices', 'myDirectives'] )
     .config(['$routeProvider', '$translateProvider',
              function($routeProvider, $translateProvider) {
                  $routeProvider.when('/main', {

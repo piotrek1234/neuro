@@ -67,6 +67,14 @@ angular.module('myAppControllers', [])
 					 		 });
 					 };
 					 $timeout(call, 0); //start calling the service
-				 }]);
+				 }])
+	.controller('hexagonController',
+		['$scope',
+		 'srvInfo',
+		 'srvCommands',
+		 function($scope, srvInfo, srvCommands) {
+		 	
+		 	$scope.mapSize = 2;
+		 	
 
-
+		 }]);
