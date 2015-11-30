@@ -17,7 +17,7 @@ public:
     
 private:
     int size;
-    map<Hex, Token*, > board;
+    std::map<Hex, Token*> board;
     
     
 };
