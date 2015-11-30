@@ -1,3 +1,8 @@
+
+lighttpd.develop
+*.dll
+*.so
+*.os
 #################
 ## Eclipse
 #################
