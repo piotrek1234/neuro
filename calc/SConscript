@@ -49,25 +49,11 @@ elif(platform.system() == "Windows"):
    env_dll.Append( CPPFLAGS = ' /D "CALC_EXPORTS" ')
 
 #build C++ library
-cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calc.cpp', '../calc/src/calcpy.cpp'])
+cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calc.cpp', '../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp'])
 if(platform.system() == "Linux"):
    target = '../build_web/calcpy/calc.so'
 elif(platform.system() == "Windows"):
    target = '../build_web/calcpy/calc.pyd'
-env_dll.Command(target, cpplib, copyLibBuilder )
-
-cpplib = env_dll.SharedLibrary( target = 'player', source = ['../calc/src/player.cpp', '../calc/src/player.cpp'])
-if(platform.system() == "Linux"):
-   target = '../build_web/calcpy/player.so'
-elif(platform.system() == "Windows"):
-   target = '../build_web/calcpy/player.pyd'
-env_dll.Command(target, cpplib, copyLibBuilder )
-
-cpplib = env_dll.SharedLibrary( target = 'game', source = ['../calc/src/game.cpp', '../calc/src/game.cpp'])
-if(platform.system() == "Linux"):
-   target = '../build_web/calcpy/game.so'
-elif(platform.system() == "Windows"):
-   target = '../build_web/calcpy/game.pyd'
 env_dll.Command(target, cpplib, copyLibBuilder )
 
 #build tests
