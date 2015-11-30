@@ -3,6 +3,7 @@
 
 #include "tokenputable.h"
 #include "vector"
+#include "hex.h"
 
 class TokenCreature : virtual public TokenPutable
 {
@@ -18,10 +19,10 @@ public:
 
 private:
     int priority_;
-    //std::vector<kierunek> attack;
-    //std::vector<kierunek> shoot;
-    //std::vector<kierunek> net;
-    //std::vector<kierunek> shield;
+    std::vector<Hex> attack;
+    std::vector<Hex> shoot;
+    std::vector<Hex> net;
+    std::vector<Hex> shield;
     int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
 };
 

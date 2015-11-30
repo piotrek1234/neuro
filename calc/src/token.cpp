@@ -19,7 +19,4 @@ void Token::setColor(const Color &value)
     color_ = value;
 }
 
-int Token::getId()
-{
-    return this->id;
-}
+

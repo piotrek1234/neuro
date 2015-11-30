@@ -3,11 +3,12 @@
 
 #include "visitor.h"
 #include "token.h"
+#include "hex.h"
 
 class TokenPutable : public Token
 {
 public:
-    TokenPutable();
+    TokenPutable() : position_(Hex(5,5)), direction_(Hex(0,-1)){}
     virtual ~TokenPutable();
     virtual bool isPutable() const { return true; }
     virtual void accept(Visitor& v)=0;
@@ -24,7 +25,8 @@ private:
     int life_;
     int angle_;  //chyba int
     int movable_;    //int żeby nie było konfliktu przy kasowaniu jednego z kilku modułów tego typu
-    //cośtam position;
+    Hex position_;
+    Hex direction_;
     bool active_;    //sieciarz może deaktywować żeton: nie bierze udziału w bitwie, nie można go przesuwać
 
 };

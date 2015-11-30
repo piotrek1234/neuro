@@ -12,6 +12,7 @@ public:
     virtual ~ModPriority();
     virtual void visit(TokenCreature *tc);
     virtual void visit(TokenModule*){}
+    virtual void visit(TokenHQ *th);
 private:
     int priority;
 };

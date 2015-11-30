@@ -1,36 +1,41 @@
 #include "hex.h"
+#include <math.h>
 
-Hex::Hex(int q_, int r_, int s_) : q(q_), r(r_), s(s_){};
+static const std::vector<Hex> hex_directions_ = {Hex(1, 0), Hex(1, -1), Hex(0, -1), Hex(-1, 0), Hex(-1, 1), Hex(0, 1)};
 
-int Hex::getq()
+Hex::~Hex()
 {
-    return q;
+
 }
 
-int Hex::getr() const
+Hex Hex::operator+(const Hex& val) const
 {
-    return r;
+    return Hex(q_+val.getQ(), r_+val.getR());
 }
 
-int Hex::gets() const
+Hex Hex::operator-(const Hex& val) const
 {
-    return s;
+    return Hex(q_-val.getQ(), r_-val.getR());
 }
 
-Hex Hex::hex_add(Hex a, Hex b);
+bool Hex::operator==(const Hex& val) const
 {
-    return Hex(a.q + b.q, a.r + b.r, a.s + b.s);
+    if(q_ == val.getQ())
+        if(r_ == val.getR())
+            return true;
+    return false;
 }
 
-bool Hex::compare(const Hex a, const Hex b)
+bool Hex::isValid() const
 {
-    if(a.q==b.q)
-    {
-        if(a.r==b.r)
-        {
-            return a.s>b.s;
-        }
-        return a.r>b.r;
-    }
-    return a.q>b.q;
+    if(abs(q_) < 3)
+        if(abs(r_) < 3)
+            return true;
+    return false;
 }
+
+Hex hex_direction(int direction)
+{
+    return hex_directions_[direction];
+}
+

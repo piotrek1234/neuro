@@ -9,6 +9,7 @@ public:
     ModLife();
     virtual ~ModLife();
     virtual void visit(TokenCreature* tc);
+    virtual void visit(TokenHQ* th);
     virtual void visit(TokenModule* tm);
 private:
     int life;

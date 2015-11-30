@@ -26,7 +26,7 @@ void Stack::deleteToken(unsigned int id)
     }
 }
 
-vector<int> Stack::getCurrentTokensIds()
+std::vector<int> Stack::getCurrentTokensIds()
 {
     return this->currentTokens;
 }
@@ -38,7 +38,7 @@ vector<int> Stack::getNextTokensIds(int num)
     {
         for(int i=1; i<=dif; i++)
         {
-            vector<Token*>::iterator token=this->tokens.end()-i;
+            std::vector<Token*>::iterator token=this->tokens.end()-i;
             this->currentTokens.push_back(token->getId());
         }
         
@@ -64,7 +64,7 @@ Color Stack::getColor()
     return this->color;
 }
 
-vector<int>::iterator Stack::findInCurrent(int id)
+std::vector<int>::iterator Stack::findInCurrent(int id)
 {
     for(auto i=currentTokens.begin(); i!=currentTokens.end(), ++i)
     {
@@ -76,7 +76,7 @@ vector<int>::iterator Stack::findInCurrent(int id)
     return nullptr;
 }
 
-vector<Token*>::iterator Stack::findInTokens(int id)
+std::vector<Token*>::iterator Stack::findInTokens(int id)
 {
     for (auto i=tokens.end()-1; i>=tokens.begin(); --i)
     {

@@ -130,6 +130,6 @@ elif env['doxygen'] == 1:
 else: #build app
     SConscript(['calc/SConscript', 'web/SConscript', 'client/SConscript'], exports=['env'] )
 
-env.Clean('.','../doc/doxygen')
+env.Clean('.','doc/doxygen')
 env.Clean('.','Doxyfile')
 
