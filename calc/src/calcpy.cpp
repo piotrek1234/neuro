@@ -60,7 +60,6 @@ BOOST_PYTHON_MODULE( calc )
 		;
 
     class_<CommandManagerPy>("CommandManager")
-        .def( "getProgress", &CommandManagerPy::getProgress )
 		.def( "addPlayer", &CommandManagerPy::addPlayer )
 		.def( "getPlayers", &CommandManagerPy::getPlayers )
         ;
