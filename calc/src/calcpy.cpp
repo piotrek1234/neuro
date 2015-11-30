@@ -16,7 +16,6 @@
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <string>
-#include "calc.hpp"
 #include "game.h"
 
 using namespace boost::python;
@@ -26,18 +25,6 @@ using namespace std;
  */
 class CommandManagerPy {
 public:
-    std::vector<long> getIds() {
-		return CommandManager::getInstance().commandKeys();
-	}
-
-    long startTick() {
-		return CommandManager::getInstance().runTickCommand(200); //4 sec here! (in C++ tests 0.2 s. command is used)
-	}
-    void breakCmd(long) {
-        //TODO
-    }
-    mt4cpp::CommandDesc::State getState(long id) { return CommandManager::getInstance().findCommandDesc(id).state_; }
-    double getProgress(long id) { return CommandManager::getInstance().findCommandDesc(id).progress_; }
 	
 	void addPlayer(std::string name)
 	{
@@ -56,9 +43,9 @@ public:
 BOOST_PYTHON_MODULE( calc )
 {
     //! exports getNumber to Python
-    boost::python::def( "getNumber", getNumber );
+    //boost::python::def( "getNumber", getNumber );
 
-    boost::python::enum_<mt4cpp::CommandDesc::State>("CommandState")
+    /*boost::python::enum_<mt4cpp::CommandDesc::State>("CommandState")
         .value("NONE",mt4cpp::CommandDesc::NONE)
         .value("QUEUED",mt4cpp::CommandDesc::QUEUED)
         .value("PENDING",mt4cpp::CommandDesc::PENDING)
@@ -66,21 +53,13 @@ BOOST_PYTHON_MODULE( calc )
         .value("EXCEPTION",mt4cpp::CommandDesc::EXCEPTION)
         .value("DONE",mt4cpp::CommandDesc::DONE)
         .export_values()
-        ;
-
-	class_<std::vector<long> >("CommandKeys")
-		.def(vector_indexing_suite<std::vector<long> >() )
-		;
+        ;*/
 		
 	class_<std::vector<std::string> >("vectorOfStrings")
 		.def(vector_indexing_suite<std::vector<std::string> >() )
 		;
 
     class_<CommandManagerPy>("CommandManager")
-        .def( "getIds", &CommandManagerPy::getIds )
-        .def( "start", &CommandManagerPy::startTick )
-        .def( "break", &CommandManagerPy::breakCmd )
-        .def( "getState", &CommandManagerPy::getState )
         .def( "getProgress", &CommandManagerPy::getProgress )
 		.def( "addPlayer", &CommandManagerPy::addPlayer )
 		.def( "getPlayers", &CommandManagerPy::getPlayers )

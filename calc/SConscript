@@ -49,7 +49,7 @@ elif(platform.system() == "Windows"):
    env_dll.Append( CPPFLAGS = ' /D "CALC_EXPORTS" ')
 
 #build C++ library
-cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calc.cpp', '../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp'])
+cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp'])
 if(platform.system() == "Linux"):
    target = '../build_web/calcpy/calc.so'
 elif(platform.system() == "Windows"):
