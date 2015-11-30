@@ -9,44 +9,20 @@
 #include <boost/test/unit_test.hpp>
 
 
-#include "../src/calc.hpp"
+#include "../src/game.h"
+#include "../src/player.h"
 
 using namespace boost;
 using boost::unit_test::test_suite;
 
 BOOST_AUTO_TEST_SUITE( calc_test )
 
-BOOST_AUTO_TEST_CASE( TestGetNumber )
-{
-	BOOST_CHECK_EQUAL( getNumber(), 1234 );
-}
-
 BOOST_AUTO_TEST_CASE( CommandMgrTest )
 {
-	mt4cpp::CommandID id1 = CommandManager::getInstance().runTickCommand();
-	mt4cpp::CommandID id2 = CommandManager::getInstance().runTickCommand();
-	mt4cpp::CommandID id3 = CommandManager::getInstance().runTickCommand();
 
-	std::vector<mt4cpp::CommandID> keys = CommandManager::getInstance().commandKeys();
-
-	BOOST_CHECK_EQUAL( keys.size(), 3U );
-	BOOST_CHECK_EQUAL( keys[0], id1 );
-	BOOST_CHECK_EQUAL( keys[1], id2 );
-	BOOST_CHECK_EQUAL( keys[2], id3 );
-
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id1).state_ != mt4cpp::CommandDesc::DONE );
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id2).state_ != mt4cpp::CommandDesc::DONE );
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id3).state_ != mt4cpp::CommandDesc::DONE );
-
-    boost::this_thread::sleep(boost::posix_time::millisec(500)); //po 0.5 sec need to be finished (command executes 0.2s)
-
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id1).state_ == mt4cpp::CommandDesc::DONE );
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id2).state_ == mt4cpp::CommandDesc::DONE );
-    BOOST_CHECK( CommandManager::getInstance().findCommandDesc(id3).state_ == mt4cpp::CommandDesc::DONE );
-
-	BOOST_CHECK_EQUAL( CommandManager::getInstance().commandKeys().size(), 3U );
-	CommandManager::getInstance().clearHistory();
-	BOOST_CHECK_EQUAL( CommandManager::getInstance().commandKeys().size(), 0U );
+	Game::getInstance().addPlayer("player1");
+	int playersNum = Game::getInstance().getPlayersNames().size();
+	BOOST_CHECK_EQUAL( playersNum, 1 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
