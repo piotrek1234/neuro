@@ -6,7 +6,7 @@
 #include <vector>
 
 class Mod;
-class TokenModule : public virtual TokenPutable
+class TokenModule : public TokenPutable
 {
 public:
     TokenModule();

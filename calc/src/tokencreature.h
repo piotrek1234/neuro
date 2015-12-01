@@ -5,7 +5,7 @@
 #include "vector"
 #include "hex.h"
 
-class TokenCreature : virtual public TokenPutable
+class TokenCreature : public TokenPutable
 {
 public:
     TokenCreature();
