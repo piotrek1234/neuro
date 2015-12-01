@@ -3,14 +3,14 @@
     @brief the AngularJS partial 'about'
 -->
 
-<div class="hidden popup" id="welcomePopup">
+<div class="popup" ng-controller="welcomePopup">
   <div><h1>Witamy!</h1></div>
   <div><label>Podaj imie</label></div>
   <div><input type=text id="playerName"></div>
-  <div><input type=submit value="Potwierdź" onclick="sendName();" id="sendName"></div>
+  <div><input type=submit value="Potwierdź" ng-click="sendName()" id="sendName"></div>
 </div>
 
-<div class="hidden popup" id="infoGamePopup">
+<div class="hidden popup">
   <div><h1>Obecny stan gry</h1></div>
   <div id="playersInfo"><label>Ilość graczy:</label><label id="playersNum"></label></div>
   <div id="stateInfo"><label>Stan gry:</label><label id="state"></label></div>

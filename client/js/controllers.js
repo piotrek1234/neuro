@@ -70,11 +70,15 @@ angular.module('myAppControllers', [])
 				 }])
 	.controller('hexagonController',
 		['$scope',
-		 'srvInfo',
-		 'srvCommands',
-		 function($scope, srvInfo, srvCommands) {
-		 	
+		 function ($scope, srvInfo, srvCommands) {
 		 	$scope.mapSize = 2;
-		 	
-
-		 }]);
+		 }])
+	.controller('welcomePopup', 
+		['$scope',
+		'srvCommands',
+		function ($scope) {
+			$scope.sendName = function () {
+				var $popup = document.querySelector("[ng-controller='welcomePopup']");
+				$popup.remove();
+			};
+		}]);

@@ -26,4 +26,7 @@ angular.module('myAppServices', [])
 				 this.startCommand = function(callback) {
 					 return $http.get(this.baseURL + 'startCommand').success(callback);
 				 };
+                 this.getPlayers = function (callback) {
+                    return $http.get(this.baseURL + 'getPlayers').success(callback);
+                 }
              });
