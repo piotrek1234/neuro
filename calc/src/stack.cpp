@@ -1,18 +1,18 @@
 #include "stack.h"
 
-void Stack::Stack()
+Stack::Stack()
 {
     
 }
 
 void Stack::addToken(Token* token)
 {
-    this.tokens.push_back(token);    
+    this->tokens.push_back(token);
 }
 
 int Stack::getSize()
 {
-    this.tokens.size();
+    this->tokens.size();
 }
 
 void Stack::deleteToken(unsigned int id)

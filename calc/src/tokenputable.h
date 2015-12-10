@@ -14,7 +14,7 @@ public:
     virtual void accept(Visitor& v)=0;
     int getLife() const;
     void setLife(int value);
-
+    Hex getPosition() const;
 
 
 private:

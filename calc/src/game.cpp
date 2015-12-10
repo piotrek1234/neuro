@@ -1,21 +1,35 @@
 #include "game.h"
 
+Game::Game()
+{
+    board_ = new Board;
+}
+
+Game::~Game()
+{
+    delete board_;
+}
+
 Game& Game::getInstance() {
 	static Game instance;
 	return instance;
 }
 
-Game::Game()
+
+
+Board *Game::getBoard()
 {
-    
+    return board_;
 }
 
-void Game::addPlayer(std::string name)
+bool Game::addPlayer(std::string name)
 {
     if (players.size()<=4)
     {
         players.push_back(Player(name));
+        return true;
     }
+    return false;
 }
 
 void Game::removePlayer(std::string name)

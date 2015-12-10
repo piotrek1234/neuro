@@ -20,6 +20,7 @@ public:
     Hex operator-(const Hex& val) const;
     bool operator==(const Hex& val) const;
     bool operator!=(const Hex& val) const { return !operator==(val); }
+    bool operator<(const Hex& val) const;   //konieczne dla std::map
 
     static Hex direction(int dir_id) { return hexDirections_[dir_id % 6]; }
     Hex getNeighbor(int dir_id) const { return *this + hexDirections_[dir_id]; }
