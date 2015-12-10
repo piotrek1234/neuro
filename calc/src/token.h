@@ -11,9 +11,12 @@ public:
     virtual bool isPutable() const = 0;
     Color getColor() const;
     void setColor(const Color &value);
+    int getId() const;
+    void setId(int id);
 
 private:
     Color color_;
+    int id_;
 };
 
 #endif // TOKEN_H

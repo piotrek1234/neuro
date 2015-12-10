@@ -11,15 +11,13 @@ public:
     void addToken(Hex pos, Token* token);
     void moveToken(Hex src, Hex dst);
     void deleteToken(Hex pos);
-    Token* getNeighbour(Hex hex, int direction);
+    Hex getNeighbour(Hex hex, int direction);
     Token* getToken(Hex pos);
     Token* getNeighbourToken(Hex hex, int direction);
     
 private:
     int size;
     std::map<Hex, Token*> board;
-    
-    
 };
 
 #endif

@@ -17,13 +17,15 @@ public:
     int getPriority() const;
     void setPriority(int value);
 
+    int getMovable() const; //przy bitwie/przesuwaniu używać jako bool getMovable()
+    void setMovable(int value);
+
 private:
     int priority_;
-    std::vector<Hex> attack;
-    std::vector<Hex> shoot;
-    std::vector<Hex> net;
-    std::vector<Hex> shield;
+    std::vector<Hex> attack_;
+    std::vector<Hex> shield_;
     int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
+    int movable_;
 };
 
 #endif // TOKENCREATURE_H
