@@ -10,9 +10,10 @@ class ModPriority : public Mod
 public:
     ModPriority();
     virtual ~ModPriority();
-    virtual void visit(TokenCreature *tc);
+    /*virtual void visit(TokenCreature *tc);
     virtual void visit(TokenModule*){}
-    virtual void visit(TokenHQ *th);
+    virtual void visit(TokenHQ *th);*/
+    virtual void modify(TokenCreature* tc);
 private:
     int priority;
 };

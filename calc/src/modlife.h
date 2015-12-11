@@ -8,9 +8,10 @@ class ModLife : public Mod
 public:
     ModLife();
     virtual ~ModLife();
-    virtual void visit(TokenCreature* tc);
+    /*virtual void visit(TokenCreature* tc);
     virtual void visit(TokenHQ* th);
-    virtual void visit(TokenModule* tm);
+    virtual void visit(TokenModule* tm);*/
+    virtual void modify(TokenCreature *tc);
 private:
     int life;
 };

@@ -16,9 +16,15 @@ void BattleHandler::handleBattle()
     //dla każdego TokenCreature trzeba znaleźć działające na niego TokenModule
     for(auto it = creatureFinder.getBegin(); it != creatureFinder.getEnd(); ++it)
     {
-        for(int i=0; i<6; ++i)
+        //ModuleFinder moduleFinder;
+        //dla każdego kierunku
         {
-            //todo
+            //sąsiad->accept(moduleFinder);
+        }
+        //for(auto it = moduleFinder.getBegin(); it != moduleFinder.getEnd(); ++it)
+        {
+            //jeśli moduł wskazuje na żeton w środku:
+            //(*it)->modify(żeton w środku);
         }
     }
 
