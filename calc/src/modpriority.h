@@ -8,14 +8,11 @@
 class ModPriority : public Mod
 {
 public:
-    ModPriority();
+    ModPriority(int priority) : priority_(priority) {}
     virtual ~ModPriority();
-    /*virtual void visit(TokenCreature *tc);
-    virtual void visit(TokenModule*){}
-    virtual void visit(TokenHQ *th);*/
     virtual void modify(TokenCreature* tc);
 private:
-    int priority;
+    int priority_;
 };
 
 #endif // MODPRIORITY_H

@@ -13,7 +13,7 @@ class Mod : public Visitor
 public:
     Mod();
     virtual ~Mod() = 0;
-    virtual modify(TokenCreature*)=0;
+    virtual void modify(TokenCreature*)=0;
 protected:
     std::vector<Hex> directions;
     std::vector<TokenPutable*> modded_;

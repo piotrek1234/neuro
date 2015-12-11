@@ -1,11 +1,6 @@
 #include "modlife.h"
 #include <iostream>
 
-ModLife::ModLife()
-{
-
-}
-
 ModLife::~ModLife()
 {
 
