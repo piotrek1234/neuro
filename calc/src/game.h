@@ -5,6 +5,7 @@
 #include "board.h"
 #include <vector>
 #include <string>
+#include "color.h"
 
 class Game {
 public:
@@ -16,11 +17,18 @@ public:
     void removeAllPlayers(std::string name);
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
+    //TODO Magda
+    //getPlayers
+    //getGameState
+    //addToken
+    //throwToken
+    //getNextPlayer
+    //ActionTokens
     
 private:
     std::vector<Player> players;
     Board* board_;  ///pomyśleć nad zmianą na shared_ptr
-    
+    Color getNextColor();
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;
 

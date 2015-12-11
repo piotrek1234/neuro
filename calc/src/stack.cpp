@@ -5,6 +5,11 @@ Stack::Stack()
     
 }
 
+void Stack::readTokens(Color color)
+{
+    tokens = TokenFactory::getInstance().createTokensFormFile("../tokensConfig/" + static_cast<int>(color) + ".xml");
+}
+        
 void Stack::addToken(Token* token)
 {
     this->tokens.push_back(token);

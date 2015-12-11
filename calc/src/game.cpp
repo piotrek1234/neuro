@@ -26,10 +26,28 @@ bool Game::addPlayer(std::string name)
 {
     if (players.size()<=4)
     {
-        players.push_back(Player(name));
+		Player player(name, getNextColor());
+        players.push_back(player);
         return true;
     }
     return false;
+}
+
+Color Game::getNextColor()
+{
+	switch(players.size())
+	{
+		case 0:
+			return Color::BLUE;
+		case 1:
+			return Color::RED;
+		case 2:
+			return Color::YELLOW;
+		case 3:
+			return Color::GREEN;
+		default:
+			return Color::NONE;
+	}
 }
 
 void Game::removePlayer(std::string name)

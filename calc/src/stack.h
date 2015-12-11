@@ -4,6 +4,9 @@
 #include "token.h"
 #include <vector>
 #include <map>
+#include "color.h"
+#include "utils.h"
+#include "tokenfactory.h"
 
 class Stack {
 public:
@@ -14,15 +17,15 @@ public:
     std::vector<int> getCurrentTokensIds();
     std::vector<int> getNextTokensIds(int num);
     Token* getToken(int id);
-    Color getColor();
+    void readTokens(Color color);
     
 private:
     //TODO change to sharedptr
-    std::vector<Token*> tokens;
+    std::vector<TokenPtr> tokens;
     std::vector<int> currentTokens;
     Color color;
     std::vector<int>::iterator findInCurrent(int id);
-    std::vector<Token*>::iterator findInTokens(int id);
+    std::vector<TokenPtr>::iterator findInTokens(int id);
     
 };
 

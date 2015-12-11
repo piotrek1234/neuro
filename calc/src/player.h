@@ -7,22 +7,26 @@
 #define PLAYER_H
 
 
-//#include "stack.h"
+#include "stack.h"
 #include <string>
 //#include "board.h"
 #include <vector>
+#include "color.h"
+#include "tokenfactory.h"
 
 class Player {
 public:
 	Player(std::string name_);
+    Player(std::string name_, Color color);
     std::string getName();
-    //Color getColor();
+    void getStack(Color color);
+    Color getColor();
     //void putTokenOnBoard(unsigned int tokenId);
     //void throwToken(unsigned int tokenId);
     //vector<int> getTokensOnHandIds();
     
 private:
-    //Stack stack;
+    Stack stack;
     std::string name;
     //Board *board;
 };
