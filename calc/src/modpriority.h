@@ -3,7 +3,6 @@
 
 #include "mod.h"
 #include "tokencreature.h"
-#include "tokenmodule.h"
 
 class ModPriority : public Mod
 {

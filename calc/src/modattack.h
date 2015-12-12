@@ -6,11 +6,11 @@
 class ModAttack : public Mod
 {
 public:
-    ModAttack(int attackBoost) : attakBoost_(attackBoost) {}
+    ModAttack(int attackBoost) : attackBoost_(attackBoost) {}
     virtual ~ModAttack();
     virtual void modify(TokenCreature* tc);
 private:
-    int attakBoost_;
+    int attackBoost_;
 };
 
 #endif // MODATTACK_H

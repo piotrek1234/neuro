@@ -12,7 +12,6 @@ public:
     TokenModule();
     virtual ~TokenModule();
     virtual void accept(Visitor& v);
-    void detachMods();
 private:
     Mod* mod_;
     //std::vector<Hex> directions_; //tutaj albo w Mod

@@ -2,15 +2,16 @@
 #define TOKENACTION_H
 
 #include "token.h"
+#include "actiontype.h"
 
 class TokenAction : public Token
 {
 public:
-    TokenAction();
+    TokenAction(ActionType actionType) : actionType_(actionType) {}
     virtual ~TokenAction();
     virtual bool isPutable() const { return false; }
 private:
-    //ActionType action;
+    ActionType actionType_;
 };
 
 #endif // TOKENACTION_H
