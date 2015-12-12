@@ -11,29 +11,29 @@ void TokenFactory::register(std::string type id, TokenCreateFun fun)
     creators.insert(std::pair<std::string, TokenCreateFun>(type, fun));
 }
 
-TokenPtr TokenFactory::create(boost::property_tree::ptree::value_type const& xmlnode)
+TokenPtr TokenFactory::create(boost::property_tree::ptree::value_type const& xmlnode, Color color)
 {
     if(xmlnode.first=="token")
     {
         std::string type=xmlnode.second.get<std::string>("type");
         std::map<std::string,TokenCreateFun>::cons_iterator it=creators.find(type);
         if(it != creators.end() )
-            return it->second();
+            return it->second()(xmlnode, color);
     }
     return std::nullptr;
 }
 
-std::vector<TokenPtr> TokenFactory::createTokensFromFile(std::string filename)
+std::vector<TokenPtr> TokenFactory::createTokensFromFile(std::string filename, Color color)
 {
-    std::ifstream configFile (filename, std::ifstream::out);
+    //std::ifstream configFile (filename, std::ifstream::out);
     using boost::property_tree::ptree;
     ptree pt;
-    read_xml(configFile, pt);
+    read_xml(filename, pt);
 
     std::vector<TokenPtr> tokens;
-    BOOST_FOREACH( ptree::value_type const& v, pt.get_child("tokens") )
+    for( ptree::value_type const& v, pt.get_child("tokens") )
     {
-        TokenPtr token=create(v);
+        TokenPtr token=create(v, color);
         if(token!=std::nullptr)
         {
             tokens.push_back(token);
@@ -43,37 +43,56 @@ std::vector<TokenPtr> TokenFactory::createTokensFromFile(std::string filename)
     return tokens;
 }
 
-TokenPtr createTokenCreature(node)
+TokenPtr createTokenCreature(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenCreature());
+    token->setColor(color);
+    token->setPriority(xmlnode.second.get<unsigned int>("priority"));
+    token->setAdditionalAction(xmlnode.second.get<unsigned int>("additional_action"));
+    token->setMovable(xmlnode.second.get<unsigned int>("movable"));
+    token->setLife(xmlnode.second.get<unsigned int>("life"));
+    //TODO read attack and shield values
+    return token;
 }
 
-TokenPtr createTokenAction(node)
+TokenPtr createTokenAction(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenAction());
+    token->setColor(color);
+    return token;
 }
 
-TokenPtr createTokenHQ(node)
+TokenPtr createTokenHQ(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenHQ());
+    token->setColor(color);
+    return token;
 }
 
-TokenPtr createTokenModuleLife(node)
+TokenPtr createTokenModuleLife(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenModule());
+    token->setColor(color);
+    return token;
 }
 
-TokenPtr createTokenModuleAttack(node)
+TokenPtr createTokenModuleAttack(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenModule());
+    token->setColor(color);
+    return token;
 }
 
-TokenPtr createTokenModulePrioryty(node)
+TokenPtr createTokenModulePrioryty(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenModule());
+    token->setColor(color);
+    return token;
 }
 
-TokenPtr createTokenModuleAddAction(node)
+TokenPtr createTokenModuleAddAction(node const& xmlnode, Color color)
 {
-    
+    TokenPtr token(new TokenModule());
+    token->setColor(color);
+    return token;
 }

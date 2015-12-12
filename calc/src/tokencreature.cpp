@@ -33,5 +33,8 @@ void TokenCreature::setPriority(int value)
     priority_ = value;
 }
 
-
+void TokenCreature::addAttack(int value, int dirId)
+{
+    Hex::direction
+}
 

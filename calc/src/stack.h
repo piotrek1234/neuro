@@ -7,6 +7,7 @@
 #include "color.h"
 #include "utils.h"
 #include "tokenfactory.h"
+#include <string>
 
 class Stack {
 public:
@@ -17,7 +18,7 @@ public:
     std::vector<int> getCurrentTokensIds();
     std::vector<int> getNextTokensIds(int num);
     Token* getToken(int id);
-    void readTokens(Color color);
+    void readTokens(Color color, std::string tokensConfigPath);
     
 private:
     //TODO change to sharedptr

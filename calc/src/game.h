@@ -5,6 +5,7 @@
 #include "board.h"
 #include <vector>
 #include <string>
+#include <map>
 #include "color.h"
 
 class Game {
@@ -24,6 +25,7 @@ public:
     //throwToken
     //getNextPlayer
     //ActionTokens
+    //set path for tokens config
     
 private:
     std::vector<Player> players;
@@ -31,6 +33,7 @@ private:
     Color getNextColor();
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;
+    map<Color, std::string> tokensFiles;
 
 };
 

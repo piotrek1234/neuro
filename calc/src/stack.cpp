@@ -5,9 +5,10 @@ Stack::Stack()
     
 }
 
-void Stack::readTokens(Color color)
+void Stack::readTokens(Color color_, std::string tokensConfigPath)
 {
-    tokens = TokenFactory::getInstance().createTokensFormFile("../tokensConfig/" + static_cast<int>(color) + ".xml");
+    color=color_;
+    tokens = TokenFactory::getInstance().createTokensFormFile(tokensConfigPath, color);
 }
         
 void Stack::addToken(Token* token)

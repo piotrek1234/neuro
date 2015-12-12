@@ -19,10 +19,11 @@ public:
 
     int getMovable() const; //przy bitwie/przesuwaniu używać jako bool getMovable()
     void setMovable(int value);
+    void addAttack(int value, int dirId);
 
 private:
     int priority_;
-    std::vector<Hex> attack_;
+    std::vector<Hex> attack_; //TODO wartość ataku w każdym kierunku
     std::vector<Hex> shield_;
     int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
     int movable_;

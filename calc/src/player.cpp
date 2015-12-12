@@ -5,11 +5,6 @@ Player::Player(std::string name_) : name(name_)
     
 }
 
-Player::Player(std::string name_, Color color_) : name(name_)
-{
-    getStack(color_);
-}
-
 std::string Player::getName()
 {
     return this->name;
@@ -19,11 +14,11 @@ Color Player::getColor(){
     return this->stack.color;
 }
 
-void Player::getStack(Color color)
+void Player::getStack(Color color, std::string tokensConfigPath)
 {
     if(color!=Color::NONE)
     {
-        stack.readTokens(color);
+        stack.readTokens(color, tokensConfigPath);
     }
 }
 

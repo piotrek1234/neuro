@@ -26,7 +26,8 @@ bool Game::addPlayer(std::string name)
 {
     if (players.size()<=4)
     {
-		Player player(name, getNextColor());
+		Player player(name);
+        player.getStack(getNextColor(), tokensFiles[getNextColor()]);
         players.push_back(player);
         return true;
     }
