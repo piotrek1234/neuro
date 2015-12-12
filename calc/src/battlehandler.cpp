@@ -16,7 +16,7 @@ void BattleHandler::handleBattle()
     //dla każdego TokenCreature trzeba znaleźć działające na niego TokenModule
     for(auto it = creatureFinder.getBegin(); it != creatureFinder.getEnd(); ++it)
     {
-        //ModuleFinder moduleFinder;
+        ModuleFinder moduleFinder;
         //dla każdego kierunku
         {
             //sąsiad->accept(moduleFinder);

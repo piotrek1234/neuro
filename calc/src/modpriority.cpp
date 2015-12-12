@@ -7,6 +7,6 @@ ModPriority::~ModPriority()
 
 void ModPriority::modify(TokenCreature *tc)
 {
-    tc->setPriority(tc->getPriority()+priority_);
+    tc->setPriority(tc->getPriority()+1);
 }
 

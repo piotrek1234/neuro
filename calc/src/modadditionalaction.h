@@ -6,7 +6,7 @@
 class ModAdditionalAction : public Mod
 {
 public:
-    ModAdditionalAction();
+    ModAdditionalAction(std::vector<int> &directions) : Mod(directions) {}
     virtual ~ModAdditionalAction();
     virtual void modify(TokenCreature* tc);
 };

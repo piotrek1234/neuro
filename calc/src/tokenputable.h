@@ -8,21 +8,21 @@
 class TokenPutable : public Token
 {
 public:
-    TokenPutable() : position_(Hex(5,5)), direction_(Hex(0,-1)){}
+    TokenPutable(int life) : position_(Hex(5,5)), angle_(0), life_(life) {}
     virtual ~TokenPutable();
     virtual bool isPutable() const { return true; }
-    virtual void accept(Visitor& v)=0;
+    virtual void accept(Visitor& v) = 0;
+    virtual TokenPutable* clone() = 0;
+
     int getLife() const;
     void setLife(int value);
     Hex getPosition() const;
-
+    void setPosition(Hex pos);
 
 private:
     int life_;
     int angle_;  //chyba int
     Hex position_;
-    Hex direction_;
-
 };
 
 #endif // TOKENPUTABLE_H

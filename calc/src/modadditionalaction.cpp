@@ -1,10 +1,5 @@
 #include "modadditionalaction.h"
 
-ModAdditionalAction::ModAdditionalAction()
-{
-
-}
-
 ModAdditionalAction::~ModAdditionalAction()
 {
 

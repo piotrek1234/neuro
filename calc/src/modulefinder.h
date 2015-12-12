@@ -13,7 +13,7 @@ class ModuleFinder : public Visitor
 public:
     ModuleFinder();
     virtual void visit(TokenCreature*) {}
-    virtual void visit(TokenHQ* th);    //to przemyśleć
+    virtual void visit(TokenHQ* th);
     virtual void visit(TokenModule* tm);
     vector<TokenModule*>::iterator getBegin();
     vector<TokenModule*>::iterator getEnd();

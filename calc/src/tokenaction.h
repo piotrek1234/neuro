@@ -10,6 +10,7 @@ public:
     TokenAction(ActionType actionType) : actionType_(actionType) {}
     virtual ~TokenAction();
     virtual bool isPutable() const { return false; }
+    ActionType getType() const { return actionType_; }
 private:
     ActionType actionType_;
 };

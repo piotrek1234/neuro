@@ -1,18 +1,19 @@
 #ifndef TOKENHQ_H
 #define TOKENHQ_H
 
-#include "tokenputable.h"
+#include "tokenmodhq.h"
 
 class Mod;
 
-class TokenHQ: public TokenPutable  //przemyśleć czy nie lepiej będzie :TokenModule
+class TokenHQ: public TokenModHq
 {
 public:
     TokenHQ();
-    ~TokenHQ();
+    virtual ~TokenHQ();
+    virtual TokenPutable* clone() const { return new TokenHQ(*this); }
     virtual void accept(Visitor& v);
 private:
-    int life_;
+    TokenHQ(const TokenHQ&) = default;
     Mod* mod_;
 };
 
