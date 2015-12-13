@@ -17,6 +17,7 @@
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 #include <string>
 #include "game.h"
+#include "color.h"
 
 using namespace boost::python;
 using namespace std;

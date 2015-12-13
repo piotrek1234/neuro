@@ -1,0 +1,17 @@
+<tokens>
+    <token>
+        <type></type>
+        <life></life>
+        <priority></priority>
+        <additional_action></additional_action>
+        <movable></movable>
+        <attack>
+            <dir_id></dir_id>
+            <value></value>
+        </attack>
+        <shield>
+            <dir_id></dir_id>
+            <value></value>
+        </shield>
+    </token>
+</tokens>

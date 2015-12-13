@@ -6,11 +6,11 @@
 class ModAttack : public Mod
 {
 public:
-    ModAttack();
+    ModAttack(std::vector<int> &directions, int attackBoost) : Mod(directions), attackBoost_(attackBoost) {}
     virtual ~ModAttack();
-    virtual void visit(TokenCreature* tc);
-    virtual void visit(TokenHQ*){}  //sztabowi nie można ulepszyć siły ataku
-    virtual void visit(TokenModule*){}
+    virtual void modify(TokenCreature* tc);
+private:
+    int attackBoost_;
 };
 
 #endif // MODATTACK_H

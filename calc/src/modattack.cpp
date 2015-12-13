@@ -1,18 +1,13 @@
 #include "modattack.h"
 
-ModAttack::ModAttack()
-{
-
-}
-
 ModAttack::~ModAttack()
 {
 
 }
 
-void ModAttack::visit(TokenCreature *tc)
+void ModAttack::modify(TokenCreature *tc)
 {
-
+    //jeśli w tc->attack jest jakiś kierunek to trzeba dopisać attackBoost_ razy taki sam
 }
 
 

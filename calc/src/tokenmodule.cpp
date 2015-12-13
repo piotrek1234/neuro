@@ -15,3 +15,11 @@ void TokenModule::accept(Visitor &v)
     v.visit(this);
 }
 
+TokenModule::TokenModule(const TokenModule &tm)
+{
+    //głeboka kopia ze względu na mod_
+    ///sprawdzić czy to ma sens
+    Mod* copy = new Mod(*mod_);
+    return copy;
+}
+

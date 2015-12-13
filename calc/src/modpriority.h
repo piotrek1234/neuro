@@ -2,19 +2,13 @@
 #define MODPRIORITY_H
 
 #include "mod.h"
-#include "tokencreature.h"
-#include "tokenmodule.h"
 
 class ModPriority : public Mod
 {
 public:
-    ModPriority();
+    ModPriority(std::vector<int> directions) : Mod(directions) {}
     virtual ~ModPriority();
-    virtual void visit(TokenCreature *tc);
-    virtual void visit(TokenModule*){}
-    virtual void visit(TokenHQ *th);
-private:
-    int priority;
+    virtual void modify(TokenCreature* tc);
 };
 
 #endif // MODPRIORITY_H

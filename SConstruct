@@ -2,7 +2,7 @@
 import os, platform, subprocess, re, time, ConfigParser, shutil, sys, signal, fileinput
 
 MYAPP_VER_MAJOR = '0'
-MYAPP_VER_MINOR = '07'
+MYAPP_VER_MINOR = '0'
 MYAPP_VER_COMPILATION = '0'
 MYAPP_VER_INSTALL = '1'
 

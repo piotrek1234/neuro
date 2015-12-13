@@ -1,24 +1,21 @@
 #ifndef TOKENHQ_H
 #define TOKENHQ_H
 
-#include "tokenputable.h"
+#include "tokenmodhq.h"
 
-class TokenHQ: public TokenPutable
+class Mod;
+
+class TokenHQ: public TokenModHq
 {
 public:
     TokenHQ();
-    ~TokenHQ();
+    virtual ~TokenHQ();
+    //virtual TokenHQ* clone() const { return new TokenHQ(*this); }
     virtual void accept(Visitor& v);
-    int getPriority() const;
-    void setPriority(int priority);
-
-    int getAdditionalAction() const;
-    void setAdditionalAction(int additionalAction);
-
+    virtual Mod* getMod() const { return mod_; }
 private:
-    int priority_;
-    //std::vector<kierunek> attack; //zawsze po jednym ataku w każdym kierunku
-    int additionalAction_;
+    TokenHQ(const TokenHQ&) = default;
+    Mod* mod_;
 };
 
 #endif // TOKENHQ_H

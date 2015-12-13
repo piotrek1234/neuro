@@ -33,5 +33,9 @@ void TokenCreature::setPriority(int value)
     priority_ = value;
 }
 
-
+void TokenCreature::addAttack(int value, int dirId)
+{
+    for(int i=0; i<value; ++i)
+        attack_.push_back(dirId);
+}
 

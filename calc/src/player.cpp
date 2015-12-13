@@ -10,10 +10,19 @@ std::string Player::getName()
     return this->name;
 }
 
-/*Color Player::getColor(){
+Color Player::getColor(){
     return this->stack.getColor();
 }
 
+void Player::getStack(Color color, std::string tokensConfigPath)
+{
+    if(color!=Color::NONE)
+    {
+        stack.readTokens(color, tokensConfigPath);
+    }
+}
+
+/*
 void Player::putTokenOnBoard(unsigned int tokenId){
     //this->board->
 }

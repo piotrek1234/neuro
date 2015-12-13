@@ -1,21 +1,54 @@
 #include "game.h"
 
+Game::Game()
+{
+    board_ = new Board;
+}
+
+Game::~Game()
+{
+    delete board_;
+}
+
 Game& Game::getInstance() {
 	static Game instance;
 	return instance;
 }
 
-Game::Game()
+
+
+Board *Game::getBoard()
 {
-    
+    return board_;
 }
 
-void Game::addPlayer(std::string name)
+bool Game::addPlayer(std::string name)
 {
     if (players.size()<=4)
     {
-        players.push_back(Player(name));
+		Player player(name);
+        player.getStack(getNextColor(), tokensFiles[getNextColor()]);
+        players.push_back(player);
+        return true;
     }
+    return false;
+}
+
+Color Game::getNextColor()
+{
+	switch(players.size())
+	{
+		case 0:
+			return Color::BLUE;
+		case 1:
+			return Color::RED;
+		case 2:
+			return Color::YELLOW;
+		case 3:
+			return Color::GREEN;
+		default:
+			return Color::NONE;
+	}
 }
 
 void Game::removePlayer(std::string name)

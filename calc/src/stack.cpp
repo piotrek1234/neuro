@@ -1,18 +1,24 @@
 #include "stack.h"
 
-void Stack::Stack()
+Stack::Stack()
 {
     
 }
 
+void Stack::readTokens(Color color, std::string tokensConfigPath)
+{
+    color_=color;
+    tokens = TokenFactory::getInstance().createTokensFormFile(tokensConfigPath, color_);
+}
+        
 void Stack::addToken(Token* token)
 {
-    this.tokens.push_back(token);    
+    this->tokens.push_back(token);
 }
 
 int Stack::getSize()
 {
-    this.tokens.size();
+    this->tokens.size();
 }
 
 void Stack::deleteToken(unsigned int id)

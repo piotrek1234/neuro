@@ -13,23 +13,10 @@ void TokenPutable::setLife(int value)
 {
     life_ = value;
 }
-int TokenPutable::getMovable() const
-{
-    return movable_;
-}
 
-void TokenPutable::setMovable(int value)
+void TokenPutable::setPosition(Hex pos)
 {
-    movable_ = value;
-}
-bool TokenPutable::getActive() const
-{
-    return active_;
-}
-
-void TokenPutable::setActive(bool value)
-{
-    active_ = value;
+    position_ = pos;
 }
 
 

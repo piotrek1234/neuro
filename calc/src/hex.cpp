@@ -1,7 +1,7 @@
 #include "hex.h"
-#include <math.h>
+#include <cmath>
 
-static const std::vector<Hex> hex_directions_ = {Hex(1, 0), Hex(1, -1), Hex(0, -1), Hex(-1, 0), Hex(-1, 1), Hex(0, 1)};
+const std::vector<Hex> Hex::hexDirections_ = {Hex(1, 0), Hex(1, -1), Hex(0, -1), Hex(-1, 0), Hex(-1, 1), Hex(0, 1)};
 
 Hex::~Hex()
 {
@@ -26,16 +26,19 @@ bool Hex::operator==(const Hex& val) const
     return false;
 }
 
-bool Hex::isValid() const
+bool Hex::operator<(const Hex &val) const
 {
-    if(abs(q_) < 3)
-        if(abs(r_) < 3)
-            return true;
+    if(q_ < val.getQ())
+        return true;
+    if(r_ < val.getR())
+        return true;
     return false;
 }
 
-Hex hex_direction(int direction)
+bool Hex::isValid() const
 {
-    return hex_directions_[direction];
+    if(std::abs(q_) < 3)
+        if(std::abs(r_) < 3)
+            return true;
+    return false;
 }
-
