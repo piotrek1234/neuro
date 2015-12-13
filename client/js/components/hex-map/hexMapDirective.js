@@ -12,7 +12,7 @@ angular.module('hexMapDirective', [])
 			templateUrl: 'js/components/hex-map/hexMap.html',
 			controller: function ($scope) {
 				setLayoutSize(Point($scope.size, $scope.size));
-				debugger;
+				
 				var hexMap = generateMap($scope.hexCount);
 
 				var coordinateMap = [];

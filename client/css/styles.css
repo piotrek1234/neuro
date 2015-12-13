@@ -56,6 +56,12 @@ body {
     opacity: 0.6;
 }
 
+.hex-active {
+    fill: #36BA1C;
+    stroke: black;
+    opacity: 0.6;   
+}
+
 .middle {
     position: fixed;
     top: 50%;
