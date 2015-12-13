@@ -3,14 +3,17 @@ angular.module('hexMapDirective', [])
 		return {
 			restrict: 'E',
 			scope: {
-				size: "=",
+				hexCount: "=hexCount",
 				width: "=",
-				height: "="
+				height: "=",
+				size: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex-map/hexMap.html',
 			controller: function ($scope) {
-				var hexMap = generateMap($scope.size);
+				setLayoutSize(Point($scope.size, $scope.size));
+				debugger;
+				var hexMap = generateMap($scope.hexCount);
 
 				var coordinateMap = [];
 				hexMap.forEach(function (element) {
@@ -21,7 +24,7 @@ angular.module('hexMapDirective', [])
 			 	coordinateMap.forEach(function (element) {
 			 		cornersSet.push(setHexCorners(element));
 			 	});
-			 	debugger;
+			 	
 			 	$scope.cornersSet = cornersSet;
 			}
 		};

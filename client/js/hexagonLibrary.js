@@ -1,5 +1,11 @@
 var layout_flat = Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
-var flat = Layout(layout_flat, Point(40, 40), Point(200, 200));
+var flat = Layout(layout_flat, Point(70, 70), Point(280, 300));
+
+function setLayoutSize (size) {
+    var origin = Point(size.x * 4, size.y * 4 + 20);
+    
+    flat = Layout(layout_flat, size, origin);
+};
 
 function setHexCorners (center) {
 		var corners = [];
