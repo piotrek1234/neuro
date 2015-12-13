@@ -6,7 +6,7 @@
 class ModLife : public Mod
 {
 public:
-    ModLife(int life) : life_(life) {}
+    ModLife(std::vector<int> directions, int life) : Mod(directions), life_(life) {}
     virtual ~ModLife();
     virtual void modify(TokenCreature *tc);
 private:

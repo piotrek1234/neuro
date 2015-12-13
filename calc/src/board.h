@@ -11,19 +11,20 @@ class Board {
 public:
     Board();
     ~Board();
-    Board(int size);
-    void addToken(Hex pos, TokenPutable* token);
-    void moveToken(Hex src, Hex dst);
-    void deleteToken(Hex pos);
+    Board(int size);    //potrzebne? size jest stały
+    bool addToken(Hex pos, TokenPutable* token);
+    bool moveToken(Hex src, Hex dst);
+    bool deleteToken(Hex pos);
+    bool pushToken(Hex pusher, Hex pushed);
     Hex getNeighbour(Hex hex, int direction);
     TokenPutable* getToken(Hex pos);
-    TokenPutable* getNeighbourToken(Hex hex, int dir);
-    Board* clone();
+    TokenPutable* getNeighbourToken(Hex hex, int dir);  //potrzebne?
+    Board* clone(); //albo zamiast tego zrobić konstruktor kopiujący
     map<Hex, TokenPutable*>::iterator getMapBegin();
     map<Hex, TokenPutable*>::iterator getMapEnd();
 private:
-    int size;
-    map<Hex, TokenPutable*> board;
+    int size_;  //do czego służy size_?
+    map<Hex, TokenPutable*> board_;
 };
 
 #endif

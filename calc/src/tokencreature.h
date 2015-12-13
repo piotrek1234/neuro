@@ -3,7 +3,6 @@
 
 #include "tokenputable.h"
 #include "vector"
-#include "hex.h"
 
 class TokenCreature : public TokenPutable
 {
@@ -11,6 +10,8 @@ public:
     TokenCreature();
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
+    virtual TokenPutable* clone() const { return new TokenCreature(*this); }
+
     int getAdditionalAction() const;
     void setAdditionalAction(int value);
 
@@ -19,12 +20,14 @@ public:
 
     int getMovable() const; //przy bitwie/przesuwaniu używać jako bool getMovable()
     void setMovable(int value);
+
     void addAttack(int value, int dirId);
 
 private:
+    TokenCreature(const TokenCreature&) = default;
     int priority_;
-    std::vector<Hex> attack_; //TODO wartość ataku w każdym kierunku
-    std::vector<Hex> shield_;
+    std::vector<int> attack_; //TODO wartość ataku w każdym kierunku
+    std::vector<int> shield_;
     int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
     int movable_;
 };

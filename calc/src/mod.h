@@ -1,22 +1,19 @@
 #ifndef MOD_H
 #define MOD_H
 
-//#include "visitor.h"
 #include "tokencreature.h"
-//#include "tokenmodule.h"
-//#include "tokenhq.h"
 #include "hex.h"
 #include <vector>
 
 class Mod : public Visitor
 {
 public:
-    Mod();
+    Mod(std::vector<int> &directions) : directions_(directions) {}
     virtual ~Mod() = 0;
+    Mod(const Mod& mod) = default;
     virtual void modify(TokenCreature*)=0;
 protected:
-    std::vector<Hex> directions;
-    std::vector<TokenPutable*> modded_;
+    std::vector<int> directions_;
 };
 
 #endif // MOD_H
