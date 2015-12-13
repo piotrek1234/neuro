@@ -6,7 +6,7 @@ static TokenFactory& TokenFactory::getInstance()
     return instance;
 }
 
-void TokenFactory::register(std::string type id, TokenCreateFun fun)
+void TokenFactory::registerFun(std::string type, TokenCreateFun fun)
 {
     creators.insert(std::pair<std::string, TokenCreateFun>(type, fun));
 }

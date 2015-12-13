@@ -9,14 +9,19 @@ void ModuleFinder::visit(TokenHQ *th)
     modules_.push_back(th);
 }
 
-vector<TokenModule*>::iterator ModuleFinder::getBegin()
+void ModuleFinder::visit(TokenModule *tm)
 {
-    return creatures_.begin();
+    modules_.push_back(tm);
 }
 
-vector<TokenModule*>::iterator ModuleFinder::getEnd()
+vector<TokenModHq*>::iterator ModuleFinder::getBegin()
 {
-    return creatures_.end();
+    return modules_.begin();
+}
+
+vector<TokenModHq*>::iterator ModuleFinder::getEnd()
+{
+    return modules_.end();
 }
 
 void ModuleFinder::clear()

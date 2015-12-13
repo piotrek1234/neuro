@@ -10,8 +10,9 @@ class TokenHQ: public TokenModHq
 public:
     TokenHQ();
     virtual ~TokenHQ();
-    virtual TokenPutable* clone() const { return new TokenHQ(*this); }
+    //virtual TokenHQ* clone() const { return new TokenHQ(*this); }
     virtual void accept(Visitor& v);
+    virtual Mod* getMod() const { return mod_; }
 private:
     TokenHQ(const TokenHQ&) = default;
     Mod* mod_;

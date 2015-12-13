@@ -11,8 +11,9 @@ class TokenModule : public TokenModHq
 public:
     TokenModule();
     virtual ~TokenModule();
-    virtual TokenPutable* clone() const { return new TokenModule(*this); }
+    //virtual TokenModule* clone() const { return new TokenModule(*this); }
     virtual void accept(Visitor& v);
+    virtual Mod* getMod() const { return mod_; }
 private:
     TokenModule(const TokenModule& tm);
     Mod* mod_;

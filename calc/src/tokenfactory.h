@@ -26,7 +26,7 @@ class TokenFactory
     public:
         typedef TokenPtr(*TokenCreateFun)(node, Color);
         static TokenFactory& getInstance();
-        void register(std::string type id, TokenCreateFun fun);
+        void registerFun(std::string type, TokenCreateFun fun); //było register() i błąd że to słowo kluczowe
         TokenPtr create(boost::property_tree::ptree::value_type const& xmlnode);
         std::vector<TokenPtr> createTokensFromFile(std::string filename, Color color);
         TokenPtr createTokenCreature(node const&, Color);
@@ -41,6 +41,6 @@ class TokenFactory
         std::map<std::string,TokenCreateFun> creators;
         TokenFactory(){}
         TokenFactory(const TokenFactory&);
-}
+};
 
 #endif // TOKENFACTORY_H

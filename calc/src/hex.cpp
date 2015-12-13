@@ -42,9 +42,3 @@ bool Hex::isValid() const
             return true;
     return false;
 }
-
-/*Hex hex_direction(int direction)
-{
-    return hexDirections_[direction];
-}*/
-

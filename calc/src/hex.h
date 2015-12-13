@@ -6,8 +6,6 @@
 
 #include <vector>
 
-///todo: podorzucać wyjątki
-
 class Hex
 {
 public:

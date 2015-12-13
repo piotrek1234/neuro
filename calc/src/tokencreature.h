@@ -10,7 +10,7 @@ public:
     TokenCreature();
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
-    virtual TokenPutable* clone() const { return new TokenCreature(*this); }
+    //virtual TokenCreature* clone() const { return new TokenCreature(*this); }
 
     int getAdditionalAction() const;
     void setAdditionalAction(int value);

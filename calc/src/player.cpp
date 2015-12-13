@@ -11,7 +11,7 @@ std::string Player::getName()
 }
 
 Color Player::getColor(){
-    return this->stack.color;
+    return this->stack.getColor();
 }
 
 void Player::getStack(Color color, std::string tokensConfigPath)

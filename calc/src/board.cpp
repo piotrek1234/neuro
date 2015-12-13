@@ -9,7 +9,7 @@ bool Board::addToken(Hex pos, TokenPutable *token)
 {
     if(board_.find(pos) == board_.end())
     {
-        board_.insert(pos, token);
+        board_.insert(std::pair<Hex, TokenPutable*>(pos, token));
         return true;
     }
     return false;
@@ -33,7 +33,7 @@ bool Board::moveToken(Hex src, Hex dst)
 
 bool Board::deleteToken(Hex pos)
 {
-    auto field = board_.find(src);
+    auto field = board_.find(pos);
 
     if(field == board_.end())    //jeśli pole źródłowe jest puste
         return false;
@@ -61,7 +61,7 @@ Board *Board::clone()
     //dla każdego żetonu z oryginalnej planszy wstaw sklonowany w takie samo miejsce na nowej planszy
     for(auto it=board_.begin(); it!=board_.end(); ++it)
     {
-        cloned->addToken(it->first, it->second->clone());
+        //cloned->addToken(it->first, it->second->clone());
     }
 
     return cloned;
@@ -84,7 +84,7 @@ bool Board::pushToken(Hex pusher, Hex pushed)
 
     if(destination.isValid()) //pole jest na planszy
     {
-        if(board_.find(destination) == board.end())  //pole jest wolne
+        if(board_.find(destination) == board_.end())  //pole jest wolne
         {
             moveToken(pushed, destination);
             return true;

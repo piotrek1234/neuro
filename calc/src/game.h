@@ -29,7 +29,7 @@ public:
     
 private:
     std::vector<Player> players;
-    Board* board_;  ///pomyśleć nad zmianą na shared_ptr
+    Board* board_;
     Color getNextColor();
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;

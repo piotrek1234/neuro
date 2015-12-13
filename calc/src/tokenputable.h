@@ -8,11 +8,11 @@
 class TokenPutable : public Token
 {
 public:
-    TokenPutable(int life) : position_(Hex(5,5)), angle_(0), life_(life) {}
+    TokenPutable(int life) : life_(life), angle_(0), position_(Hex(5,5)) {}
     virtual ~TokenPutable();
     virtual bool isPutable() const { return true; }
     virtual void accept(Visitor& v) = 0;
-    virtual TokenPutable* clone() = 0;
+    //virtual TokenPutable* clone() = 0;
 
     int getLife() const;
     void setLife(int value);
