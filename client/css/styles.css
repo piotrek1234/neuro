@@ -22,6 +22,8 @@ body {
     padding: 0px;
     font-family: 'Noto Sans', sans-serif;
 	font-size: 100.01%;
+
+    background: url('/pict/bright-wood.jpg');
 }
 
 #icons_ul {
@@ -47,10 +49,17 @@ body {
     text-align: center;
 }
 
-
-
-
-
 .hex {
     background-color: #e6b3ff;
+}
+
+.middle {
+    height: 500px;
+    width: 500px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
 }
