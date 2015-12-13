@@ -8,5 +8,6 @@
 
 typedef boost::shared_ptr<Token> TokenPtr;
 typedef boost::property_tree::ptree::value_type node;
+typedef boost::property_tree::ptree ptree;
 
 #endif // COLOR_H
