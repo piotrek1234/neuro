@@ -24,19 +24,14 @@ vector<TokenCreature*>::iterator CreatureFinder::getEnd()
     return creatures_.end();
 }
 
-vector::iterator CreatureFinder::getHqBegin()
+vector<TokenHQ*>::iterator CreatureFinder::getHqBegin()
 {
     return hq_.begin();
 }
 
-vector::iterator CreatureFinder::getHqEnd()
+vector<TokenHQ*>::iterator CreatureFinder::getHqEnd()
 {
     return hq_.end();
-}
-
-TokenHQ *CreatureFinder::getHQ()
-{
-    return hq_;
 }
 
 void CreatureFinder::clear()

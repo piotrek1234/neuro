@@ -33,9 +33,38 @@ void TokenCreature::setPriority(int value)
     priority_ = value;
 }
 
-void TokenCreature::addAttack(int value, int dirId)
+void TokenCreature::addAttack(int dirId, int value)
 {
-    for(int i=0; i<value; ++i)
-        attack_.push_back(dirId);
+    if(attack_.find(dirId) == attack_.end())    //nie ma jeszcze ataku w tym kierunku
+    {
+        attack_.insert(std::pair<int, int>(dirId, value));
+    }
+    else
+    {
+        attack_[dirId] = attack_[dirId]+value;
+    }
+}
+
+int TokenCreature::getAttack(int dirId) const
+{
+    auto strength = attack_.find(dirId);
+
+    if(strength != attack_.end())
+        return strength->second;
+    return 0;
+}
+
+void TokenCreature::setShield(int dirId, bool value)
+{
+        shield_[dirId] = value;
+        //jeśli było coś ustawione to nadpisze
+        //jeśli nie było to wstawi
+}
+
+bool TokenCreature::getShield(int dirId) const
+{
+    if(shield_.find(dirId) != shield_.end())
+        return shield_[dirId];
+    return false;
 }
 

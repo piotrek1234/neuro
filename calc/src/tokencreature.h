@@ -2,7 +2,7 @@
 #define TOKENCREATURE_H
 
 #include "tokenputable.h"
-#include "vector"
+#include <map>
 
 class TokenCreature : public TokenPutable
 {
@@ -18,16 +18,20 @@ public:
     int getPriority() const;
     void setPriority(int value);
 
-    int getMovable() const; //przy bitwie/przesuwaniu używać jako bool getMovable()
+    int getMovable() const;
     void setMovable(int value);
 
-    void addAttack(int value, int dirId);
+    void addAttack(int dirId, int value);
+    int getAttack(int dirId) const;
+
+    void setShield(int dirId, bool value);
+    bool getShield(int dirId) const;
 
 private:
     TokenCreature(const TokenCreature&) = default;
     int priority_;
-    std::vector<int> attack_; //TODO wartość ataku w każdym kierunku
-    std::vector<int> shield_;
+    std::map<int, int> attack_; //TODO wartość ataku w każdym kierunku
+    std::map<int, bool> shield_;
     int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
     int movable_;
 };
