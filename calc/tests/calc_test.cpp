@@ -48,8 +48,10 @@ BOOST_AUTO_TEST_CASE( HexTest )
     BOOST_CHECK_EQUAL(h1!=h3, false);
     BOOST_CHECK_EQUAL(h1+h2, Hex(5, 7));
     BOOST_CHECK_EQUAL(h1-h2, Hex(-3, -3));
-    h3=h1;
-    BOOST_CHECK_EQUAL(h3, Hex(1, 2));
+    Hex h4=h3;
+    BOOST_CHECK_EQUAL(h4, Hex(1, 2));
+    h3 = Hex(5,6);
+    BOOST_CHECK_EQUAL(h4, Hex(1, 2));
 
     //direction
     BOOST_CHECK_EQUAL(Hex::direction(3), Hex(-1,0));

@@ -12,15 +12,13 @@ using namespace std;
 class ModuleFinder : public Visitor
 {
 public:
-    ModuleFinder();
+    ModuleFinder() {}
+    void setTarget(TokenCreature* tc) { tc_ = tc; }
     virtual void visit(TokenCreature*) {}
     virtual void visit(TokenHQ* th);
     virtual void visit(TokenModule* tm);
-    vector<TokenModHq*>::iterator getBegin();
-    vector<TokenModHq*>::iterator getEnd();
-    void clear();
 private:
-    vector<TokenModHq*> modules_;
+    TokenCreature* tc_;
 };
 
 #endif // MODULEFINDER_H

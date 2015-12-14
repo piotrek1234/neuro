@@ -95,4 +95,3 @@ void TokenCreature::clearShield()
 {
     shield_.clear();
 }
-
