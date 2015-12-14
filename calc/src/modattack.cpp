@@ -7,7 +7,11 @@ ModAttack::~ModAttack()
 
 void ModAttack::modify(TokenCreature *tc)
 {
-    //jeśli w tc->attack jest jakiś kierunek to trzeba dopisać attackBoost_ razy taki sam
+    for(int i=0; i<6; ++i)
+    {
+        if(tc->getAttack(i) > 0)
+            tc->addAttack(i, attackBoost_);
+    }
 }
 
 

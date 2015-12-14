@@ -14,6 +14,13 @@ void TokenCreature::accept(Visitor &v)
 {
     v.visit(this);
 }
+
+/*TokenPutable *TokenCreature::clone() const
+{
+    TokenPutable* token = new TokenCreature(*this);
+    return token;
+}*/
+
 int TokenCreature::getAdditionalAction() const
 {
     return additionalAction_;
@@ -31,6 +38,16 @@ int TokenCreature::getPriority() const
 void TokenCreature::setPriority(int value)
 {
     priority_ = value;
+}
+
+bool TokenCreature::getMovable() const
+{
+    return movable_;
+}
+
+void TokenCreature::setMovable(bool value)
+{
+    movable_ = value;
 }
 
 void TokenCreature::addAttack(int dirId, int value)
@@ -54,6 +71,11 @@ int TokenCreature::getAttack(int dirId) const
     return 0;
 }
 
+void TokenCreature::clearAttack()
+{
+    attack_.clear();
+}
+
 void TokenCreature::setShield(int dirId, bool value)
 {
         shield_[dirId] = value;
@@ -63,8 +85,14 @@ void TokenCreature::setShield(int dirId, bool value)
 
 bool TokenCreature::getShield(int dirId) const
 {
-    if(shield_.find(dirId) != shield_.end())
-        return shield_[dirId];
+    auto temp = shield_.find(dirId);
+    if(temp != shield_.end())
+        return temp->second;
     return false;
+}
+
+void TokenCreature::clearShield()
+{
+    shield_.clear();
 }
 

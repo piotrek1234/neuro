@@ -10,16 +10,22 @@ TokenModule::~TokenModule()
     //delete mod; //sypie warningiem
 }
 
+/*TokenPutable *TokenModule::clone() const
+{
+    TokenPutable* token = new TokenModule(*this);
+    return token;
+}*/
+
 void TokenModule::accept(Visitor &v)
 {
     v.visit(this);
 }
 
-TokenModule::TokenModule(const TokenModule &tm)
+/*TokenModule::TokenModule(const TokenModule &old)
 {
-    //głeboka kopia ze względu na mod_
-    ///sprawdzić czy to ma sens
-    Mod* copy = new Mod(*mod_);
-    return copy;
-}
+    TokenModule token;
+    Mod* mod = old.getMod()->clone();
+    token.setMod(mod);
+    return token;
+}*/
 

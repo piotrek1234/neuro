@@ -11,13 +11,10 @@ class TokenModule : public TokenModHq
 public:
     TokenModule();
     virtual ~TokenModule();
-    //virtual TokenModule* clone() const { return new TokenModule(*this); }
+    //virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
-    virtual Mod* getMod() const { return mod_; }
 private:
-    TokenModule(const TokenModule& tm);
-    Mod* mod_;
-    //std::vector<Hex> directions_; //tutaj albo w Mod
+    //TokenModule(const TokenModule& old);
 };
 
 #endif // TOKENMODULE_H

@@ -26,6 +26,14 @@ bool Hex::operator==(const Hex& val) const
     return false;
 }
 
+Hex &Hex::operator=(const Hex &val)
+{
+    q_ = val.getQ();
+    r_ = val.getR();
+    s_ = val.getS();
+    return *this;
+}
+
 bool Hex::operator<(const Hex &val) const
 {
     if(q_ < val.getQ())
