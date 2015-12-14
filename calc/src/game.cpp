@@ -3,6 +3,9 @@
 Game::Game()
 {
     board_ = new Board;
+    actions["battle"] = ActionType::BATTLE;
+    actions["move"] = ActionType::MOVE;
+    actions["push"] = ActionType::PUSH;
 }
 
 Game::~Game()
@@ -15,7 +18,10 @@ Game& Game::getInstance() {
 	return instance;
 }
 
-
+ActionType Game::getAction(std::string type)
+{
+    return actions[type];
+}
 
 Board *Game::getBoard()
 {

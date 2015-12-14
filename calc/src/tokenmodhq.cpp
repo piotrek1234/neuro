@@ -3,3 +3,8 @@
 TokenModHq::TokenModHq()
 {
 }
+
+TokenModHq::~TokenModHq()
+{
+
+}

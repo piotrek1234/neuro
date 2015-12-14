@@ -7,10 +7,10 @@
 #include <string>
 #include <map>
 #include "color.h"
+#include "actiontype.h"
 
 class Game {
 public:
-    Game();
     ~Game();
     static Game& getInstance();
     bool addPlayer(std::string name);
@@ -18,6 +18,7 @@ public:
     void removeAllPlayers(std::string name);
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
+    ActionType getAction(std::string type);
     //TODO Magda
     //getPlayers
     //getGameState
@@ -28,12 +29,14 @@ public:
     //set path for tokens config
     
 private:
+    Game();
     std::vector<Player> players;
     Board* board_;
     Color getNextColor();
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;
-    map<Color, std::string> tokensFiles;
+    std::map<Color, std::string> tokensFiles;
+    std::map<std::string, ActionType> actions;
 
 };
 

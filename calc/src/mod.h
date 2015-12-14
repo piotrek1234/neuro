@@ -2,7 +2,6 @@
 #define MOD_H
 
 #include "tokencreature.h"
-#include "hex.h"
 #include <vector>
 
 class Mod : public Visitor
@@ -12,6 +11,8 @@ public:
     virtual ~Mod() = 0;
     Mod(const Mod& mod) = default;
     virtual void modify(TokenCreature*)=0;
+    std::vector<int>::iterator getDirectionBegin();
+    std::vector<int>::iterator getDirectionEnd();
 protected:
     std::vector<int> directions_;
 };

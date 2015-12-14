@@ -1,30 +1,27 @@
 #include "modulefinder.h"
 
-ModuleFinder::ModuleFinder()
-{
-}
-
 void ModuleFinder::visit(TokenHQ *th)
 {
-    modules_.push_back(th);
+    if(th->getColor() == tc_->getColor())
+    {
+        //dla każdego kierunku moda
+        for(auto it=th->getMod()->getDirectionBegin(); it != th->getMod()->getDirectionEnd(); ++it)
+        {
+            if(th->getPosition()+Hex::direction(*it) == tc_->getPosition()) //jeśli wskazuje na tc_
+                th->getMod()->modify(tc_);
+        }
+    }
 }
 
 void ModuleFinder::visit(TokenModule *tm)
 {
-    modules_.push_back(tm);
-}
-
-vector<TokenModHq*>::iterator ModuleFinder::getBegin()
-{
-    return modules_.begin();
-}
-
-vector<TokenModHq*>::iterator ModuleFinder::getEnd()
-{
-    return modules_.end();
-}
-
-void ModuleFinder::clear()
-{
-    modules_.clear();
+    if(tm->getColor() == tc_->getColor())
+    {
+        //dla każdego kierunku moda
+        for(auto it=tm->getMod()->getDirectionBegin(); it != tm->getMod()->getDirectionEnd(); ++it)
+        {
+            if(tm->getPosition()+Hex::direction(*it) == tc_->getPosition()) //jeśli wskazuje na tc_
+                tm->getMod()->modify(tc_);
+        }
+    }
 }

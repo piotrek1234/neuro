@@ -1,17 +1,21 @@
 <tokens>
     <token>
-        <type></type>
-        <life></life>
-        <priority></priority>
-        <additional_action></additional_action>
-        <movable></movable>
+        <type>creature</type>
+        <life>2</life>
+        <priority>2</priority>
+        <additional_action>0</additional_action>
+        <movable>0</movable>
         <attack>
-            <dir_id></dir_id>
-            <value></value>
+            <dir_id>1</dir_id>
+            <value>2</value>
         </attack>
         <shield>
-            <dir_id></dir_id>
-            <value></value>
+            <dir_id>1</dir_id>
+            <value>2</value>
         </shield>
+    </token>
+    <token>
+        <type>action</type>
+        <action_type>battle</action_type>
     </token>
 </tokens>

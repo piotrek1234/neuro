@@ -10,31 +10,24 @@ TokenHQ::~TokenHQ()
 
 }
 
+/*TokenPutable *TokenHQ::clone() const
+{
+    TokenPutable* token = new TokenHQ(*this);
+    return token;
+}*/
+
 void TokenHQ::accept(Visitor &v)
 {
-    //TODO: rozwiązać to inaczej
-    //v.visit(dynamic_cast<TokenCreature*>(this));
-   // v.visit(dynamic_cast<TokenModule*>(this));
     v.visit(this);
 }
-int TokenHQ::getPriority() const
-{
-    return priority_;
-}
 
-void TokenHQ::setPriority(int priority)
+/*TokenHQ::TokenHQ(const TokenHQ &old)
 {
-    priority_ = priority;
-}
-int TokenHQ::getAdditionalAction() const
-{
-    return additionalAction_;
-}
-
-void TokenHQ::setAdditionalAction(int additionalAction)
-{
-    additionalAction_ = additionalAction;
-}
+    TokenHQ token;
+    Mod* mod = old.getMod()->clone();
+    token.setMod(mod);
+    return token;
+}*/
 
 
 
