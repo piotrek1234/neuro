@@ -223,3 +223,5 @@ pip-log.txt
 ###########
 build_web/
 /.sconsign.dblite
+/client/unit_test_out.html
+/client/index.html
