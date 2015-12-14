@@ -1,5 +1,6 @@
 #include "hex.h"
 #include <cmath>
+#include <ostream>
 
 const std::vector<Hex> Hex::hexDirections_ = {Hex(1, 0), Hex(1, -1), Hex(0, -1), Hex(-1, 0), Hex(-1, 1), Hex(0, 1)};
 
@@ -41,6 +42,16 @@ bool Hex::operator<(const Hex &val) const
     if(r_ < val.getR())
         return true;
     return false;
+}
+
+Hex Hex::direction(int dir_id)
+{
+    while(dir_id < 0)
+        dir_id += 6;
+
+    if(dir_id>5) dir_id %= 6;
+
+    return hexDirections_[dir_id];
 }
 
 bool Hex::isValid() const
