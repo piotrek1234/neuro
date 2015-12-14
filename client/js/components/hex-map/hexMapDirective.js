@@ -26,6 +26,23 @@ angular.module('hexMapDirective', [])
 			 	});
 			 	
 			 	$scope.cornersSet = cornersSet;
+			},
+			link: function (scope, element, attr) {
+				element.on('mouseover', function (event) {
+					var srcElement = d3.select(event.srcElement);
+					
+					if (!srcElement.classed("hex")) {
+						return;
+					}
+
+					event.preventDefault();
+
+					d3.select(".hex-active")
+						.classed("hex-active", false);
+
+					srcElement
+						.classed("hex-active", true);			
+				});
 			}
 		};
 	});
