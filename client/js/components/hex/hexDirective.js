@@ -3,7 +3,7 @@ angular.module('hexDirective', [])
 		return {
 			restrict: 'E',
 			scope: {
-				corners: "="
+				corners: '='
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex/hex.html',

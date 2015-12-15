@@ -3,7 +3,7 @@
     @brief the AngularJS partial 'about'
 -->
 
-<div class="popup" ng-controller="welcomePopup">
+<!-- <div class="popup" ng-controller="welcomePopup">
   <div><h1>Witamy!</h1></div>
   <div><label>Podaj imie</label></div>
   <div><input type=text id="playerName"></div>
@@ -23,8 +23,14 @@
   <div><label>Wygrał</label></div>
   <div><label id="winner"></label></div>
   <div><input type=submit value="Zagraj ponownie" onclick="newGame();"></div>
-</div>
+</div> -->
+
+<!-- <div class="middle" ng-controller="hexagonController">
+    <hex-map class="hex-map" hex-count="mapSize" class="middle" width="700" height="700" size="80"></hex-map>
+</div> -->
 
 <div class="middle" ng-controller="hexagonController">
-    <hex-map hex-count="mapSize" class="middle" width="700" height="700" size="80"></hex-map>
+  <svg width="500" height="500" class="hex-map" style="background-color: #2F3233; opacity: 0.6;">
+    <hex-token cx="70" cy="70"><hex-token>
+  </svg>
 </div>
