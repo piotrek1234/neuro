@@ -29,7 +29,7 @@ if(platform.system() == "Linux"):
 
    env.Append( LIBS = [ 'boost_python', 'boost_thread',  'boost_chrono',  'boost_system' ] )
 elif(platform.system() == "Windows"):
-   env.Append( CPPPATH = [ Dir('C:/Boost/include/boost-1_57'), #path to boost include
+   env.Append( CPPPATH = [ Dir('C:/Boost/include/boost-1_59'), #path to boost include
                            Dir('C:/Python27/include'), #path to python include
                            Dir('C:/usr/local/include') ] ) #path to mt4cpp include
    env.Append( LIBPATH = [ Dir('C:/Boost/lib'), #path to boost libs
