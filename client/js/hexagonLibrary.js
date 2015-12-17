@@ -1,4 +1,8 @@
 function hexLibraryConstructor () {
+    this.getHexSize = function () {
+        return this.flat.size;
+    };
+
     this.setLayoutSize = function (size) {
         var origin = Point(size.x * 4, size.y * 4 + 20);
         
@@ -99,4 +103,23 @@ function getHexMapHeight () {
     var heightString = d3.select($hexMap).attr("height");
 
     return parseInt(heightString);
+};
+
+function convertPointsStringToArray (pointsString) {
+    var result = [];
+
+    pointsString = pointsString.replace(/,/g, '');
+    var pointsArray = pointsString.split(' ');
+    
+    //TODO dorobic funkcje która przyporządkowuje koordynaty x i y
+
+    pointsArray.forEach(function (element, index) {
+        if (index%2) {
+
+        } else {
+
+        }
+    });
+
+    return result;
 };

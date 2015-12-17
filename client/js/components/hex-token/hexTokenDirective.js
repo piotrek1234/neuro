@@ -14,9 +14,11 @@ angular.module('hexTokenDirective', [])
 					x: $scope.centerX,
 					y: $scope.centerY
 				});
+
+				$scope.hexSize = hexLibrary.getHexSize();
 			},
-			link: function (scope, element, attr) {
-				element.on('click', dispathClickHandler);
+			link: function ($scope, $element, attr) {
+				$element.on('click', dispathClickHandler);
 
 				function dispathClickHandler (event) {
 					event.preventDefault();
@@ -28,10 +30,10 @@ angular.module('hexTokenDirective', [])
 							tokenActivation($token);
 							break;
 					}
-
 				};
 
 				function tokenActivation ($token) {
+					setTokenRotateArrows($token);
 					setTokenActiveClass($token);
 					moveTokenToMapCenter($token);
 				};
@@ -51,6 +53,35 @@ angular.module('hexTokenDirective', [])
 					$token.transition()
 						.duration(1500)
 						.attr("points", getCornersString(hexCorners));
+				};
+
+				function setTokenRotateArrows ($token) {
+					var corners = convertPointsStringToArray($token.attr("points"));
+					debugger;
+				};
+
+				function getMinYCoordinate (corners) {
+					var minXCoordinate = Infinity;
+
+					corners.forEach(function (singleCorner) {
+						if (singleCorner.x < minXCoordinate) {
+							minXCoordinate = singleCorner.x;
+						}
+					});
+
+					return minXCoordinate;
+				};
+
+				function getMaxYCoordinate (corners) {
+					var maxXCoordinate = -Infinity;
+
+					corners.hexCorners.forEach(function (singleCorner) {
+						if (singleCorner.x > maxXCoordinate) {
+							maxXCoordinate = singleCorner.x;
+						}
+					});
+
+					return maxXCoordinate;
 				};
 			}
 		};
