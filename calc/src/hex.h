@@ -29,6 +29,7 @@ public:
     bool operator<(const Hex& val) const;   //konieczne dla std::map
 
     static Hex direction(int dir_id);
+    static int revDirection(const Hex& dir_hex);
     Hex getNeighbor(int dir_id) const { return *this + direction(dir_id); }
     Hex getNeighbor(const Hex& dir) const { return *this + dir; }
     bool isValid() const;

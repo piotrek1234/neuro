@@ -6,11 +6,9 @@
 class ModLife : public Mod
 {
 public:
-    ModLife(std::vector<int> directions, int life) : Mod(directions), life_(life) {}
+    ModLife(std::vector<int> directions) : Mod(directions) {}
     virtual ~ModLife();
     virtual void modify(TokenCreature *tc);
-private:
-    int life_;
 };
 
 #endif // MODLIFE_H

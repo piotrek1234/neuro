@@ -1,6 +1,6 @@
-#include "modulefinder.h"
+#include "moduleapplier.h"
 
-void ModuleFinder::visit(TokenHQ *th)
+void ModuleApplier::visit(TokenHQ *th)
 {
     if(th->getColor() == tc_->getColor())
     {
@@ -13,7 +13,7 @@ void ModuleFinder::visit(TokenHQ *th)
     }
 }
 
-void ModuleFinder::visit(TokenModule *tm)
+void ModuleApplier::visit(TokenModule *tm)
 {
     if(tm->getColor() == tc_->getColor())
     {

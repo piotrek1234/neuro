@@ -12,8 +12,8 @@ public:
     virtual void accept(Visitor& v);
     //virtual TokenPutable* clone() const;
 
-    int getAdditionalAction() const;
-    void setAdditionalAction(int value);
+    bool getAdditionalAction() const;
+    void setAdditionalAction(bool value);
 
     int getPriority() const;
     void setPriority(int value);
@@ -26,7 +26,7 @@ public:
     void clearAttack();
 
     void setShield(int dirId, bool value);
-    bool getShield(int dirId) const;
+    virtual bool getShield(int dirId) const;
     void clearShield();
 
 private:
@@ -34,8 +34,8 @@ private:
     int priority_;
     std::map<int, int> attack_;
     std::map<int, bool> shield_;
-    int additionalAction_;
-    int movable_;
+    bool additionalAction_;
+    bool movable_;
 };
 
 #endif // TOKENCREATURE_H

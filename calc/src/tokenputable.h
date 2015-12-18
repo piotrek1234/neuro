@@ -21,10 +21,11 @@ public:
     void setPosition(Hex pos);
     int getAngle() const;
     void setAngle(int angle);
+    virtual bool getShield(int dirId) const = 0;
 
 private:
     int life_;
-    int angle_;  //chyba int
+    int angle_;
     Hex position_;
 };
 

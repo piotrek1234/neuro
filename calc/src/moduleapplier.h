@@ -1,5 +1,5 @@
-#ifndef MODULEFINDER_H
-#define MODULEFINDER_H
+#ifndef MODULEAPPLIER_H
+#define MODULEAPPLIER_H
 
 #include <vector>
 #include "tokenmodule.h"
@@ -9,10 +9,10 @@
 
 using namespace std;
 
-class ModuleFinder : public Visitor
+class ModuleApplier : public Visitor
 {
 public:
-    ModuleFinder() {}
+    ModuleApplier() {}
     void setTarget(TokenCreature* tc) { tc_ = tc; }
     virtual void visit(TokenCreature*) {}
     virtual void visit(TokenHQ* th);
@@ -21,4 +21,4 @@ private:
     TokenCreature* tc_;
 };
 
-#endif // MODULEFINDER_H
+#endif // MODULEAPPLIER_H

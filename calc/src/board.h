@@ -18,7 +18,7 @@ public:
     bool pushToken(Hex pusher, Hex pushed);
     Hex getNeighbour(Hex hex, int direction);
     TokenPutable* getToken(Hex pos);
-    TokenPutable* getNeighbourToken(Hex hex, int dir);  //potrzebne?
+    TokenPutable* getNeighbourToken(Hex hex, int dir);
     Board* clone(); //albo zamiast tego zrobić konstruktor kopiujący
     map<Hex, TokenPutable*>::iterator getMapBegin();
     map<Hex, TokenPutable*>::iterator getMapEnd();

@@ -21,12 +21,12 @@ void TokenCreature::accept(Visitor &v)
     return token;
 }*/
 
-int TokenCreature::getAdditionalAction() const
+bool TokenCreature::getAdditionalAction() const
 {
     return additionalAction_;
 }
 
-void TokenCreature::setAdditionalAction(int value)
+void TokenCreature::setAdditionalAction(bool value)
 {
     additionalAction_ = value;
 }

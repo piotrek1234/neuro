@@ -15,6 +15,7 @@ class TokenModHq : public TokenPutable
 public:
     Mod* getMod() const { return mod_; }
     void setMod(Mod* mod) { mod_ = mod; }
+    virtual bool getShield(int) const { return false; }
 protected:
     TokenModHq();
     ~TokenModHq();

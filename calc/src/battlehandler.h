@@ -4,7 +4,7 @@
 #include "board.h"
 #include "game.h"
 #include "creaturefinder.h"
-#include "modulefinder.h"
+#include "moduleapplier.h"
 
 class BattleHandler {
 public:

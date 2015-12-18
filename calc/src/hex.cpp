@@ -61,3 +61,12 @@ bool Hex::isValid() const
             return true;
     return false;
 }
+
+
+int Hex::revDirection(const Hex& dir_hex)
+{
+    //ewentualnie rzucić wyjątek jeślidir_hex nie jest jednostkowy
+    for(int i=0; i<6; ++i)
+        if(Hex::direction(i) == dir_hex) return i;
+    return -1;
+}

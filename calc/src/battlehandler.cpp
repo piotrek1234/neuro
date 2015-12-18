@@ -16,16 +16,16 @@ void BattleHandler::handleBattle()
             it->second->accept(creatureFinder);
         }
 
-        ModuleFinder moduleFinder;
+        ModuleApplier moduleApplier;
         //dla każdego TokenCreature trzeba znaleźć działające na niego TokenModule
         for(auto it = creatureFinder.getBegin(); it != creatureFinder.getEnd(); ++it)
         {
-            moduleFinder.setTarget(*it);
+            moduleApplier.setTarget(*it);
             //znajdź którzy z sąsiadów są modułami i wskazują na token
             for(int i=0; i<6; ++i)
             {
                 //jeśli sąsiedni TokenModule lub TokenHQ wskazują na token, to zastosuj mod
-                Game::getInstance().getBoard()->getNeighbourToken((*it)->getPosition(), i)->accept(moduleFinder);
+                Game::getInstance().getBoard()->getNeighbourToken((*it)->getPosition(), i)->accept(moduleApplier);
             }
         }
 
@@ -64,9 +64,10 @@ void BattleHandler::handleBattle()
                 TokenPutable* neighbor = Game::getInstance().getBoard()->\
                         getNeighbourToken(((TokenPutable*)(*it))->getPosition(),\
                                           dir+(*it)->getAngle());  //sąsiad
-                //jeśli sąsiad jest wrogiem to go zaatakuj
+                //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
                 if((*it)->getColor() != neighbor->getColor())
-                    neighbor->setLife(neighbor->getLife()-(*it)->getAttack(dir));
+                    if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
+                        neighbor->setLife(neighbor->getLife()-(*it)->getAttack(dir));
             }
         }
 
@@ -79,9 +80,10 @@ void BattleHandler::handleBattle()
                 {
                     TokenPutable* neighbor = Game::getInstance().getBoard()->\
                             getNeighbourToken(((TokenPutable*)(*it))->getPosition(), dir);  //sąsiad
-                    //jeśli sąsiad jest wrogiem to go zaatakuj
+                    //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
                     if((*it)->getColor() != neighbor->getColor())
-                        neighbor->setLife(neighbor->getLife()-1);
+                        if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
+                            neighbor->setLife(neighbor->getLife()-1);
                 }
             }
 
