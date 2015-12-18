@@ -34,11 +34,23 @@ void BattleHandler::handleBattle()
         // (żetony na planszy nie zmieniły położenia) i wyłowienie tych TokenCreature
         for(auto it = creatureFinder.getBegin(); it != creatureFinder.getEnd(); ++it)
         {
-            if(((*it)->getPriority() > maxPriority)&&((*it)->getPriority()<lastPriority))
+            int tokenPriority = (*it)->getPriority();
+
+            //jeśli token jeszcze nie brał udziału w bitwie
+            if(tokenPriority<lastPriority)
             {
-                currentCreatures.clear();
+                if(tokenPriority > maxPriority)
+                {
+                    currentCreatures.clear();
+                    maxPriority = tokenPriority;
+                }
+                if(tokenPriority == maxPriority)
+                    currentCreatures.push_back(*it);
+            }
+            else if((tokenPriority == lastPriority)&&((*it)->getAdditionalAction()))
+            {
+                //brał udział w poprzedniej inicjatywie, ale ma dodatkową akcję
                 currentCreatures.push_back(*it);
-                maxPriority = (*it)->getPriority();
             }
         }
 
@@ -46,25 +58,48 @@ void BattleHandler::handleBattle()
         //żetony z currentCreatures atakują wrogich sąsiadów
         for(auto it = currentCreatures.begin(); it!=currentCreatures.end(); ++it)
         {
-            //zaatakuj w każdym kierunku z odpowiednią siła (0..n)
+            //zaatakuj w każdym kierunku z odpowiednią siłą (0..n)
             for(int dir=0; dir<6; ++dir)
             {
                 TokenPutable* neighbor = Game::getInstance().getBoard()->\
-                        getNeighbourToken(((TokenPutable*)(*it))->getPosition(), dir);  //sąsiad
+                        getNeighbourToken(((TokenPutable*)(*it))->getPosition(),\
+                                          dir+(*it)->getAngle());  //sąsiad
                 //jeśli sąsiad jest wrogiem to go zaatakuj
                 if((*it)->getColor() != neighbor->getColor())
                     neighbor->setLife(neighbor->getLife()-(*it)->getAttack(dir));
             }
         }
 
+        //jeśli trwa inicjatywa 0, to TokenHQ też atakują
+        if(maxPriority < 1)
+            for(auto it = creatureFinder.getHqBegin(); it != creatureFinder.getHqEnd(); ++it)
+            {
+                //zaatakuj w każdym kierunku z siłą 1
+                for(int dir=0; dir<6; ++dir)
+                {
+                    TokenPutable* neighbor = Game::getInstance().getBoard()->\
+                            getNeighbourToken(((TokenPutable*)(*it))->getPosition(), dir);  //sąsiad
+                    //jeśli sąsiad jest wrogiem to go zaatakuj
+                    if((*it)->getColor() != neighbor->getColor())
+                        neighbor->setLife(neighbor->getLife()-1);
+                }
+            }
+
         //obecna inicjatywa zakończyła się, sprawdzić czy któreś HQ nie zmarło
         for(auto it=creatureFinder.getHqBegin(); it!=creatureFinder.getHqEnd(); ++it)
         {
             if((*it)->getLife() < 1)
             {
-                /// powiadomić o porażce gracza
+                ///+ powiadomić o porażce gracza
                 //usunąć wszystkie żetony tego gracza
-
+                //rozwiązane przez ustawienie życia żetonów na 0 (usuwanie jest zrobione dalej)
+                for(auto i = Game::getInstance().getBoard()->getMapBegin(); \
+                    i!= Game::getInstance().getBoard()->getMapEnd(); ++i)
+                {
+                    TokenPutable* token = i->second;
+                    if((*it)->getColor() == token->getColor())
+                        token->setLife(0);
+                }
             }
         }
 
@@ -78,5 +113,8 @@ void BattleHandler::handleBattle()
         //jeśli skończyła się inicjatywa nr 0 to bitwa kończy się
         lastPriority = maxPriority;
     }
-    //tu można sprawdzić czy został tylko 1 żywy gracz
+    //bitwa zakończona
+    //po bitwie warto sprwadzić czy został tylko 1 gracz, wtedy jest koniec gry
+    //jeśli to była bitwa uruchomiona przez wyczerpanie stosu któregoś gracza,
+    //to również następuje koniec gry, a wygrywa ten, czyjego HQ ma najwięcej życia
 }

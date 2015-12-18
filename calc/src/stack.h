@@ -18,7 +18,7 @@ public:
     std::vector<int> getCurrentTokensIds();
     std::vector<int> getNextTokensIds(int num);
     Color getColor() const { return color_; }
-    Token* getToken(int id);
+    TokenPtr getToken(int id);
     void readTokens(Color color, std::string tokensConfigPath);
     
 private:
