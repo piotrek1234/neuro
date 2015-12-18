@@ -4,9 +4,15 @@
 #ifndef HEX_H
 #define HEX_H
 
+#ifdef CALC_EXPORTS
+#define CALC_DLL(X) __declspec(dllexport)X
+#else
+#define CALC_DLL(X) X
+#endif
+
 #include <vector>
 
-class Hex
+class CALC_DLL(Hex)
 {
 public:
     Hex(int q, int r) : q_(q), r_(r), s_(-q_-r_){}
