@@ -9,7 +9,7 @@
 
 #include "mod.h"
 
-class ModAdditionalAction : public Mod
+class CALC_DLL()ModAdditionalAction : public Mod
 {
 public:
     ModAdditionalAction(std::vector<int> &directions) : Mod(directions) {}

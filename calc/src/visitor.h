@@ -1,9 +1,16 @@
 #ifndef VISITOR_H
 #define VISITOR_H
-/*
-#include "tokencreature.h"
+
+/*#include "tokencreature.h"
 #include "tokenmodule.h"
-*/
+#include "tokenhq.h"*/
+
+#ifdef CALC_EXPORTS
+#define CALC_DLL(X) __declspec(dllexport)X
+#else
+#define CALC_DLL(X) X
+#endif
+
 class TokenCreature;
 class TokenModule;
 class TokenHQ;

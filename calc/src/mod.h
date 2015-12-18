@@ -7,10 +7,15 @@
 #define CALC_DLL(X) X
 #endif
 
+#include "visitor.h"
 #include "tokencreature.h"
+
+class TokenCreature;
+class TokenModule;
+
 #include <vector>
 
-class Mod : public Visitor
+class CALC_DLL()Mod
 {
 public:
     Mod(std::vector<int> &directions) : directions_(directions) {}

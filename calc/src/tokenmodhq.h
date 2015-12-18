@@ -10,6 +10,8 @@
 #include "tokenputable.h"
 #include "mod.h"
 
+//class Mod;
+
 class TokenModHq : public TokenPutable
 {
 public:
@@ -18,7 +20,7 @@ public:
     virtual bool getShield(int) const { return false; }
 protected:
     TokenModHq();
-    ~TokenModHq();
+    virtual ~TokenModHq();
     Mod* mod_;
 };
 

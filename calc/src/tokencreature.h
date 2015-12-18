@@ -4,7 +4,13 @@
 #include "tokenputable.h"
 #include <map>
 
-class TokenCreature : public TokenPutable
+#ifdef CALC_EXPORTS
+#define CALC_DLL(X) __declspec(dllexport)X
+#else
+#define CALC_DLL(X) X
+#endif
+
+class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
     TokenCreature();

@@ -49,7 +49,7 @@ elif(platform.system() == "Windows"):
    env_dll.Append( CPPFLAGS = ' /D "CALC_EXPORTS" ')
 
 #build C++ library
-cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp', '../calc/src/tokenfactory.cpp', '../calc/src/hex.cpp', '../calc/src/tokenmodule.cpp', '../calc/src/tokencreature.cpp', '../calc/src/tokenhq.cpp', '../calc/src/stack.cpp', '../calc/src/tokenputable.cpp', '../calc/src/token.cpp', '../calc/src/board.cpp', '../calc/src/tokenmodhq.cpp', '../calc/src/tokenaction.cpp'])
+cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp', '../calc/src/tokenfactory.cpp', '../calc/src/hex.cpp', '../calc/src/tokenmodule.cpp', '../calc/src/tokencreature.cpp', '../calc/src/tokenhq.cpp', '../calc/src/stack.cpp', '../calc/src/tokenputable.cpp', '../calc/src/token.cpp', '../calc/src/board.cpp', '../calc/src/tokenmodhq.cpp', '../calc/src/tokenaction.cpp', '../calc/src/mod.cpp', '../calc/src/modadditionalaction.cpp', '../calc/src/visitor.cpp'])
 if(platform.system() == "Linux"):
    target = '../build_web/calcpy/calc.so'
 elif(platform.system() == "Windows"):

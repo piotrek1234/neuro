@@ -11,8 +11,10 @@
 #endif
 
 #include <vector>
+#include <cmath>
+#include <ostream>
 
-class CALC_DLL(Hex)
+class CALC_DLL()Hex
 {
 public:
     Hex(int q, int r) : q_(q), r_(r), s_(-q_-r_){}

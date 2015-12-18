@@ -1,9 +1,10 @@
 #ifndef TOKENMODULE_H
 #define TOKENMODULE_H
 
+#include <vector>
 #include "tokenmodhq.h"
 #include "hex.h"
-#include <vector>
+//#include "mod.h"
 
 class Mod;
 class TokenModule : public TokenModHq
