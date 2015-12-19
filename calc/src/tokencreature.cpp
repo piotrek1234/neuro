@@ -1,10 +1,5 @@
 #include "tokencreature.h"
 
-TokenCreature::TokenCreature()
-{
-
-}
-
 TokenCreature::~TokenCreature()
 {
 

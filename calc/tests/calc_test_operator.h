@@ -8,31 +8,36 @@
 #include <ostream>
 #include <sstream>
 #include "../src/hex.h"
-/*#include "../src/modadditionalaction.h"
+#include "../src/tokencreature.h"
+#include "../src/modadditionalaction.h"
 #include "../src/modpriority.h"
 #include "../src/modlife.h"
-#include "../src/modattack.h"*/
+#include "../src/modattack.h"
 
 //Hex
 namespace std{
-std::ostream& operator<<(std::ostream& s, const Hex& h) {
-  s << "Hex(" << h.getQ() << ',' << h.getR() << ')';
-  return s;
-}}
-/*namespace std{
-std::ostream& operator<<(std::ostream& s, const ModAdditionalAction& m) {
-  std::stringstream kierunki;
-  for(auto i=m.getDirectionBegin(); i!=m.getDirectionEnd(); ++i)
-    kierunki << *i;
-  s << "ModAddAct(" << kierunki.str() << ')';
-  return s;
-}}*/
-/*namespace boost { namespace test_tools {
-template<>
-struct print_log_value<Hex> {
-void operator()( std::ostream& os, Hex const& ts)
-{ ::operator<<(os,ts); }};}}*/
-//
+    std::ostream& operator<<(std::ostream& s, const Hex& h) {
+      s << "Hex(" << h.getQ() << ',' << h.getR() << ')';
+      return s;
+    }
 
+    std::ostream& operator<<(std::ostream& s, Mod& m) {
+      std::stringstream kierunki;
+      for(auto i=m.getDirectionBegin(); i!=m.getDirectionEnd(); ++i)
+        kierunki << *i;
+      s << "Mod(" << kierunki.str() << ')';
+      return s;
+    }
+
+    std::ostream& operator<<(std::ostream& s, TokenCreature&) {
+      s << "TokenCreature(..)";
+      return s;
+    }
+
+    std::ostream& operator<<(std::ostream& s, const Color& c) {
+      s << "Color(" << (int)c << ")";
+      return s;
+    }
+}
 
 #endif // CALC_TEST_OPERATOR_H

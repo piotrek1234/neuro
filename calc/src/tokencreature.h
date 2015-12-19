@@ -13,7 +13,7 @@
 class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
-    TokenCreature();
+    TokenCreature() : priority_(0), additionalAction_(false), movable_(false) {}
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
     //virtual TokenPutable* clone() const;

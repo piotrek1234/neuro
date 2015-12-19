@@ -102,4 +102,106 @@ BOOST_AUTO_TEST_CASE( ModTest )
     delete maa;
 }
 
+BOOST_AUTO_TEST_CASE( TokenCreatureTest )
+{
+    TokenCreature* tc = new TokenCreature;
+
+    //common (Token)
+    //set/get color
+    BOOST_CHECK_EQUAL(tc->getColor(), Color::NONE);
+    tc->setColor(Color::RED);
+    BOOST_CHECK_EQUAL(tc->getColor(), Color::RED);
+
+    //isPutable
+    BOOST_CHECK_EQUAL(tc->isPutable(), true);
+
+    //common (TokenPutable)
+    //set/get life
+    BOOST_CHECK_EQUAL(tc->getLife(), 1);
+    tc->setLife(3);
+    BOOST_CHECK_EQUAL(tc->getLife(), 3);
+
+    //set/get position
+    BOOST_CHECK_EQUAL(tc->getPosition(), Hex(5,5));
+    tc->setPosition(Hex(0,1));
+    BOOST_CHECK_EQUAL(tc->getPosition(), Hex(0,1));
+
+    //set/get angle
+    BOOST_CHECK_EQUAL(tc->getAngle(), 0);
+    tc->setAngle(3);
+    BOOST_CHECK_EQUAL(tc->getAngle(), 3);
+
+    //TokenCreature
+    //set/get movable
+    BOOST_CHECK_EQUAL(tc->getMovable(), false);
+    tc->setMovable(true);
+    BOOST_CHECK_EQUAL(tc->getMovable(), true);
+
+    //set/get AdditionalAction
+    BOOST_CHECK_EQUAL(tc->getAdditionalAction(), false);
+    tc->setAdditionalAction(true);
+    BOOST_CHECK_EQUAL(tc->getAdditionalAction(), true);
+
+    //set/get priority
+    BOOST_CHECK_EQUAL(tc->getPriority(), 0);
+    tc->setPriority(3);
+    BOOST_CHECK_EQUAL(tc->getPriority(), 3);
+
+    //shield: set, get, clear
+    stringstream ss;
+    for(int i=0; i<6; ++i)
+        ss << tc->getShield(i);
+    BOOST_CHECK_EQUAL(ss.str(), "000000");
+    ss.str("");
+
+    for(int i=0; i<6; ++i)
+        tc->setShield(i, i%2);
+    for(int i=0; i<6; ++i)
+        ss << tc->getShield(i);
+    BOOST_CHECK_EQUAL(ss.str(), "010101");
+    ss.str("");
+
+    for(int i=0; i<6; ++i)
+        tc->setShield(i, i%3);
+    for(int i=0; i<6; ++i)
+        ss << tc->getShield(i);
+    BOOST_CHECK_EQUAL(ss.str(), "011011");
+    ss.str("");
+
+    tc->clearShield();
+    for(int i=0; i<6; ++i)
+        ss << tc->getShield(i);
+    BOOST_CHECK_EQUAL(ss.str(), "000000");
+    ss.str("");
+
+    //attack: add, get, clear
+    for(int i=0; i<6; ++i)
+        ss << tc->getAttack(i);
+    BOOST_CHECK_EQUAL(ss.str(), "000000");
+    ss.str("");
+
+    for(int i=0; i<6; ++i)
+        tc->addAttack(i, i);
+    for(int i=0; i<6; ++i)
+        ss << tc->getAttack(i);
+    BOOST_CHECK_EQUAL(ss.str(), "012345");
+    ss.str("");
+
+    for(int i=0; i<6; ++i)
+        tc->addAttack(i, 2);
+    for(int i=0; i<6; ++i)
+        ss << tc->getAttack(i);
+    BOOST_CHECK_EQUAL(ss.str(), "234567");
+    ss.str("");
+
+    tc->clearAttack();
+    for(int i=0; i<6; ++i)
+        ss << tc->getAttack(i);
+    BOOST_CHECK_EQUAL(ss.str(), "000000");
+    ss.str("");
+
+    //clone
+    ///todo
+}
+
 BOOST_AUTO_TEST_SUITE_END()
