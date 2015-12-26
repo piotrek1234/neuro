@@ -41,8 +41,9 @@ class TokenFactory
         
     private:
         std::map<std::string,TokenCreateFun> creators;
-        TokenFactory(){}
+        TokenFactory();
         TokenFactory(const TokenFactory&);
+        std::map<std::string, ActionType> actions;
 };
 
 #endif // TOKENFACTORY_H

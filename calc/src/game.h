@@ -18,7 +18,6 @@ public:
     void removeAllPlayers(std::string name);
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
-    ActionType getAction(std::string type);
     //TODO Magda
     //getPlayers
     //getGameState
@@ -36,7 +35,6 @@ private:
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;
     std::map<Color, std::string> tokensFiles;
-    std::map<std::string, ActionType> actions;
 
 };
 

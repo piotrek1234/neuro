@@ -6,6 +6,13 @@ TokenFactory& TokenFactory::getInstance()
     return instance;
 }
 
+TokenFactory::TokenFactory()
+{
+    actions["battle"] = ActionType::BATTLE;
+    actions["move"] = ActionType::MOVE;
+    actions["push"] = ActionType::PUSH;
+}
+
 void TokenFactory::registerFun(std::string type, TokenCreateFun fun)
 {
     creators.insert(std::pair<std::string, TokenCreateFun>(type, fun));
@@ -87,7 +94,7 @@ TokenPtr createTokenCreature(ptree const& xmlnode, Color color)
 TokenPtr createTokenAction(ptree const& xmlnode, Color color)
 {
     std::string type = xmlnode.get<std::string>("action_type");
-    ActionType action;//=Game::getInstance().getAction(type);
+    ActionType action=actions[type];
     TokenPtr token(new TokenAction(action));
     token->setColor(color);
     return token;
