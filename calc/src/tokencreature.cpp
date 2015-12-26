@@ -1,10 +1,5 @@
 #include "tokencreature.h"
 
-TokenCreature::TokenCreature()
-{
-
-}
-
 TokenCreature::~TokenCreature()
 {
 
@@ -14,12 +9,19 @@ void TokenCreature::accept(Visitor &v)
 {
     v.visit(this);
 }
-int TokenCreature::getAdditionalAction() const
+
+TokenPutable *TokenCreature::clone() const
+{
+    TokenPutable* token = new TokenCreature(*this);
+    return token;
+}
+
+bool TokenCreature::getAdditionalAction() const
 {
     return additionalAction_;
 }
 
-void TokenCreature::setAdditionalAction(int value)
+void TokenCreature::setAdditionalAction(bool value)
 {
     additionalAction_ = value;
 }
@@ -31,6 +33,16 @@ int TokenCreature::getPriority() const
 void TokenCreature::setPriority(int value)
 {
     priority_ = value;
+}
+
+bool TokenCreature::getMovable() const
+{
+    return movable_;
+}
+
+void TokenCreature::setMovable(bool value)
+{
+    movable_ = value;
 }
 
 void TokenCreature::addAttack(int dirId, int value)
@@ -54,6 +66,11 @@ int TokenCreature::getAttack(int dirId) const
     return 0;
 }
 
+void TokenCreature::clearAttack()
+{
+    attack_.clear();
+}
+
 void TokenCreature::setShield(int dirId, bool value)
 {
         shield_[dirId] = value;
@@ -63,8 +80,54 @@ void TokenCreature::setShield(int dirId, bool value)
 
 bool TokenCreature::getShield(int dirId) const
 {
-    if(shield_.find(dirId) != shield_.end())
-        return shield_[dirId];
+    auto temp = shield_.find(dirId);
+    if(temp != shield_.end())
+        return temp->second;
     return false;
 }
 
+void TokenCreature::clearShield()
+{
+    shield_.clear();
+}
+
+TokenPtr TokenCreature::create(ptree xmlnode, Color color)
+{
+    TokenCreature* token = new TokenCreature();
+    token->setColor(color);
+    BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xmlnode.get_child("") )
+    {
+        std::string label = v.first;
+        if(label == "priority")
+        {
+            token->setPriority(xmlnode.get<unsigned int>("priority"));
+            break;
+        }
+        if(label == "additional_action")
+        {
+            token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
+            break;
+        }
+        if(label ==  "movable")
+        {
+            token->setMovable(xmlnode.get<unsigned int>("movable"));
+            break;
+        }
+        if(label == "life")
+        {
+            token->setLife(xmlnode.get<unsigned int>("life"));
+            break;
+        }
+        if(label == "attack")
+        {
+            token->addAttack(v.second.get<unsigned int>("dir_id"), v.second.get<unsigned int>("value"));
+            break;
+        }
+        if(label == "shield")
+        {
+            token->setShield(v.second.get<unsigned int>("dir_id"), v.second.get<bool>("value"));
+            break;
+        }
+    }
+    return TokenPtr(token);
+}

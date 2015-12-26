@@ -1,3 +1,8 @@
+/*
+ * creaturefinder.h
+ * Wizytator CreatureFinder odsiewa wrzucane do niego TokenPutable*. Do creatures_
+ * wrzuca TokenCreature*, do hq_ wrzuca TokenHQ*
+ */
 #ifndef CREATUREFINDER_H
 #define CREATUREFINDER_H
 

@@ -29,7 +29,7 @@ if(platform.system() == "Linux"):
 
    env.Append( LIBS = [ 'boost_python', 'boost_thread',  'boost_chrono',  'boost_system' ] )
 elif(platform.system() == "Windows"):
-   env.Append( CPPPATH = [ Dir('C:/Boost/include/boost-1_57'), #path to boost include
+   env.Append( CPPPATH = [ Dir('C:/Boost/include/boost-1_59'), #path to boost include
                            Dir('C:/Python27/include'), #path to python include
                            Dir('C:/usr/local/include') ] ) #path to mt4cpp include
    env.Append( LIBPATH = [ Dir('C:/Boost/lib'), #path to boost libs
@@ -49,7 +49,13 @@ elif(platform.system() == "Windows"):
    env_dll.Append( CPPFLAGS = ' /D "CALC_EXPORTS" ')
 
 #build C++ library
-cpplib = env_dll.SharedLibrary( target = 'calc', source = ['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp', '../calc/src/tokenfactory.cpp'])
+libs=['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp',\
+      '../calc/src/tokenfactory.cpp', '../calc/src/hex.cpp', '../calc/src/tokenmodule.cpp',\
+      '../calc/src/tokencreature.cpp', '../calc/src/tokenhq.cpp', '../calc/src/stack.cpp',\
+      '../calc/src/tokenputable.cpp', '../calc/src/token.cpp', '../calc/src/board.cpp',\
+      '../calc/src/tokenmodhq.cpp', '../calc/src/tokenaction.cpp', '../calc/src/mod.cpp',\
+      '../calc/src/modadditionalaction.cpp', '../calc/src/visitor.cpp', '../calc/src/modfactory.cpp']
+cpplib = env_dll.SharedLibrary( target = 'calc', source = libs )
 if(platform.system() == "Linux"):
    target = '../build_web/calcpy/calc.so'
 elif(platform.system() == "Windows"):

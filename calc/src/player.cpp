@@ -14,7 +14,7 @@ Color Player::getColor(){
     return this->stack.getColor();
 }
 
-void Player::getStack(Color color, std::string tokensConfigPath)
+void Player::setStack(Color color, std::string tokensConfigPath)
 {
     if(color!=Color::NONE)
     {

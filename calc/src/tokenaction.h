@@ -3,6 +3,10 @@
 
 #include "token.h"
 #include "actiontype.h"
+#include "utils.h"
+#include <string>
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 class TokenAction : public Token
 {
@@ -11,8 +15,11 @@ public:
     virtual ~TokenAction();
     virtual bool isPutable() const { return false; }
     ActionType getType() const { return actionType_; }
+    static TokenPtr create(ptree Ptree, Color color);
+    
 private:
     ActionType actionType_;
+    static ActionType getActionTypeByName(std::string name);
 };
 
 #endif // TOKENACTION_H

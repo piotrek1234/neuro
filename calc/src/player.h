@@ -18,7 +18,7 @@ class Player {
 public:
 	Player(std::string name_);
     std::string getName();
-    void getStack(Color color, std::string tokensConfigPath);
+    void setStack(Color color, std::string tokensConfigPath);
     Color getColor();
     //void putTokenOnBoard(unsigned int tokenId);
     //void throwToken(unsigned int tokenId);

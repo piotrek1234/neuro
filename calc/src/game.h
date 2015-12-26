@@ -23,9 +23,10 @@ public:
     //getGameState
     //addToken
     //throwToken
-    //getNextPlayer
+    //getNextPlayer - player + stack
     //ActionTokens
-    //set path for tokens config
+    void addTokenConfigPath(Color color, string path);
+    //killPlayer
     
 private:
     Game();
@@ -35,6 +36,8 @@ private:
     Game(const Game&) = delete;
 	Game operator=(const Game&) = delete;
     std::map<Color, std::string> tokensFiles;
+    unsigned int currentPlayerNum;
+    
 
 };
 

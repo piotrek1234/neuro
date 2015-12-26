@@ -11,21 +11,38 @@ angular.module('hexMapDirective', [])
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex-map/hexMap.html',
 			controller: function ($scope) {
-				setLayoutSize(Point($scope.size, $scope.size));
+				hexLibrary.setLayoutSize(Point($scope.size, $scope.size));
 				
-				var hexMap = generateMap($scope.hexCount);
+				var hexMap = hexLibrary.generateMap($scope.hexCount);
 
 				var coordinateMap = [];
 				hexMap.forEach(function (element) {
-					coordinateMap.push(hexToCoordinate(flat, element));
+					coordinateMap.push(hexLibrary.hexToCoordinate(hexLibrary.flat, element));
 				});
 
 			 	var cornersSet = [];
 			 	coordinateMap.forEach(function (element) {
-			 		cornersSet.push(setHexCorners(element));
+			 		cornersSet.push(hexLibrary.setHexCorners(element));
 			 	});
 			 	
 			 	$scope.cornersSet = cornersSet;
+			},
+			link: function (scope, element, attr) {
+				element.on('mouseover', function (event) {
+					var srcElement = d3.select(event.target);
+					
+					if (!srcElement.classed("hex")) {
+						return;
+					}
+
+					event.preventDefault();
+
+					d3.select(".hex-active")
+						.classed("hex-active", false);
+
+					srcElement
+						.classed("hex-active", true);			
+				});
 			}
 		};
 	});

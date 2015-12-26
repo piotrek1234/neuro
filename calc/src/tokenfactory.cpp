@@ -8,9 +8,6 @@ TokenFactory& TokenFactory::getInstance()
 
 TokenFactory::TokenFactory()
 {
-    actions["battle"] = ActionType::BATTLE;
-    actions["move"] = ActionType::MOVE;
-    actions["push"] = ActionType::PUSH;
 }
 
 void TokenFactory::registerFun(std::string type, TokenCreateFun fun)
@@ -48,89 +45,4 @@ std::vector<TokenPtr> TokenFactory::createTokensFromFile(std::string filename, C
         }
     }
     return tokens;
-}
-
-TokenPtr createTokenCreature(ptree const& xmlnode, Color color)
-{
-    boost::shared_ptr<TokenCreature> token(new TokenCreature());
-    token->setColor(color);
-    BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xmlnode.get_child("") )
-    {
-        std::string label = v.first;
-        if(label == "priority")
-        {
-            token->setPriority(xmlnode.get<unsigned int>("priority"));
-            break;
-        }
-        if(label == "additional_action")
-        {
-            token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
-            break;
-        }
-        if(label ==  "movable")
-        {
-            token->setMovable(xmlnode.get<unsigned int>("movable"));
-            break;
-        }
-        if(label == "life")
-        {
-            token->setLife(xmlnode.get<unsigned int>("life"));
-            break;
-        }
-        if(label == "attack")
-        {
-            token->addAttack(v.second.get<unsigned int>("dir_id"), v.second.get<unsigned int>("value"));
-            break;
-        }
-        if(label == "shield")
-        {
-            token->setShield(v.second.get<unsigned int>("dir_id"), v.second.get<bool>("value"));
-            break;
-        }
-    }
-    return token;
-}
-
-TokenPtr createTokenAction(ptree const& xmlnode, Color color)
-{
-    std::string type = xmlnode.get<std::string>("action_type");
-    ActionType action=actions[type];
-    TokenPtr token(new TokenAction(action));
-    token->setColor(color);
-    return token;
-}
-
-TokenPtr createTokenHQ(ptree const& xmlnode, Color color)
-{
-    TokenPtr token(new TokenHQ());
-    token->setColor(color);
-    return token;
-}
-
-TokenPtr createTokenModuleLife(ptree const& xmlnode, Color color)
-{
-    TokenPtr token(new TokenModule());
-    token->setColor(color);
-    return token;
-}
-
-TokenPtr createTokenModuleAttack(ptree const& xmlnode, Color color)
-{
-    TokenPtr token(new TokenModule());
-    token->setColor(color);
-    return token;
-}
-
-TokenPtr createTokenModulePrioryty(ptree const& xmlnode, Color color)
-{
-    TokenPtr token(new TokenModule());
-    token->setColor(color);
-    return token;
-}
-
-TokenPtr createTokenModuleAddAction(ptree const& xmlnode, Color color)
-{
-    TokenPtr token(new TokenModule());
-    token->setColor(color);
-    return token;
 }

@@ -25,9 +25,13 @@ bool Game::addPlayer(std::string name)
     if (players.size()<=4)
     {
 		Player player(name);
-        player.getStack(getNextColor(), tokensFiles[getNextColor()]);
-        players.push_back(player);
-        return true;
+        Color nextColor = getNextColor();
+        if(tokensFiles.find(nextColor)!=tokensFiles.end())
+        {
+            player.setStack(nextColor, tokensFiles[nextColor]);
+            players.push_back(player);
+            return true;
+        }
     }
     return false;
 }
@@ -65,11 +69,17 @@ void Game::removeAllPlayers(std::string name)
     players.clear();
 }
 
-std::vector<std::string> Game::getPlayersNames(){
+std::vector<std::string> Game::getPlayersNames()
+{
     std::vector<std::string> names;
     for(auto i=players.begin(); i<players.end(); ++i)
     {
         names.push_back(i->getName());
     }
     return names;
+}
+
+void Game::addTokenConfigPath(Color color, string path)
+{
+    tokensFiles[color] = path;
 }

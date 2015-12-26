@@ -13,15 +13,7 @@
 #include <fstream> 
 #include "utils.h"
 #include "color.h"
-#include "tokenaction.h"
-#include "tokencreature.h"
-#include "tokenhq.h"
-#include "tokenmodule.h"
-#include "modadditionalaction.h"
-#include "modattack.h"
-#include "modlife.h"
 #include <boost/foreach.hpp>
-#include "modpriority.h"
 
 class TokenFactory
 {
@@ -31,19 +23,11 @@ class TokenFactory
         void registerFun(std::string type, TokenCreateFun fun); //było register() i błąd że to słowo kluczowe
         TokenPtr create(boost::property_tree::ptree::value_type const& xmlnode, Color color);
         std::vector<TokenPtr> createTokensFromFile(std::string filename, Color color);
-        TokenPtr createTokenCreature(ptree const&, Color);
-        TokenPtr createTokenAction(ptree const&, Color);
-        TokenPtr createTokenHQ(ptree const&, Color);
-        TokenPtr createTokenModuleLife(ptree const&, Color);
-        TokenPtr createTokenModuleAttack(ptree const&, Color);
-        TokenPtr createTokenModulePrioryty(ptree const&, Color);
-        TokenPtr createTokenModuleAddAction(ptree const&, Color);
         
     private:
         std::map<std::string,TokenCreateFun> creators;
         TokenFactory();
         TokenFactory(const TokenFactory&);
-        std::map<std::string, ActionType> actions;
 };
 
 #endif // TOKENFACTORY_H

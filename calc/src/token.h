@@ -6,7 +6,7 @@
 class Token
 {
 public:
-    Token();
+    Token() : color_(Color::NONE) {}
     virtual ~Token();
     virtual bool isPutable() const = 0;
     Color getColor() const;

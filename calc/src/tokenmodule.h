@@ -1,9 +1,13 @@
 #ifndef TOKENMODULE_H
 #define TOKENMODULE_H
 
+#include <vector>
 #include "tokenmodhq.h"
 #include "hex.h"
-#include <vector>
+#include "utils.h"
+//#include "mod.h"
+#include <string>
+#include "modfactory.h"
 
 class Mod;
 class TokenModule : public TokenModHq
@@ -11,13 +15,11 @@ class TokenModule : public TokenModHq
 public:
     TokenModule();
     virtual ~TokenModule();
-    //virtual TokenModule* clone() const { return new TokenModule(*this); }
+    virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
-    virtual Mod* getMod() const { return mod_; }
+    static TokenPtr create(ptree Ptree, Color color);
 private:
-    TokenModule(const TokenModule& tm);
-    Mod* mod_;
-    //std::vector<Hex> directions_; //tutaj albo w Mod
+    TokenModule(const TokenModule& old);
 };
 
 #endif // TOKENMODULE_H

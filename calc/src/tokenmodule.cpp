@@ -10,16 +10,26 @@ TokenModule::~TokenModule()
     //delete mod; //sypie warningiem
 }
 
+TokenPutable *TokenModule::clone() const
+{
+    TokenPutable* token = new TokenModule(*this);
+    return token;
+}
+
 void TokenModule::accept(Visitor &v)
 {
     v.visit(this);
 }
 
-TokenModule::TokenModule(const TokenModule &tm)
+TokenModule::TokenModule(const TokenModule &old)
 {
-    //głeboka kopia ze względu na mod_
-    ///sprawdzić czy to ma sens
-    Mod* copy = new Mod(*mod_);
-    return copy;
+    setMod(old.getMod()->clone());
 }
 
+TokenPtr TokenModule::create(ptree Ptree, Color color)
+{
+    TokenModule* token=new TokenModule();
+    token->setColor(color);
+    token->setMod(ModFactory::getInstance().create(Ptree));
+    return TokenPtr(token);
+}

@@ -2,38 +2,52 @@
 #define TOKENCREATURE_H
 
 #include "tokenputable.h"
+#include "utils.h"
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/foreach.hpp>
 #include <map>
 
-class TokenCreature : public TokenPutable
+#ifdef CALC_EXPORTS
+#define CALC_DLL(X) __declspec(dllexport)X
+#else
+#define CALC_DLL(X) X
+#endif
+
+class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
-    TokenCreature();
+    TokenCreature() : priority_(0), additionalAction_(false), movable_(false) {}
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
-    //virtual TokenCreature* clone() const { return new TokenCreature(*this); }
+    virtual TokenPutable* clone() const;
 
-    int getAdditionalAction() const;
-    void setAdditionalAction(int value);
+    bool getAdditionalAction() const;
+    void setAdditionalAction(bool value);
 
     int getPriority() const;
     void setPriority(int value);
 
-    int getMovable() const;
-    void setMovable(int value);
+    bool getMovable() const;
+    void setMovable(bool value);
 
     void addAttack(int dirId, int value);
     int getAttack(int dirId) const;
+    void clearAttack();
 
     void setShield(int dirId, bool value);
-    bool getShield(int dirId) const;
+    virtual bool getShield(int dirId) const;
+    void clearShield();
+    
+    static TokenPtr create(ptree Ptree, Color color);
 
 private:
     TokenCreature(const TokenCreature&) = default;
-    int priority_;
-    std::map<int, int> attack_; //TODO wartość ataku w każdym kierunku
+    std::map<int, int> attack_;
     std::map<int, bool> shield_;
-    int additionalAction_;  //zieloni mają sztab dający możliwość udziału w dwóch inicjatywach
-    int movable_;
+    int priority_;
+    bool additionalAction_;
+    bool movable_;
 };
 
 #endif // TOKENCREATURE_H
