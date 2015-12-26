@@ -18,4 +18,19 @@
         <type>action</type>
         <action_type>battle</action_type>
     </token>
+    <token>
+        <type>module</type>
+        <module_type>life</module_type>
+        <directions>
+            <dir_id>1</dir_id>
+        </directions>
+    </token>
+    <token>
+        <type>module</type>
+        <module_type>attack</module_type>
+        <directions>
+            <dir_id>1</dir_id>
+        </directions>
+        <value>2</value>
+    </token>
 </tokens>

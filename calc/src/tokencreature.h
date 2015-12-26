@@ -2,6 +2,10 @@
 #define TOKENCREATURE_H
 
 #include "tokenputable.h"
+#include "utils.h"
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/foreach.hpp>
 #include <map>
 
 class CALC_DLL()TokenCreature : public TokenPutable
@@ -28,6 +32,8 @@ public:
     void setShield(int dirId, bool value);
     virtual bool getShield(int dirId) const;
     void clearShield();
+    
+    static TokenPtr create(ptree Ptree, Color color);
 
 private:
     TokenCreature(const TokenCreature&) = default;

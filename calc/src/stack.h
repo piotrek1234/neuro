@@ -12,22 +12,21 @@
 class Stack {
 public:
     Stack();
-    void addToken(Token* token);
+    void addToken(TokenPtr token);
     int getSize();
-    void deleteToken(unsigned int id);
+    bool deleteToken(unsigned int id);
     std::vector<int> getCurrentTokensIds();
-    std::vector<int> getNextTokensIds(int num);
+    std::vector<int> getNextTokensIds();
     Color getColor() const { return color_; }
     TokenPtr getToken(int id);
     void readTokens(Color color, std::string tokensConfigPath);
     
 private:
-    //TODO change to sharedptr
+    bool hq;
     std::vector<TokenPtr> tokens;
-    std::vector<int> currentTokens;
+    std::vector<TokenPtr> currentTokens;
     Color color_;
-    std::vector<int>::iterator findInCurrent(int id);
-    std::vector<TokenPtr>::iterator findInTokens(int id);
+    std::vector<TokenPtr>::iterator findInCurrent(int id);
     
 };
 

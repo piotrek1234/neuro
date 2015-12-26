@@ -90,3 +90,44 @@ void TokenCreature::clearShield()
 {
     shield_.clear();
 }
+
+TokenPtr TokenCreature::create(ptree xmlnode, Color color)
+{
+    TokenCreature* token = new TokenCreature();
+    token->setColor(color);
+    BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xmlnode.get_child("") )
+    {
+        std::string label = v.first;
+        if(label == "priority")
+        {
+            token->setPriority(xmlnode.get<unsigned int>("priority"));
+            break;
+        }
+        if(label == "additional_action")
+        {
+            token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
+            break;
+        }
+        if(label ==  "movable")
+        {
+            token->setMovable(xmlnode.get<unsigned int>("movable"));
+            break;
+        }
+        if(label == "life")
+        {
+            token->setLife(xmlnode.get<unsigned int>("life"));
+            break;
+        }
+        if(label == "attack")
+        {
+            token->addAttack(v.second.get<unsigned int>("dir_id"), v.second.get<unsigned int>("value"));
+            break;
+        }
+        if(label == "shield")
+        {
+            token->setShield(v.second.get<unsigned int>("dir_id"), v.second.get<bool>("value"));
+            break;
+        }
+    }
+    return TokenPtr(token);
+}

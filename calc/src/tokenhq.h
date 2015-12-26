@@ -12,6 +12,7 @@ public:
     virtual ~TokenHQ();
     virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
+    static TokenPtr create(ptree Ptree, Color color);
 private:
     //TokenHQ(const TokenHQ& old);
 };

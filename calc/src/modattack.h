@@ -2,6 +2,10 @@
 #define MODATTACK_H
 
 #include "mod.h"
+#include "utils.h"
+#include <boost/property_tree/xml_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/foreach.hpp>
 
 class CALC_DLL()ModAttack : public Mod
 {
@@ -10,6 +14,7 @@ public:
     virtual ~ModAttack();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
+    static Mod* create(ptree xml);
 private:
     int attackBoost_;
 };

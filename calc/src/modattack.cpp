@@ -19,4 +19,13 @@ void ModAttack::modify(TokenCreature *tc)
     }
 }
 
-
+Mod* ModAttack::create(ptree xml)
+{
+    int val=xml.get<int>("value");    
+    std::vector<int> directions;
+    BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xml.get_child("directions") )
+    {
+        directions.push_back(v.second.get<int>("dir_id"));
+    }
+    return new ModAttack(directions, val);
+}

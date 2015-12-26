@@ -21,6 +21,12 @@ void TokenHQ::accept(Visitor &v)
     v.visit(this);
 }
 
+TokenPtr TokenHQ::create(ptree Ptree, Color color)
+{
+    TokenPtr token(new TokenHQ());
+    token->setColor(color);
+    return token;
+}
 /*TokenHQ::TokenHQ(const TokenHQ &old)
 {
     TokenHQ token;
