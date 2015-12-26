@@ -16,7 +16,7 @@ public:
     TokenCreature() : priority_(0), additionalAction_(false), movable_(false) {}
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
-    //virtual TokenPutable* clone() const;
+    virtual TokenPutable* clone() const;
 
     bool getAdditionalAction() const;
     void setAdditionalAction(bool value);
@@ -37,9 +37,9 @@ public:
 
 private:
     TokenCreature(const TokenCreature&) = default;
-    int priority_;
     std::map<int, int> attack_;
     std::map<int, bool> shield_;
+    int priority_;
     bool additionalAction_;
     bool movable_;
 };

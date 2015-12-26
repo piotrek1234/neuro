@@ -8,6 +8,7 @@ class ModAttack : public Mod
 public:
     ModAttack(std::vector<int> &directions, int attackBoost) : Mod(directions), attackBoost_(attackBoost) {}
     virtual ~ModAttack();
+    virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
 private:
     int attackBoost_;

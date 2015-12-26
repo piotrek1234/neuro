@@ -10,11 +10,11 @@ TokenHQ::~TokenHQ()
 
 }
 
-/*TokenPutable *TokenHQ::clone() const
+TokenPutable *TokenHQ::clone() const
 {
     TokenPutable* token = new TokenHQ(*this);
     return token;
-}*/
+}
 
 void TokenHQ::accept(Visitor &v)
 {

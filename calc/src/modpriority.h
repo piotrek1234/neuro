@@ -8,6 +8,7 @@ class ModPriority : public Mod
 public:
     ModPriority(std::vector<int> directions) : Mod(directions) {}
     virtual ~ModPriority();
+    virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
 };
 

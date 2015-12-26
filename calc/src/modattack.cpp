@@ -5,6 +5,11 @@ ModAttack::~ModAttack()
 
 }
 
+Mod *ModAttack::clone() const
+{
+    return new ModAttack(*this);
+}
+
 void ModAttack::modify(TokenCreature *tc)
 {
     for(int i=0; i<6; ++i)

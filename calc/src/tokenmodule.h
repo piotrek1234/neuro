@@ -12,10 +12,10 @@ class TokenModule : public TokenModHq
 public:
     TokenModule();
     virtual ~TokenModule();
-    //virtual TokenPutable* clone() const;
+    virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
 private:
-    //TokenModule(const TokenModule& old);
+    TokenModule(const TokenModule& old);
 };
 
 #endif // TOKENMODULE_H

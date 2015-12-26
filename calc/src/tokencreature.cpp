@@ -10,11 +10,11 @@ void TokenCreature::accept(Visitor &v)
     v.visit(this);
 }
 
-/*TokenPutable *TokenCreature::clone() const
+TokenPutable *TokenCreature::clone() const
 {
     TokenPutable* token = new TokenCreature(*this);
     return token;
-}*/
+}
 
 bool TokenCreature::getAdditionalAction() const
 {

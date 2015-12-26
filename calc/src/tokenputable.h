@@ -13,7 +13,7 @@ public:
     virtual ~TokenPutable();
     virtual bool isPutable() const { return true; }
     virtual void accept(Visitor& v) = 0;
-    //virtual TokenPutable* clone() = 0;
+    virtual TokenPutable* clone() const = 0;
 
     int getLife() const;
     void setLife(int value);

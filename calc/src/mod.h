@@ -22,6 +22,7 @@ public:
     virtual ~Mod() = 0;
     Mod(const Mod& mod) = default;
     virtual void modify(TokenCreature*)=0;
+    virtual Mod* clone() const = 0;
     std::vector<int>::iterator getDirectionBegin();
     std::vector<int>::iterator getDirectionEnd();
 protected:
