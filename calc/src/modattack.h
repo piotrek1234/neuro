@@ -3,7 +3,7 @@
 
 #include "mod.h"
 
-class ModAttack : public Mod
+class CALC_DLL()ModAttack : public Mod
 {
 public:
     ModAttack(std::vector<int> &directions, int attackBoost) : Mod(directions), attackBoost_(attackBoost) {}

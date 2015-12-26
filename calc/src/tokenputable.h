@@ -5,7 +5,7 @@
 #include "token.h"
 #include "hex.h"
 
-class TokenPutable : public Token
+class CALC_DLL()TokenPutable : public Token
 {
 public:
     TokenPutable() : life_(1), angle_(0), position_(Hex(5,5)) {}

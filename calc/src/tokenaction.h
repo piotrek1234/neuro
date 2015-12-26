@@ -4,7 +4,7 @@
 #include "token.h"
 #include "actiontype.h"
 
-class TokenAction : public Token
+class CALC_DLL()TokenAction : public Token
 {
 public:
     TokenAction(ActionType actionType) : actionType_(actionType) {}

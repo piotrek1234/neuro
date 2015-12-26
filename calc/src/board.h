@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class Board {
+class CALC_DLL()Board {
 public:
     Board();
     ~Board();

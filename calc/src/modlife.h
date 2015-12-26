@@ -3,7 +3,7 @@
 
 #include "mod.h"
 
-class ModLife : public Mod
+class CALC_DLL()ModLife : public Mod
 {
 public:
     ModLife(std::vector<int> directions) : Mod(directions) {}

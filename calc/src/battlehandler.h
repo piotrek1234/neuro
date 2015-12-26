@@ -6,7 +6,7 @@
 #include "creaturefinder.h"
 #include "moduleapplier.h"
 
-class BattleHandler {
+class CALC_DLL()BattleHandler {
 public:
     BattleHandler();
     void handleBattle();

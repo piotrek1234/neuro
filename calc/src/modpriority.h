@@ -3,7 +3,7 @@
 
 #include "mod.h"
 
-class ModPriority : public Mod
+class CALC_DLL()ModPriority : public Mod
 {
 public:
     ModPriority(std::vector<int> directions) : Mod(directions) {}

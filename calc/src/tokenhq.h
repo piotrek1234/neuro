@@ -5,7 +5,7 @@
 
 class Mod;
 
-class TokenHQ: public TokenModHq
+class CALC_DLL()TokenHQ: public TokenModHq
 {
 public:
     TokenHQ();

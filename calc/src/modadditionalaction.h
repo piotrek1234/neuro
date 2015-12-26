@@ -1,12 +1,6 @@
 #ifndef MODADDITIONALACTION_H
 #define MODADDITIONALACTION_H
 
-#ifdef CALC_EXPORTS
-#define CALC_DLL(X) __declspec(dllexport)X
-#else
-#define CALC_DLL(X) X
-#endif
-
 #include "mod.h"
 
 class CALC_DLL()ModAdditionalAction : public Mod

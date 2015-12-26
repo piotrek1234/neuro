@@ -7,7 +7,8 @@
 //#include "mod.h"
 
 class Mod;
-class TokenModule : public TokenModHq
+
+class CALC_DLL()TokenModule : public TokenModHq
 {
 public:
     TokenModule();

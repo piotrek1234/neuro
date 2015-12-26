@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class CreatureFinder : public Visitor
+class CALC_DLL()CreatureFinder : public Visitor
 {
 public:
     CreatureFinder();

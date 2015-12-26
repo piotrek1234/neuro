@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class ModuleApplier : public Visitor
+class CALC_DLL()ModuleApplier : public Visitor
 {
 public:
     ModuleApplier() {}

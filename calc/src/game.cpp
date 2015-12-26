@@ -62,6 +62,7 @@ void Game::removePlayer(std::string name)
     for(auto i=players.begin(); i<players.end(); ++i)
     {
         if(i->getName() == name){
+            //wywalić wszystko co player miał przypisane dynamicznie
             players.erase(i);
             return;
         }

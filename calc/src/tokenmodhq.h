@@ -12,7 +12,7 @@
 
 //class Mod;
 
-class TokenModHq : public TokenPutable
+class CALC_DLL()TokenModHq : public TokenPutable
 {
 public:
     Mod* getMod() const { return mod_; }
