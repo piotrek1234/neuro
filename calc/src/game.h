@@ -8,6 +8,18 @@
 #include <map>
 #include "color.h"
 #include "actiontype.h"
+#include "tokenfactory.h"
+#include <boost/mpl/vector.hpp>
+#include "tokenaction.h"
+#include "tokencreature.h"
+#include "tokenhq.h"
+#include "tokenmodule.h"
+#include <boost/mpl/for_each.hpp>
+#include "modadditionalaction.h"
+#include "modlife.h"
+#include "modpriority.h"
+#include "modattack.h"
+#include "modfactory.h"
 
 class Game {
 public:
@@ -37,7 +49,15 @@ private:
 	Game operator=(const Game&) = delete;
     std::map<Color, std::string> tokensFiles;
     unsigned int currentPlayerNum;
-    
+    typedef boost::mpl::vector<TokenAction, TokenCreature, TokenModule, TokenHQ> tokensTypes;
+    typedef boost::mpl::vector<ModAdditionalAction, ModAttack, ModLife, ModPriority> modsTypes;
+    template<typename F> struct RegisterTypeInFactory
+    {
+        template<typename T> void operator()(T)
+        {
+            F::getInstance().registerFun(T::typeName, T::create);
+        }
+    };
 
 };
 

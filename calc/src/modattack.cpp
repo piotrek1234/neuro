@@ -29,3 +29,5 @@ Mod* ModAttack::create(ptree xml)
     }
     return new ModAttack(directions, val);
 }
+
+std::string ModAttack::typeName="attack";

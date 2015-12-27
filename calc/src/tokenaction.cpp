@@ -24,3 +24,5 @@ ActionType TokenAction::getActionTypeByName(std::string name)
             return ActionType::PUSH;
     return ActionType::NONE;
 }
+
+std::string TokenAction::typeName="action";

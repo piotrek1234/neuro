@@ -131,3 +131,5 @@ TokenPtr TokenCreature::create(ptree xmlnode, Color color)
     }
     return TokenPtr(token);
 }
+
+std::string TokenCreature::typeName="creature";

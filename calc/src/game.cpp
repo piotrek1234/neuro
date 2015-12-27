@@ -2,6 +2,8 @@
 
 Game::Game()
 {
+    boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
+    boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
 }
 

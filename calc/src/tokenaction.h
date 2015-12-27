@@ -11,11 +11,13 @@
 class CALC_DLL()TokenAction : public Token
 {
 public:
+    TokenAction(){}
     TokenAction(ActionType actionType) : actionType_(actionType) {}
     virtual ~TokenAction();
     virtual bool isPutable() const { return false; }
     ActionType getType() const { return actionType_; }
     static TokenPtr create(ptree Ptree, Color color);
+    static std::string typeName;
     
 private:
     ActionType actionType_;

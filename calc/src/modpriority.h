@@ -10,11 +10,13 @@
 class CALC_DLL()ModPriority : public Mod
 {
 public:
+    ModPriority(){}
     ModPriority(std::vector<int> directions) : Mod(directions) {}
     virtual ~ModPriority();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
     static Mod* create(ptree xml);
+    static std::string typeName;
 };
 
 #endif // MODPRIORITY_H

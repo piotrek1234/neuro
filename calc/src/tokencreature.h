@@ -34,9 +34,10 @@ public:
     void clearShield();
     
     static TokenPtr create(ptree Ptree, Color color);
+    static std::string typeName;
 
 private:
-    TokenCreature(const TokenCreature&) = default;
+    //TokenCreature(const TokenCreature&) = default;
     std::map<int, int> attack_;
     std::map<int, bool> shield_;
     int priority_;

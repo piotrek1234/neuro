@@ -18,6 +18,7 @@ class TokenModule;
 class CALC_DLL()Mod
 {
 public:
+    Mod(){}
     Mod(std::vector<int> &directions) : directions_(directions) {}
     virtual ~Mod() = 0;
     Mod(const Mod& mod) = default;

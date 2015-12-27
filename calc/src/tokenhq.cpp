@@ -35,5 +35,7 @@ TokenPtr TokenHQ::create(ptree Ptree, Color color)
     return token;
 }*/
 
+std::string TokenHQ::typeName="hq";
+
 
 

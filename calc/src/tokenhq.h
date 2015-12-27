@@ -13,6 +13,7 @@ public:
     virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
     static TokenPtr create(ptree Ptree, Color color);
+    static std::string typeName;
 private:
     //TokenHQ(const TokenHQ& old);
 };

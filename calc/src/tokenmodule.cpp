@@ -33,3 +33,5 @@ TokenPtr TokenModule::create(ptree Ptree, Color color)
     token->setMod(ModFactory::getInstance().create(Ptree));
     return TokenPtr(token);
 }
+
+std::string TokenModule::typeName="module";
