@@ -31,14 +31,15 @@ public:
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
     //TODO Magda
-    //getPlayers
-    //getGameState
-    //addToken
-    //throwToken
-    //getNextPlayer - player + stack
-    //ActionTokens
+    std::vector<Player> getPlayers();
+    void restartGame();
+    bool addToken(int tokenId, Player& player, Hex pos);
+    bool throwToken(int tokenId, Player& player);
+    Player* getNextPlayer();
+    Player* getCurrentPlayer();
+    bool actionToken(ActionType action);
+    bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
-    //killPlayer
     
 private:
     Game();
@@ -49,6 +50,7 @@ private:
 	Game operator=(const Game&) = delete;
     std::map<Color, std::string> tokensFiles;
     unsigned int currentPlayerNum;
+    
     typedef boost::mpl::vector<TokenAction, TokenCreature, TokenModule, TokenHQ> tokensTypes;
     typedef boost::mpl::vector<ModAdditionalAction, ModAttack, ModLife, ModPriority> modsTypes;
     template<typename F> struct RegisterTypeInFactory
