@@ -39,21 +39,20 @@
       </pattern>
     </defs>
 
-
        <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
         <g ng-attr-transform="translate({{hexSize*9}})">
           <rect class="main-board" ng-attr-width="{{hexSize*9}}" ng-attr-height="{{hexSize*15}}" fill=url(#main-board-img)>
           </rect>
 
-          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+          <user-board x="hexSize/2" y="hexSize/2" size-base="hexSize"/>
 
-          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*6}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+          <user-board x="hexSize/2" y="hexSize/2*6" size-base="hexSize"/>
 
-          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*11}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+          <user-board x="hexSize/2" y="hexSize/2*11" size-base="hexSize"/>
 
-          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*19}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+          <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"/>
+
         </g>
-
 
         <g ng-attr-transform="translate(0, {{hexSize*9}})">
            <rect class="main-board" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" fill=url(#user-board-img) />
