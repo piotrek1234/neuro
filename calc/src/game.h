@@ -20,23 +20,24 @@
 #include "modpriority.h"
 #include "modattack.h"
 #include "modfactory.h"
+#include "boost/variant.hpp"
 
 class Game {
 public:
     ~Game();
+    typedef boost::variant<std::pair<Hex, Hex>, bool> ActionArgs;
     static Game& getInstance();
     bool addPlayer(std::string name);
     void removeAllPlayers();
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
-    //TODO Magda
     std::vector<Player> getPlayers();
     void restartGame();
     bool addToken(int tokenId, Color color, Hex pos);
     bool throwToken(int tokenId, Color color);
     Player getNextPlayer();
     Player getCurrentPlayer();
-    bool actionToken(int tokenId, Color color);
+    bool actionToken(int tokenId, Color color, ActionArgs args);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
     

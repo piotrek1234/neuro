@@ -86,7 +86,8 @@ std::vector<Player> Game::getPlayers()
 void Game::restartGame()
 {
     removeAllPlayers();
-    board_->clear();
+    delete board_;
+    board_=new Board();
     currentPlayerNum=0;    
 }
 
@@ -113,9 +114,38 @@ Player Game::getCurrentPlayer()
     return players[currentPlayerNum];
 }
 
-bool Game::actionToken(int tokenId, Color color)
+bool Game::actionToken(int tokenId, Color color, ActionArgs args)
 {
-    return true;
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)].getToken(tokenId));
+    if(token->getType() == ActionType::BATTLE)
+    {
+        return true;
+    }
+    if(token->getType() == ActionType::MOVE)
+    {
+            std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
+            Hex from = fromTo.first;
+            Hex to = fromTo.second;
+            TokenPutable* tokenToMove = board_->getToken(from);
+            if (color==tokenToMove->getColor())
+            {
+                return board_->moveToken(from, to);
+            }
+            return false;
+    }
+    if(token->getType() == ActionType::PUSH)
+    {
+        std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
+        Hex from = fromTo.first;
+        Hex to = fromTo.second;
+        TokenPutable* tokenToMove = board_->getToken(from);
+        if (color!=tokenToMove->getColor())
+        {
+            return board_->pushToken(from, to);
+        }
+        return false;
+    }
+    return false;
 }
 
 bool Game::killPlayer(Color color)
