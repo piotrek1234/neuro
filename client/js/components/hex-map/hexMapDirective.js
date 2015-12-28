@@ -27,7 +27,6 @@ angular.module('hexMapDirective', [])
 			 	$scope.cornersSet = cornersSet;
 			},
 			link: function (scope, element, attr) {
-				debugger;
 				element.on('mouseover', function (event) {
 					var srcElement = d3.select(event.target);
 					
