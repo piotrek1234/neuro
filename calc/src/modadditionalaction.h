@@ -10,11 +10,13 @@
 class CALC_DLL()ModAdditionalAction : public Mod
 {
 public:
+    ModAdditionalAction(){}
     ModAdditionalAction(std::vector<int> &directions) : Mod(directions) {}
     virtual ~ModAdditionalAction();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
     static Mod* create(ptree xml);
+    static std::string typeName;
 };
 
 #endif // MODADDITIONALACTION_H

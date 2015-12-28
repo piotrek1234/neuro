@@ -91,7 +91,7 @@ void TokenCreature::clearShield()
     shield_.clear();
 }
 
-TokenPtr TokenCreature::create(ptree xmlnode, Color color)
+Token* TokenCreature::create(ptree xmlnode, Color color)
 {
     TokenCreature* token = new TokenCreature();
     token->setColor(color);
@@ -129,5 +129,7 @@ TokenPtr TokenCreature::create(ptree xmlnode, Color color)
             break;
         }
     }
-    return TokenPtr(token);
+    return token;
 }
+
+std::string TokenCreature::typeName="creature";

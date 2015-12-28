@@ -26,10 +26,12 @@ TokenModule::TokenModule(const TokenModule &old)
     setMod(old.getMod()->clone());
 }
 
-TokenPtr TokenModule::create(ptree Ptree, Color color)
+Token* TokenModule::create(ptree Ptree, Color color)
 {
     TokenModule* token=new TokenModule();
     token->setColor(color);
     token->setMod(ModFactory::getInstance().create(Ptree));
-    return TokenPtr(token);
+    return token;
 }
+
+std::string TokenModule::typeName="module";

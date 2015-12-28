@@ -110,4 +110,7 @@ TokenPutable *Board::getToken(Hex pos)
     return nullptr;
 }
 
-#include "board.h"
+void Board::clear()
+{
+    board_.clear();   
+}

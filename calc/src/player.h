@@ -12,7 +12,7 @@
 //#include "board.h"
 #include <vector>
 #include "color.h"
-#include "tokenfactory.h"
+#include "utils.h"
 
 class Player {
 public:
@@ -20,9 +20,10 @@ public:
     std::string getName();
     void setStack(Color color, std::string tokensConfigPath);
     Color getColor();
-    //void putTokenOnBoard(unsigned int tokenId);
-    //void throwToken(unsigned int tokenId);
-    //vector<int> getTokensOnHandIds();
+    Token* getToken(unsigned int tokenId);
+    bool throwToken(unsigned int tokenId);
+    std::vector<int> getTokensOnHandIds();
+    std::vector<int> getNextTokensOnHandIds();
     
 private:
     Stack stack;

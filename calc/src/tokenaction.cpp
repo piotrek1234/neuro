@@ -5,11 +5,11 @@ TokenAction::~TokenAction()
 
 }
 
-TokenPtr TokenAction::create(ptree xmlnode, Color color)
+Token* TokenAction::create(ptree xmlnode, Color color)
 {
     std::string type = xmlnode.get<std::string>("action_type");
     ActionType action=TokenAction::getActionTypeByName(type);
-    TokenPtr token(new TokenAction(action));
+    Token* token=new TokenAction(action);
     token->setColor(color);
     return token;
 }
@@ -24,3 +24,5 @@ ActionType TokenAction::getActionTypeByName(std::string name)
             return ActionType::PUSH;
     return ActionType::NONE;
 }
+
+std::string TokenAction::typeName="action";

@@ -5,13 +5,26 @@ Stack::Stack()
     hq=true;
 }
 
+Stack::~Stack()
+{
+    for(auto i=currentTokens.begin(); i!=currentTokens.end(); ++i)
+    {
+        delete *i;
+    }
+    
+    for(auto i=tokens.begin(); i!=tokens.end(); ++i)
+    {
+        delete *i;
+    }
+}
+
 void Stack::readTokens(Color color, std::string tokensConfigPath)
 {
     color_=color;
     tokens = TokenFactory::getInstance().createTokensFromFile(tokensConfigPath, color_);
 }
         
-void Stack::addToken(TokenPtr token)
+void Stack::addToken(Token* token)
 {
    this->tokens.push_back(token);
 }
@@ -60,12 +73,12 @@ std::vector<int> Stack::getNextTokensIds()
     return getCurrentTokensIds();
 }
 
-TokenPtr Stack::getToken(int id)
+Token* Stack::getToken(int id)
 {
     auto it = findInCurrent(id);
     if(it!=currentTokens.end())
     {
-        TokenPtr token = *it;
+        Token* token = *it;
         this->currentTokens.erase(it);
         if(hq)
         {
@@ -76,7 +89,7 @@ TokenPtr Stack::getToken(int id)
     return nullptr;
 }
 
-std::vector<TokenPtr>::iterator Stack::findInCurrent(int id)
+std::vector<Token*>::iterator Stack::findInCurrent(int id)
 {
     for(auto i=currentTokens.begin(); i!=currentTokens.end(); ++i)
     {

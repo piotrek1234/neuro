@@ -120,3 +120,10 @@ void BattleHandler::handleBattle()
     //jeśli to była bitwa uruchomiona przez wyczerpanie stosu któregoś gracza,
     //to również następuje koniec gry, a wygrywa ten, czyjego HQ ma najwięcej życia
 }
+
+
+BattleHandler &getInstance()
+{
+    static BattleHandler instance;
+    return instance;
+}

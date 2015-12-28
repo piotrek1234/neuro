@@ -21,9 +21,9 @@ void TokenHQ::accept(Visitor &v)
     v.visit(this);
 }
 
-TokenPtr TokenHQ::create(ptree Ptree, Color color)
+Token* TokenHQ::create(ptree Ptree, Color color)
 {
-    TokenPtr token(new TokenHQ());
+    Token* token = new TokenHQ();
     token->setColor(color);
     return token;
 }
@@ -34,6 +34,8 @@ TokenPtr TokenHQ::create(ptree Ptree, Color color)
     token.setMod(mod);
     return token;
 }*/
+
+std::string TokenHQ::typeName="hq";
 
 
 

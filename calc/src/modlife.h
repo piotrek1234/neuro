@@ -10,11 +10,13 @@
 class CALC_DLL()ModLife : public Mod
 {
 public:
+    ModLife(){}
     ModLife(std::vector<int> directions) : Mod(directions) {}
     virtual ~ModLife();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature *tc);
     static Mod* create(ptree xml);
+    static std::string typeName;
 };
 
 #endif // MODLIFE_H

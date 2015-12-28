@@ -22,15 +22,18 @@ void Player::setStack(Color color, std::string tokensConfigPath)
     }
 }
 
-/*
-void Player::putTokenOnBoard(unsigned int tokenId){
-    //this->board->
+Token* Player::getToken(unsigned int tokenId){
+    return stack.getToken(tokenId);
 }
 
-void Player::throwToken(unsigned int tokenId){
-    //this->stack.deleteToken(tokenId);
+bool Player::throwToken(unsigned int tokenId){
+    return this->stack.deleteToken(tokenId);
 }
 
-vector<int> Player::getTokensOnHandIds(){
+std::vector<int> Player::getTokensOnHandIds(){
     return this->stack.getCurrentTokensIds();
-}*/
+}
+
+std::vector<int> Player::getNextTokensOnHandIds(){
+    return this->stack.getNextTokensIds();
+}
