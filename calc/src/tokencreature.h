@@ -33,7 +33,7 @@ public:
     virtual bool getShield(int dirId) const;
     void clearShield();
     
-    static TokenPtr create(ptree Ptree, Color color);
+    static Token* create(ptree Ptree, Color color);
     static std::string typeName;
 
 private:

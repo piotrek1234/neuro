@@ -22,6 +22,7 @@ public:
     Board* clone(); //albo zamiast tego zrobić konstruktor kopiujący
     map<Hex, TokenPutable*>::iterator getMapBegin();
     map<Hex, TokenPutable*>::iterator getMapEnd();
+    void clear();
 private:
     //int size_;  //do czego służy size_?
     map<Hex, TokenPutable*> board_;

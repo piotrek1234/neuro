@@ -1,10 +1,11 @@
 #include "game.h"
 
-Game::Game()
+Game::Game() : MaxPlayersNum(4)
 {
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
+    currentPlayerNum=0;
 }
 
 Game::~Game()
@@ -24,7 +25,7 @@ Board *Game::getBoard()
 
 bool Game::addPlayer(std::string name)
 {
-    if (players.size()<=4)
+    if (players.size()<=MaxPlayersNum)
     {
 		Player player(name);
         Color nextColor = getNextColor();
@@ -32,6 +33,7 @@ bool Game::addPlayer(std::string name)
         {
             player.setStack(nextColor, tokensFiles[nextColor]);
             players.push_back(player);
+            playersMap[nextColor]=players.size()-1;
             return true;
         }
     }
@@ -55,21 +57,10 @@ Color Game::getNextColor()
 	}
 }
 
-void Game::removePlayer(std::string name)
-{
-    for(auto i=players.begin(); i<players.end(); ++i)
-    {
-        if(i->getName() == name){
-            //wywalić wszystko co player miał przypisane dynamicznie
-            players.erase(i);
-            return;
-        }
-    }
-}
-
-void Game::removeAllPlayers(std::string name)
+void Game::removeAllPlayers()
 {
     players.clear();
+    playersMap.clear();
 }
 
 std::vector<std::string> Game::getPlayersNames()
@@ -85,4 +76,64 @@ std::vector<std::string> Game::getPlayersNames()
 void Game::addTokenConfigPath(Color color, string path)
 {
     tokensFiles[color] = path;
+}
+
+std::vector<Player> Game::getPlayers()
+{
+    return players;
+}
+
+void Game::restartGame()
+{
+    removeAllPlayers();
+    board_->clear();
+    currentPlayerNum=0;    
+}
+
+bool Game::addToken(int tokenId, Color color, Hex pos)
+{
+    TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)].getToken(tokenId));
+    return board_->addToken(pos, token);
+}
+
+bool Game::throwToken(int tokenId, Color color)
+{
+    return players[getPlayerId(color)].throwToken(tokenId);
+}
+
+Player Game::getNextPlayer()
+{
+    currentPlayerNum = (currentPlayerNum + 1)%MaxPlayersNum;
+    players[currentPlayerNum].getNextTokensOnHandIds();
+    return getCurrentPlayer();
+}
+
+Player Game::getCurrentPlayer()
+{
+    return players[currentPlayerNum];
+}
+
+bool Game::actionToken(int tokenId, Color color)
+{
+    return true;
+}
+
+bool Game::killPlayer(Color color)
+{
+    int id=getPlayerId(color);
+    if(id!=-1)
+    {
+        players.erase(players.begin() + id);
+        playersMap.erase(color);
+        return true;
+    }
+    return false;
+}
+
+int Game::getPlayerId(Color color)
+{
+    auto it=playersMap.find(color);
+    if(it!=playersMap.end())
+        return playersMap[color];
+    return -1;
 }

@@ -16,7 +16,7 @@ public:
     virtual ~TokenAction();
     virtual bool isPutable() const { return false; }
     ActionType getType() const { return actionType_; }
-    static TokenPtr create(ptree Ptree, Color color);
+    static Token* create(ptree Ptree, Color color);
     static std::string typeName;
     
 private:
