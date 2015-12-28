@@ -225,3 +225,5 @@ build_web/
 /.sconsign.dblite
 /client/unit_test_out.html
 /client/index.html
+/calc/calc_test
+/calc/tests/calc_test.o

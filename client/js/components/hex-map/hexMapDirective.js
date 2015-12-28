@@ -4,12 +4,11 @@ angular.module('hexMapDirective', [])
 			restrict: 'E',
 			scope: {
 				hexCount: "=hexCount",
-				width: "=",
-				height: "=",
 				size: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex-map/hexMap.html',
+			replace: true,
 			controller: function ($scope) {
 				hexLibrary.setLayoutSize(Point($scope.size, $scope.size));
 				
@@ -28,6 +27,7 @@ angular.module('hexMapDirective', [])
 			 	$scope.cornersSet = cornersSet;
 			},
 			link: function (scope, element, attr) {
+				debugger;
 				element.on('mouseover', function (event) {
 					var srcElement = d3.select(event.target);
 					
