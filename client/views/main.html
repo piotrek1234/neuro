@@ -42,12 +42,23 @@
 
        <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
         <g ng-attr-transform="translate({{hexSize*9}})">
-          <rect class="main-board" ng-attr-width="{{hexSize*9}}" ng-attr-height="{{hexSize*15}}" fill=url(#main-board-img)/>
+          <rect class="main-board" ng-attr-width="{{hexSize*9}}" ng-attr-height="{{hexSize*15}}" fill=url(#main-board-img)>
+          </rect>
+
+          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+
+          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*6}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+
+          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*11}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
+
+          <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2*19}}" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4"/>
         </g>
 
 
         <g ng-attr-transform="translate(0, {{hexSize*9}})">
-           <rect class="main-board" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" fill=url(#user-board-img)/>
+           <rect class="main-board" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" fill=url(#user-board-img) />
+
+           <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2}}" ng-attr-width="{{hexSize*7}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4">
         </g>
 
     </svg>
