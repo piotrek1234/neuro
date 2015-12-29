@@ -72,6 +72,14 @@ angular.module('myAppControllers', [])
 		['$scope',
 		 function ($scope, srvInfo, srvCommands) {
 		 	$scope.mapSize = 2;
+		 	$scope.hexSize = 75;
+
+		 	var userBoard = {
+		 		width: 500,
+		 		height: 300
+		 	};
+
+		 	$scope.userBoard = userBoard;
 		 }])
 	.controller('welcomePopup', 
 		['$scope',

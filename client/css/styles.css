@@ -84,10 +84,38 @@ body {
     opacity: 0.6;   
 }
 
+.main {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    margin: auto;
+}
+
 .middle {
     position: fixed;
     top: 50%;
     left: 50%;
   
     transform: translate(-50%, -50%);
+}
+
+.left {
+    position: fixed;
+    top: 50%;
+    left: 10%;
+  
+    transform: translate(-50%, -50%);  
+}
+
+.right {
+    transform-origin: 50% 50%;
+    transform: translate(80px,0px);
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transform: translateX(8 0px); /* Safari and Chrome */
+    -moz-transform: translate(80px,0px); /* Firefox */
+}
+
+.main-board {
+    background: url('/pict/dark-wood.jpg')
 }
