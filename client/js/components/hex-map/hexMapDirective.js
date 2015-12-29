@@ -10,6 +10,8 @@ angular.module('hexMapDirective', [])
 			templateUrl: 'js/components/hex-map/hexMap.html',
 			replace: true,
 			controller: function ($scope) {
+				var hexLibrary = new hexLibraryConstructor();
+
 				hexLibrary.setLayoutSize(Point($scope.size, $scope.size));
 				
 				var hexMap = hexLibrary.generateMap($scope.hexCount);
