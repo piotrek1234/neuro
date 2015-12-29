@@ -63,7 +63,7 @@ function hexLibraryConstructor () {
     this.flat = this.Layout(this.layout_flat, Point(70, 70), Point(280, 300));
 };
 
-hexLibrary = new hexLibraryConstructor();
+
 
 function Point (x, y) {
     return {x: x, y: y};
