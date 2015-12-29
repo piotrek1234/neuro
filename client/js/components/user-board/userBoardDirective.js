@@ -6,7 +6,9 @@ angular.module('userBoardDirective', [])
 				x: "=",
 				y: "=",
 				color: "=",
-				sizeBase: "="
+				sizeBase: "=",
+				login: "=",
+				draggable: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/user-board/userBoard.html',
@@ -23,6 +25,11 @@ angular.module('userBoardDirective', [])
 				cornersSet.push(hexLibrary.setHexCorners(Point(sizeBase*6.5, sizeBase)));
 				
 				$scope.cornersSet = cornersSet;
+
+				$scope.className = $scope.color + "-token";
+			},
+			link: function ($scope, $element, attr) {
+
 			}
 		};
 	});

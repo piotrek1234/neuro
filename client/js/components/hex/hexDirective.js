@@ -4,12 +4,15 @@ angular.module('hexDirective', [])
 			restrict: 'E',
 			scope: {
 				corners: '=',
-				color: '='
+				color: '=',
+				draggable: '='
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex/hex.html',
 			replace: true,
 			controller: function ($scope) {
+				$scope.className = '';
+
 				function setColorClass (className) {
 					switch (className) {
 						case 'green':
@@ -24,14 +27,23 @@ angular.module('hexDirective', [])
 				};
 
 				function setColorTokenClass (colorClass) {
-					$scope.className = colorClass + '-token';
+					$scope.className += colorClass + '-token';
 				};
 
 				function setDefaultHexClass () {
-					$scope.className = 'hex';
+					$scope.className += 'hex';
+				};
+
+				function setDraggableAttribute (draggable) {
+					draggable = draggable || false;
+
+					if (draggable === "true" || draggable === true) {
+						$scope.className += ' draggable';
+					}
 				};
 
 				setColorClass($scope.color);
+				setDraggableAttribute($scope.draggable);
 			}
 		};
 	});

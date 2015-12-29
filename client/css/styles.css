@@ -139,3 +139,7 @@ body {
     fill: #EBD809;
     stroke: black;
 }
+
+.draggable {
+    cursor: move;
+}

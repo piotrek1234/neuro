@@ -1,5 +1,9 @@
 <g ng-attr-transform="translate({{x}}, {{y}})">
    <rect ng-attr-width="{{sizeBase*8}}" ng-attr-height="{{sizeBase*2}}" fill-opacity="0.4"/>
 
-   <hex corners="corners" color="color" ng-repeat="corners in cornersSet"></hex>
+   <hex corners="corners" color="color" ng-repeat="corners in cornersSet" draggable="draggable"></hex>
+
+   <rect ng-attr-y="{{sizeBase*2}}" ng-attr-width="{{sizeBase*3}}" ng-attr-height="{{sizeBase/2}}" fill-opacity="0.4" class="{{className}}">
+   </rect>
+   <text ng-attr-y="{{sizeBase*2.4}}" ng-attr-x="{{sizeBase/4}}" font-family="Verdana" font-size="35" fill="black"> {{login}} </text>
 </g>
