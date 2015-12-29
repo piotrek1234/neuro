@@ -2,8 +2,12 @@
 
 Game::Game() : MaxPlayersNum(4)
 {
-    boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
+    std::cout<<"game constructor"<<std::endl;
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
+    boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
+    TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
+    std::cout<<"tokens registered"<<std::endl;
+    //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
 }
@@ -119,6 +123,7 @@ bool Game::actionToken(int tokenId, Color color, ActionArgs args)
     TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)].getToken(tokenId));
     if(token->getType() == ActionType::BATTLE)
     {
+        //BattleHandler::getInstance().handleBattle();
         return true;
     }
     if(token->getType() == ActionType::MOVE)

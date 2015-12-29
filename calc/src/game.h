@@ -21,6 +21,8 @@
 #include "modattack.h"
 #include "modfactory.h"
 #include "boost/variant.hpp"
+#include <iostream>
+#include "battlehandler.h"
 
 class Game {
 public:
@@ -53,13 +55,15 @@ private:
     const unsigned int MaxPlayersNum;
     std::map<Color, int> playersMap;
     int getPlayerId(Color color);
-    typedef boost::mpl::vector<TokenAction, TokenCreature, TokenModule, TokenHQ> tokensTypes;
+    typedef boost::mpl::vector<TokenAction, TokenCreature, TokenHQ> tokensTypes;
     typedef boost::mpl::vector<ModAdditionalAction, ModAttack, ModLife, ModPriority> modsTypes;
     template<typename F> struct RegisterTypeInFactory
     {
         template<typename T> void operator()(T)
         {
+            std::cout<<"register fig"<<std::endl;
             F::getInstance().registerFun(T::typeName, T::create);
+            std::cout<<"register fig ended"<<std::endl;
         }
     };
 

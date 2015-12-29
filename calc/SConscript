@@ -55,7 +55,8 @@ libs=['../calc/src/calcpy.cpp', '../calc/src/player.cpp', '../calc/src/game.cpp'
       '../calc/src/tokenputable.cpp', '../calc/src/token.cpp', '../calc/src/board.cpp',\
       '../calc/src/tokenmodhq.cpp', '../calc/src/tokenaction.cpp', '../calc/src/mod.cpp',\
       '../calc/src/modadditionalaction.cpp', '../calc/src/visitor.cpp', '../calc/src/modfactory.cpp',\
-      '../calc/src/modlife.cpp', '../calc/src/modpriority.cpp', '../calc/src/modattack.cpp']
+      '../calc/src/modlife.cpp', '../calc/src/modpriority.cpp', '../calc/src/modattack.cpp',\
+      ]
 cpplib = env_dll.SharedLibrary( target = 'calc', source = libs )
 if(platform.system() == "Linux"):
    target = '../build_web/calcpy/calc.so'

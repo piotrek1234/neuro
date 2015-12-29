@@ -17,6 +17,7 @@ class CALC_DLL()TokenModHq : public TokenPutable
 public:
     Mod* getMod() const { return mod_; }
     void setMod(Mod* mod) { mod_ = mod; }
+    Mod* getMod() { return mod_ ; } // for testing
     virtual bool getShield(int) const { return false; }
 protected:
     TokenModHq();

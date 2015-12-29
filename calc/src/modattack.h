@@ -15,6 +15,7 @@ public:
     virtual ~ModAttack();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
+    int getAttackValue(){return attackBoost_;}
     static Mod* create(ptree xml);
     static std::string typeName;
 private:

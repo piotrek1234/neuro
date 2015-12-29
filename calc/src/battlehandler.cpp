@@ -122,7 +122,7 @@ void BattleHandler::handleBattle()
 }
 
 
-BattleHandler &getInstance()
+BattleHandler &BattleHandler::getInstance()
 {
     static BattleHandler instance;
     return instance;
