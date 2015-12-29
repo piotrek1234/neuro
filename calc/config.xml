@@ -1,8 +1,10 @@
 <tokens>
     <token>
+        <id>1</id>
         <type>hq</type>
     </token>
     <token>
+        <id>2</id>
         <type>creature</type>
         <life>2</life>
         <priority>2</priority>
@@ -18,10 +20,12 @@
         </shield>
     </token>
     <token>
+        <id>3</id>
         <type>action</type>
         <action_type>battle</action_type>
     </token>
     <token>
+        <id>4</id>
         <type>module</type>
         <module_type>life</module_type>
         <directions>
@@ -30,6 +34,7 @@
         </directions>
     </token>
     <token>
+        <id>5</id>
         <type>module</type>
         <module_type>attack</module_type>
         <directions>
@@ -37,7 +42,8 @@
         </directions>
         <value>2</value>
     </token>
-        <token>
+    <token>
+        <id>6</id>
         <type>module</type>
         <module_type>priority</module_type>
         <directions>
@@ -45,6 +51,7 @@
         </directions>
     </token>
     <token>
+        <id>7</id>
         <type>module</type>
         <module_type>additional_action</module_type>
         <directions>

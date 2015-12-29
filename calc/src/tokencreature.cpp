@@ -95,6 +95,7 @@ Token* TokenCreature::create(ptree xmlnode, Color color)
 {
     TokenCreature* token = new TokenCreature();
     token->setColor(color);
+    token->setId(xmlnode.get<int>("id"));
     BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xmlnode.get_child("") )
     {
         std::string label = v.first;

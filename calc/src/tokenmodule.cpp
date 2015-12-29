@@ -30,6 +30,7 @@ Token* TokenModule::create(ptree Ptree, Color color)
 {
     TokenModule* token=new TokenModule();
     token->setColor(color);
+    token->setId(Ptree.get<int>("id"));
     token->setMod(ModFactory::getInstance().create(Ptree));
     return token;
 }

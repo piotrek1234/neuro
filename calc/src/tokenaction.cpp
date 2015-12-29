@@ -11,6 +11,7 @@ Token* TokenAction::create(ptree xmlnode, Color color)
     ActionType action=TokenAction::getActionTypeByName(type);
     Token* token=new TokenAction(action);
     token->setColor(color);
+    token->setId(xmlnode.get<int>("id"));
     return token;
 }
 

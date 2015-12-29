@@ -25,6 +25,7 @@ Token* TokenHQ::create(ptree Ptree, Color color)
 {
     Token* token = new TokenHQ();
     token->setColor(color);
+    token->setId(Ptree.get<int>("id"));
     return token;
 }
 TokenHQ::TokenHQ(const TokenHQ &old)
