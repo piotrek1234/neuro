@@ -14,12 +14,13 @@ class CALC_DLL()TokenModule : public TokenModHq
 {
 public:
     TokenModule();
+    TokenModule(Color color) { setColor(color); }
     virtual ~TokenModule();
     virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
     static Token* create(ptree Ptree, Color color);
     static std::string typeName;
-    TokenModule(const TokenModule& old);
+    //TokenModule(const TokenModule& old);
 };
 
 #endif // TOKENMODULE_H

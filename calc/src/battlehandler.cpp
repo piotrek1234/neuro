@@ -10,7 +10,7 @@ void BattleHandler::handleBattle()
         Board* tmpBoard = Game::getInstance().getBoard()->clone();  //tymczasowa kopia planszy
 
         CreatureFinder creatureFinder;
-        //przejrzenie żetonów na planszy i wyłowienie wszystkich TokenCreature
+        //przejrzenie żetonów na planszy i wyłowienie wszystkich TokenCreature i HQ
         for(auto it = tmpBoard->getMapBegin(); it != tmpBoard->getMapEnd(); ++it)
         {
             it->second->accept(creatureFinder);
@@ -25,7 +25,9 @@ void BattleHandler::handleBattle()
             for(int i=0; i<6; ++i)
             {
                 //jeśli sąsiedni TokenModule lub TokenHQ wskazują na token, to zastosuj mod
-                Game::getInstance().getBoard()->getNeighbourToken((*it)->getPosition(), i)->accept(moduleApplier);
+                TokenPutable* neighbor = tmpBoard->getNeighbourToken((*it)->getPosition(), i);
+                if(neighbor != nullptr)
+                    neighbor->accept(moduleApplier);
             }
         }
 
@@ -61,13 +63,20 @@ void BattleHandler::handleBattle()
             //zaatakuj w każdym kierunku z odpowiednią siłą (0..n)
             for(int dir=0; dir<6; ++dir)
             {
-                TokenPutable* neighbor = Game::getInstance().getBoard()->\
+                TokenPutable* neighbor = tmpBoard->\
                         getNeighbourToken(((TokenPutable*)(*it))->getPosition(),\
                                           dir+(*it)->getAngle());  //sąsiad
-                //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
-                if((*it)->getColor() != neighbor->getColor())
-                    if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
-                        neighbor->setLife(neighbor->getLife()-(*it)->getAttack(dir));
+                if(neighbor != nullptr)
+                    //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
+                    if((*it)->getColor() != neighbor->getColor())
+                        if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
+                        {
+                            //modyfikacja życia na tmpBoard i oryginalnym Board
+                            neighbor->setLife(neighbor->getLife()-(*it)->getAttack(dir));
+                            Game::getInstance().getBoard()->getToken(neighbor->getPosition())->\
+                                    setLife(Game::getInstance().getBoard()->getToken(neighbor->getPosition())->\
+                                            getLife()-(*it)->getAttack(dir));
+                        }
             }
         }
 
@@ -80,10 +89,17 @@ void BattleHandler::handleBattle()
                 {
                     TokenPutable* neighbor = Game::getInstance().getBoard()->\
                             getNeighbourToken(((TokenPutable*)(*it))->getPosition(), dir);  //sąsiad
-                    //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
-                    if((*it)->getColor() != neighbor->getColor())
-                        if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
-                            neighbor->setLife(neighbor->getLife()-1);
+                    if(neighbor != nullptr)
+                        //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
+                        if((*it)->getColor() != neighbor->getColor())
+                            if(!neighbor->getShield(Hex::revDirection((*it)->getPosition()-neighbor->getPosition())))
+                            {
+                                //modyfikacja życia na tmpBoard i oryginalnym Board
+                                neighbor->setLife(neighbor->getLife()-1);
+                                Game::getInstance().getBoard()->getToken(neighbor->getPosition())->\
+                                        setLife(Game::getInstance().getBoard()->getToken(neighbor->getPosition())->\
+                                                getLife()-1);
+                            }
                 }
             }
 
@@ -114,6 +130,7 @@ void BattleHandler::handleBattle()
 
         //jeśli skończyła się inicjatywa nr 0 to bitwa kończy się
         lastPriority = maxPriority;
+        delete tmpBoard;
     }
     //bitwa zakończona
     //po bitwie warto sprwadzić czy został tylko 1 gracz, wtedy jest koniec gry
