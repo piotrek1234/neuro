@@ -5,6 +5,7 @@ angular.module('userBoardDirective', [])
 			scope: {
 				x: "=",
 				y: "=",
+				color: "=",
 				sizeBase: "="
 			},
 			templateNamespace: 'svg',
@@ -20,7 +21,7 @@ angular.module('userBoardDirective', [])
 				cornersSet.push(hexLibrary.setHexCorners(Point(sizeBase*1.5, sizeBase)));
 				cornersSet.push(hexLibrary.setHexCorners(Point(sizeBase*4, sizeBase)));
 				cornersSet.push(hexLibrary.setHexCorners(Point(sizeBase*6.5, sizeBase)));
-
+				
 				$scope.cornersSet = cornersSet;
 			}
 		};

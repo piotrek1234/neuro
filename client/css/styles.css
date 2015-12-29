@@ -119,3 +119,23 @@ body {
 .main-board {
     background: url('/pict/dark-wood.jpg')
 }
+
+.green-token {
+    fill: #00B52A;
+    stroke: black;
+}
+
+.red-token {
+    fill: #EB1717;
+    stroke: black;
+}
+
+.blue-token {
+    fill: #1069E6;
+    stroke: black;
+}
+
+.yellow-token {
+    fill: #EBD809;
+    stroke: black;
+}
