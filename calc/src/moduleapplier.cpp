@@ -4,10 +4,10 @@ void ModuleApplier::visit(TokenHQ *th)
 {
     if(th->getColor() == tc_->getColor())
     {
-        //dla każdego kierunku moda
-        for(auto it=th->getMod()->getDirectionBegin(); it != th->getMod()->getDirectionEnd(); ++it)
+        //dla każdego kierunku
+        for(int it=0; it<6; ++it)
         {
-            if(th->getPosition()+Hex::direction(*it+th->getAngle()) == tc_->getPosition()) //jeśli wskazuje na tc_
+            if(th->getPosition()+Hex::direction(it) == tc_->getPosition()) //jeśli wskazuje na tc_
                 th->getMod()->modify(tc_);
         }
     }

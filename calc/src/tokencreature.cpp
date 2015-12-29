@@ -93,8 +93,7 @@ void TokenCreature::clearShield()
 
 Token* TokenCreature::create(ptree xmlnode, Color color)
 {
-    TokenCreature* token = new TokenCreature();
-    token->setColor(color);
+    TokenCreature* token = new TokenCreature(color);
     token->setId(xmlnode.get<int>("id"));
     BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xmlnode.get_child("") )
     {

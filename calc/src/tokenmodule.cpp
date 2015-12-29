@@ -12,7 +12,8 @@ TokenModule::~TokenModule()
 
 TokenPutable *TokenModule::clone() const
 {
-    TokenPutable* token = new TokenModule(*this);
+    TokenModule* token = new TokenModule(*this);
+    token->setMod(mod_->clone());
     return token;
 }
 
@@ -21,15 +22,14 @@ void TokenModule::accept(Visitor &v)
     v.visit(this);
 }
 
-TokenModule::TokenModule(const TokenModule &old)
+/*TokenModule::TokenModule(const TokenModule &old)
 {
-    setMod(old.getMod()->clone());
-}
+    mod_ = old.getMod()->clone();
+}*/
 
 Token* TokenModule::create(ptree Ptree, Color color)
 {
-    TokenModule* token=new TokenModule();
-    token->setColor(color);
+    TokenModule* token=new TokenModule(color);
     token->setId(Ptree.get<int>("id"));
     token->setMod(ModFactory::getInstance().create(Ptree));
     return token;

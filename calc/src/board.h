@@ -3,7 +3,7 @@
 
 #include "tokenputable.h"
 #include "hex.h"
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -11,18 +11,18 @@ class CALC_DLL()Board {
 public:
     Board();
     ~Board();
-    bool addToken(Hex pos, TokenPutable* token);
-    bool moveToken(Hex src, Hex dst);
+    bool addToken(Hex pos, TokenPutable* token, int angle=-1);
+    bool moveToken(Hex src, Hex dst, int angle=0);
     bool deleteToken(Hex pos, bool permanent = true);
     bool pushToken(Hex pusher, Hex pushed);
     TokenPutable* getToken(Hex pos);
     TokenPutable* getNeighbourToken(Hex hex, int dir);
     Board* clone();
-    map<Hex, TokenPutable*>::iterator getMapBegin();
-    map<Hex, TokenPutable*>::iterator getMapEnd();
+    unordered_map<Hex, TokenPutable*>::iterator getMapBegin();
+    unordered_map<Hex, TokenPutable*>::iterator getMapEnd();
     void clear();
 private:
-    map<Hex, TokenPutable*> board_;
+    unordered_map<Hex, TokenPutable*, hash<Hex> > board_;
 };
 
 #endif

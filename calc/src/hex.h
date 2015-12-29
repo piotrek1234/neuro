@@ -41,4 +41,15 @@ private:
     static const std::vector<Hex> hexDirections_;
 };
 
+namespace std {
+    template <> struct hash<Hex> {
+        size_t operator()(const Hex& h) const {
+            hash<int> int_hash;
+            size_t hq = int_hash(h.getQ());
+            size_t hr = int_hash(h.getR());
+            return hq ^ (hr + 0x9e3779b9 + (hq << 6) + (hq >> 2));
+        }
+    };
+}
+
 #endif // HEX_H
