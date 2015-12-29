@@ -17,9 +17,15 @@
 #include "../src/player.h"
 #include "../src/hex.h"
 #include "../src/modadditionalaction.h"
+#include "../src/modlife.h"
 #include "../src/tokencreature.h"
 #include "../src/tokenhq.h"
 #include "../src/tokenmodule.h"
+#include "../src/tokenaction.h"
+#include "../src/modpriority.h"
+#include "../src/modlife.h"
+#include "../src/modattack.h"
+#include "../src/actiontype.h"
 
 using namespace boost;
 using boost::unit_test::test_suite;
@@ -202,6 +208,87 @@ BOOST_AUTO_TEST_CASE( TokenCreatureTest )
 
     //clone
     ///todo
+}
+
+BOOST_AUTO_TEST_CASE( GameTest )
+{
+    /*Game::getInstance().addPlayer("player1");
+	int playersNum = Game::getInstance().getPlayers().size();
+	BOOST_CHECK_EQUAL( playersNum, 1 );
+    
+    Game::getInstance().addPlayer("player2");
+	playersNum = Game::getInstance().getPlayers().size();
+	BOOST_CHECK_EQUAL( playersNum, 1 );*/
+}
+
+BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
+{
+    TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
+    TokenFactory::getInstance().registerFun(TokenCreature::typeName, TokenCreature::create);
+    TokenFactory::getInstance().registerFun(TokenAction::typeName, TokenAction::create);
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName, TokenHQ::create);
+    
+    ModFactory::getInstance().registerFun(ModAdditionalAction::typeName, ModAdditionalAction::create);
+    ModFactory::getInstance().registerFun(ModAttack::typeName, ModAttack::create);
+    ModFactory::getInstance().registerFun(ModLife::typeName, ModLife::create);
+    ModFactory::getInstance().registerFun(ModPriority::typeName, ModPriority::create);
+    
+    std::vector<Token*> tokens=TokenFactory::getInstance().createTokensFromFile("/home/magda/neurohex/calc/config.xml", Color::BLUE);
+    BOOST_CHECK_EQUAL(tokens.size(), 7);
+    
+    TokenHQ* hq=dynamic_cast<TokenHQ*>(tokens[0]);
+    BOOST_CHECK(hq!=nullptr);
+    
+    TokenCreature* creature=dynamic_cast<TokenCreature*>(tokens[1]);
+    BOOST_CHECK(creature!=nullptr);
+    BOOST_CHECK_EQUAL(creature->getLife(), 2);
+    BOOST_CHECK_EQUAL(creature->getPriority(), 2);
+    BOOST_CHECK_EQUAL(creature->getAdditionalAction(), false);
+    BOOST_CHECK_EQUAL(creature->getAttack(1), 2);
+    BOOST_CHECK_EQUAL(creature->getAttack(2), 0);
+    BOOST_CHECK_EQUAL(creature->getShield(1), true);
+    BOOST_CHECK_EQUAL(creature->getShield(2), 0);
+    
+    TokenAction* action=dynamic_cast<TokenAction*>(tokens[2]);
+    BOOST_CHECK(action!=nullptr);
+    BOOST_CHECK(action->getType()==ActionType::BATTLE);
+    
+    TokenModule* modLife=dynamic_cast<TokenModule*>(tokens[3]);
+    BOOST_CHECK(modLife!=nullptr);
+    ModLife* life = dynamic_cast<ModLife*>(modLife->getMod());
+    BOOST_CHECK(life!=nullptr);
+    BOOST_CHECK_EQUAL(*(life->getDirectionBegin()), 1);
+    BOOST_CHECK_EQUAL(*(life->getDirectionBegin()+1), 2);
+    
+    TokenModule* modAttack=dynamic_cast<TokenModule*>(tokens[4]);
+    BOOST_CHECK(modAttack!=nullptr);
+    ModAttack* attack = dynamic_cast<ModAttack*>(modAttack->getMod());
+    BOOST_CHECK(attack!=nullptr);
+    BOOST_CHECK_EQUAL(attack->getAttackValue(), 2);
+    BOOST_CHECK_EQUAL(*(attack->getDirectionBegin()), 1);
+    
+    TokenModule* modPri=dynamic_cast<TokenModule*>(tokens[5]);
+    BOOST_CHECK(modPri!=nullptr);
+    ModPriority* pri = dynamic_cast<ModPriority*>(modPri->getMod());
+    BOOST_CHECK(pri!=nullptr);
+    BOOST_CHECK_EQUAL(*(pri->getDirectionBegin()), 1);
+    
+    TokenModule* modAA=dynamic_cast<TokenModule*>(tokens[6]);
+    BOOST_CHECK(modAA!=nullptr);
+    ModAdditionalAction* aa = dynamic_cast<ModAdditionalAction*>(modAA->getMod());
+    BOOST_CHECK(aa!=nullptr);
+    BOOST_CHECK_EQUAL(*(aa->getDirectionBegin()), 1);
+    
+}
+
+BOOST_AUTO_TEST_CASE( StackTest )
+{
+    
+}
+
+BOOST_AUTO_TEST_CASE( PlayerTest )
+{
+    
 }
 
 BOOST_AUTO_TEST_SUITE_END()

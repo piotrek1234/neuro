@@ -109,7 +109,7 @@ void BattleHandler::handleBattle()
         for(auto it=tmpBoard->getMapBegin(); it!=tmpBoard->getMapEnd(); ++it)
         {
             if(it->second->getLife() < 1)
-                Game::getInstance().getBoard()->deleteToken(it->first);
+                Game::getInstance().getBoard()->deleteToken(it->first, true);
         }
 
         //jeśli skończyła się inicjatywa nr 0 to bitwa kończy się
@@ -121,8 +121,7 @@ void BattleHandler::handleBattle()
     //to również następuje koniec gry, a wygrywa ten, czyjego HQ ma najwięcej życia
 }
 
-
-BattleHandler &getInstance()
+BattleHandler &BattleHandler::getInstance()
 {
     static BattleHandler instance;
     return instance;

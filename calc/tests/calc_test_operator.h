@@ -9,6 +9,8 @@
 #include <sstream>
 #include "../src/hex.h"
 #include "../src/tokencreature.h"
+#include "../src/tokenmodule.h"
+#include "../src/tokenhq.h"
 #include "../src/modadditionalaction.h"
 #include "../src/modpriority.h"
 #include "../src/modlife.h"
@@ -31,6 +33,16 @@ namespace std{
 
     std::ostream& operator<<(std::ostream& s, TokenCreature&) {
       s << "TokenCreature(..)";
+      return s;
+    }
+
+    std::ostream& operator<<(std::ostream& s, TokenModule&) {
+      s << "TokenModule(..)";
+      return s;
+    }
+
+    std::ostream& operator<<(std::ostream& s, TokenHQ&) {
+      s << "TokenHQ(..)";
       return s;
     }
 

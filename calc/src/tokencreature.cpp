@@ -101,32 +101,32 @@ Token* TokenCreature::create(ptree xmlnode, Color color)
         if(label == "priority")
         {
             token->setPriority(xmlnode.get<unsigned int>("priority"));
-            break;
+            //break;
         }
         if(label == "additional_action")
         {
             token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
-            break;
+            //break;
         }
         if(label ==  "movable")
         {
             token->setMovable(xmlnode.get<unsigned int>("movable"));
-            break;
+            //break;
         }
         if(label == "life")
         {
             token->setLife(xmlnode.get<unsigned int>("life"));
-            break;
+            //break;
         }
         if(label == "attack")
         {
             token->addAttack(v.second.get<unsigned int>("dir_id"), v.second.get<unsigned int>("value"));
-            break;
+            //break;
         }
         if(label == "shield")
         {
             token->setShield(v.second.get<unsigned int>("dir_id"), v.second.get<bool>("value"));
-            break;
+            //break;
         }
     }
     return token;

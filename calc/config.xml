@@ -1,5 +1,8 @@
 <tokens>
     <token>
+        <type>hq</type>
+    </token>
+    <token>
         <type>creature</type>
         <life>2</life>
         <priority>2</priority>
@@ -11,7 +14,7 @@
         </attack>
         <shield>
             <dir_id>1</dir_id>
-            <value>2</value>
+            <value>1</value>
         </shield>
     </token>
     <token>
@@ -23,6 +26,7 @@
         <module_type>life</module_type>
         <directions>
             <dir_id>1</dir_id>
+            <dir_id>2</dir_id>
         </directions>
     </token>
     <token>
@@ -32,5 +36,19 @@
             <dir_id>1</dir_id>
         </directions>
         <value>2</value>
+    </token>
+        <token>
+        <type>module</type>
+        <module_type>priority</module_type>
+        <directions>
+            <dir_id>1</dir_id>
+        </directions>
+    </token>
+    <token>
+        <type>module</type>
+        <module_type>additional_action</module_type>
+        <directions>
+            <dir_id>1</dir_id>
+        </directions>
     </token>
 </tokens>

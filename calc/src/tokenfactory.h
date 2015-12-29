@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "color.h"
 #include <boost/foreach.hpp>
+#include <iostream>
 
 class TokenFactory
 {

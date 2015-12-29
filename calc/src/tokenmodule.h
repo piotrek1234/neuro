@@ -5,7 +5,6 @@
 #include "tokenmodhq.h"
 #include "hex.h"
 #include "utils.h"
-//#include "mod.h"
 #include <string>
 #include "modfactory.h"
 

@@ -10,11 +10,12 @@
 class CALC_DLL()ModAttack : public Mod
 {
 public:
-    ModAttack(){};
+    ModAttack(){}
     ModAttack(std::vector<int> &directions, int attackBoost) : Mod(directions), attackBoost_(attackBoost) {}
     virtual ~ModAttack();
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
+    int getAttackValue(){return attackBoost_;}
     static Mod* create(ptree xml);
     static std::string typeName;
 private:

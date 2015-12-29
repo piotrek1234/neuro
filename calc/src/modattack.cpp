@@ -25,7 +25,7 @@ Mod* ModAttack::create(ptree xml)
     std::vector<int> directions;
     BOOST_FOREACH( boost::property_tree::ptree::value_type const& v, xml.get_child("directions") )
     {
-        directions.push_back(v.second.get<int>("dir_id"));
+        directions.push_back(std::stoi(v.second.data()));
     }
     return new ModAttack(directions, val);
 }

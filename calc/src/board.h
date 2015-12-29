@@ -11,20 +11,17 @@ class CALC_DLL()Board {
 public:
     Board();
     ~Board();
-    //Board(int size);    //potrzebne? size jest stały
     bool addToken(Hex pos, TokenPutable* token);
     bool moveToken(Hex src, Hex dst);
     bool deleteToken(Hex pos, bool permanent = true);
     bool pushToken(Hex pusher, Hex pushed);
-    //Hex getNeighbour(Hex hex, int direction); //nieużywane, jest w Hex
     TokenPutable* getToken(Hex pos);
     TokenPutable* getNeighbourToken(Hex hex, int dir);
-    Board* clone(); //albo zamiast tego zrobić konstruktor kopiujący
+    Board* clone();
     map<Hex, TokenPutable*>::iterator getMapBegin();
     map<Hex, TokenPutable*>::iterator getMapEnd();
     void clear();
 private:
-    //int size_;  //do czego służy size_?
     map<Hex, TokenPutable*> board_;
 };
 

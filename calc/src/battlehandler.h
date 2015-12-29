@@ -8,10 +8,9 @@
 
 class CALC_DLL()BattleHandler {
 public:
+    BattleHandler() {}
     static BattleHandler& getInstance();
     void handleBattle();
-private:
-    BattleHandler();
 };
 
 
