@@ -27,13 +27,10 @@ Token* TokenHQ::create(ptree Ptree, Color color)
     token->setColor(color);
     return token;
 }
-/*TokenHQ::TokenHQ(const TokenHQ &old)
+TokenHQ::TokenHQ(const TokenHQ &old)
 {
-    TokenHQ token;
-    Mod* mod = old.getMod()->clone();
-    token.setMod(mod);
-    return token;
-}*/
+    setMod(old.getMod()->clone());
+}
 
 std::string TokenHQ::typeName="hq";
 

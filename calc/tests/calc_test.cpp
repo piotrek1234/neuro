@@ -17,6 +17,7 @@
 #include "../src/player.h"
 #include "../src/hex.h"
 #include "../src/modadditionalaction.h"
+#include "../src/modlife.h"
 #include "../src/tokencreature.h"
 #include "../src/tokenhq.h"
 #include "../src/tokenmodule.h"
