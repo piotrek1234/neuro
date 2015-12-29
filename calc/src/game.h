@@ -33,19 +33,19 @@ public:
     void removeAllPlayers();
     std::vector<std::string> getPlayersNames();
     Board* getBoard();
-    std::vector<Player> getPlayers();
+    std::vector<Player*> getPlayers();
     void restartGame();
     bool addToken(int tokenId, Color color, Hex pos);
     bool throwToken(int tokenId, Color color);
-    Player getNextPlayer();
-    Player getCurrentPlayer();
+    Player* getNextPlayer();
+    Player* getCurrentPlayer();
     bool actionToken(int tokenId, Color color, ActionArgs args);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
     
 private:
     Game();
-    std::vector<Player> players;
+    std::vector<Player*> players;
     Board* board_;
     Color getNextColor();
     Game(const Game&) = delete;
@@ -55,7 +55,7 @@ private:
     const unsigned int MaxPlayersNum;
     std::map<Color, int> playersMap;
     int getPlayerId(Color color);
-    typedef boost::mpl::vector<TokenAction, TokenCreature, TokenHQ> tokensTypes;
+    typedef boost::mpl::vector<TokenAction, TokenCreature> tokensTypes;
     typedef boost::mpl::vector<ModAdditionalAction, ModAttack, ModLife, ModPriority> modsTypes;
     template<typename F> struct RegisterTypeInFactory
     {

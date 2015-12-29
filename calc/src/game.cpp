@@ -2,11 +2,10 @@
 
 Game::Game() : MaxPlayersNum(4)
 {
-    std::cout<<"game constructor"<<std::endl;
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
     TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
-    std::cout<<"tokens registered"<<std::endl;
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName, TokenHQ::create);
     //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
@@ -24,20 +23,23 @@ Game& Game::getInstance() {
 
 Board *Game::getBoard()
 {
+    std::cout<<"game dest"<<std::endl;
     return board_;
+    std::cout<<"game dest end"<<std::endl;
 }
 
 bool Game::addPlayer(std::string name)
 {
     if (players.size()<=MaxPlayersNum)
     {
-		Player player(name);
+		Player* player=new Player(name);
         Color nextColor = getNextColor();
         if(tokensFiles.find(nextColor)!=tokensFiles.end())
         {
-            player.setStack(nextColor, tokensFiles[nextColor]);
+            player->setStack(nextColor, tokensFiles[nextColor]);
             players.push_back(player);
             playersMap[nextColor]=players.size()-1;
+            //std::cout<<"returning true"<<std::endl;
             return true;
         }
     }
@@ -63,6 +65,10 @@ Color Game::getNextColor()
 
 void Game::removeAllPlayers()
 {
+    for(auto it=players.begin(); it!=players.end(); ++it)
+    {
+        delete *it;
+    }
     players.clear();
     playersMap.clear();
 }
@@ -72,7 +78,7 @@ std::vector<std::string> Game::getPlayersNames()
     std::vector<std::string> names;
     for(auto i=players.begin(); i<players.end(); ++i)
     {
-        names.push_back(i->getName());
+        names.push_back((*i)->getName());
     }
     return names;
 }
@@ -82,7 +88,7 @@ void Game::addTokenConfigPath(Color color, string path)
     tokensFiles[color] = path;
 }
 
-std::vector<Player> Game::getPlayers()
+std::vector<Player*> Game::getPlayers()
 {
     return players;
 }
@@ -97,30 +103,30 @@ void Game::restartGame()
 
 bool Game::addToken(int tokenId, Color color, Hex pos)
 {
-    TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)].getToken(tokenId));
+    TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)]->getToken(tokenId));
     return board_->addToken(pos, token);
 }
 
 bool Game::throwToken(int tokenId, Color color)
 {
-    return players[getPlayerId(color)].throwToken(tokenId);
+    return players[getPlayerId(color)]->throwToken(tokenId);
 }
 
-Player Game::getNextPlayer()
+Player* Game::getNextPlayer()
 {
     currentPlayerNum = (currentPlayerNum + 1)%MaxPlayersNum;
-    players[currentPlayerNum].getNextTokensOnHandIds();
+    players[currentPlayerNum]->getNextTokensOnHandIds();
     return getCurrentPlayer();
 }
 
-Player Game::getCurrentPlayer()
+Player* Game::getCurrentPlayer()
 {
     return players[currentPlayerNum];
 }
 
 bool Game::actionToken(int tokenId, Color color, ActionArgs args)
 {
-    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)].getToken(tokenId));
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::BATTLE)
     {
         //BattleHandler::getInstance().handleBattle();
@@ -158,8 +164,15 @@ bool Game::killPlayer(Color color)
     int id=getPlayerId(color);
     if(id!=-1)
     {
+        std::cout<<"kill player "<<id<<std::endl;
+        Player* player=players[id];
+        std::cout<<"get player "<<std::endl;
         players.erase(players.begin() + id);
+        std::cout<<"erase player "<<std::endl;
         playersMap.erase(color);
+        std::cout<<"erase color "<<std::endl;
+        delete player;
+        std::cout<<"delete player "<<std::endl;
         return true;
     }
     return false;

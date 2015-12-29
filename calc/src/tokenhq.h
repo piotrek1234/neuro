@@ -2,6 +2,7 @@
 #define TOKENHQ_H
 
 #include "tokenmodhq.h"
+#include "modfactory.h"
 
 class Mod;
 

@@ -2,6 +2,11 @@
     <token>
         <id>1</id>
         <type>hq</type>
+        <module_type>attack</module_type>
+        <value>2</value>
+        <directions>
+            <dir_id>1</dir_id>
+        </directions>
     </token>
     <token>
         <id>2</id>
