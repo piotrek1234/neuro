@@ -1,4 +1,5 @@
 #include "stack.h"
+#include <iostream>
 
 Stack::Stack()
 {
@@ -7,15 +8,18 @@ Stack::Stack()
 
 Stack::~Stack()
 {
-    for(auto i=currentTokens.begin(); i!=currentTokens.end(); ++i)
+    std::cout<<"stack dest"<<std::endl;
+    for(unsigned int i=0; i<currentTokens.size(); ++i)
     {
-        delete *i;
+        delete currentTokens[i];
     }
-    
-    for(auto i=tokens.begin(); i!=tokens.end(); ++i)
+    std::cout<<"curr deleted"<<std::endl;
+    for(unsigned int i=0; i<tokens.size(); ++i)
     {
-        delete *i;
+        std::cout<<i<<std::endl;
+        delete tokens[i];
     }
+    std::cout<<"stack dest end"<<std::endl;
 }
 
 void Stack::readTokens(Color color, std::string tokensConfigPath)
@@ -57,7 +61,7 @@ std::vector<int> Stack::getCurrentTokensIds()
 
 std::vector<int> Stack::getNextTokensIds()
 {
-    if(hq)
+    if(hq && currentTokens.size()<1)
     {
         currentTokens.push_back(tokens.front());
         tokens.erase(tokens.begin());

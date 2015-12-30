@@ -5,17 +5,20 @@ Board::Board()
 
 }
 
-bool Board::addToken(Hex pos, TokenPutable *token)
+bool Board::addToken(Hex pos, TokenPutable *token, int angle)
 {
     if(board_.find(pos) == board_.end())
     {
+        token->setPosition(pos);
+        if(angle != -1) //jeśli angle jest nieustawiony, to zostawić domyślny
+            token->setAngle(angle);
         board_.insert(std::pair<Hex, TokenPutable*>(pos, token));
         return true;
     }
     return false;
 }
 
-bool Board::moveToken(Hex src, Hex dst)
+bool Board::moveToken(Hex src, Hex dst, int angle)
 {
     auto srcField = board_.find(src);
 
@@ -24,6 +27,8 @@ bool Board::moveToken(Hex src, Hex dst)
 
     if(board_.find(dst) == board_.end())  //pole docelowe jest wolne
     {
+        srcField->second->setPosition(dst);
+        srcField->second->setAngle(angle);
         addToken(dst, srcField->second);
         deleteToken(src);
         return true;
@@ -47,7 +52,10 @@ bool Board::deleteToken(Hex pos, bool permanent)
 
 TokenPutable *Board::getNeighbourToken(Hex hex, int dir)
 {
-    return board_.find(hex.getNeighbor(dir))->second;
+    auto neighbor = board_.find(hex.getNeighbor(dir));
+    if(neighbor != board_.end())
+        return neighbor->second;
+    return nullptr;
 }
 
 Board::~Board()
@@ -71,12 +79,12 @@ Board *Board::clone()
     return cloned;
 }
 
-map<Hex, TokenPutable*>::iterator Board::getMapBegin()
+unordered_map<Hex, TokenPutable*>::iterator Board::getMapBegin()
 {
     return board_.begin();
 }
 
-map<Hex, TokenPutable*>::iterator Board::getMapEnd()
+unordered_map<Hex, TokenPutable*>::iterator Board::getMapEnd()
 {
     return board_.end();
 }
@@ -104,7 +112,8 @@ bool Board::pushToken(Hex pusher, Hex pushed)
 
 TokenPutable *Board::getToken(Hex pos)
 {
-    auto token = board_.find(pos);
+    auto a = pos;
+    auto token = board_.find(a);
     if(token != board_.end())
         return token->second;
     return nullptr;

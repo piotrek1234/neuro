@@ -12,7 +12,6 @@
 //#include "board.h"
 #include <vector>
 #include "color.h"
-#include "utils.h"
 
 class Player {
 public:
@@ -24,11 +23,11 @@ public:
     bool throwToken(unsigned int tokenId);
     std::vector<int> getTokensOnHandIds();
     std::vector<int> getNextTokensOnHandIds();
+    int stackSize(){ return stack.getSize();}
     
 private:
     Stack stack;
     std::string name;
-    //Board *board;
 };
 
 

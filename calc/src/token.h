@@ -12,7 +12,8 @@
 class CALC_DLL()Token
 {
 public:
-    Token() : color_(Color::NONE) {}
+    Token() : color_(Color::NONE), id_(-1) {}
+    Token(Color color) : color_(color), id_(-1) {}
     virtual ~Token();
     virtual bool isPutable() const = 0;
     Color getColor() const;

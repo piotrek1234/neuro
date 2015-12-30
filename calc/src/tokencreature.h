@@ -12,6 +12,7 @@ class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
     TokenCreature() : priority_(0), additionalAction_(false), movable_(false) {}
+    TokenCreature(Color color) : TokenCreature() { setColor(color); }
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
     virtual TokenPutable* clone() const;

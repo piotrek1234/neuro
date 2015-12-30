@@ -2,7 +2,6 @@
 
 TokenHQ::TokenHQ()
 {
-
 }
 
 TokenHQ::~TokenHQ()
@@ -12,7 +11,8 @@ TokenHQ::~TokenHQ()
 
 TokenPutable *TokenHQ::clone() const
 {
-    TokenPutable* token = new TokenHQ(*this);
+    TokenHQ* token = new TokenHQ(*this);
+    token->setMod(mod_->clone());
     return token;
 }
 
@@ -23,15 +23,16 @@ void TokenHQ::accept(Visitor &v)
 
 Token* TokenHQ::create(ptree Ptree, Color color)
 {
-    Token* token = new TokenHQ();
+    TokenHQ* token = new TokenHQ();
     token->setColor(color);
     token->setId(Ptree.get<int>("id"));
+    token->setMod(ModFactory::getInstance().create(Ptree));
     return token;
 }
-TokenHQ::TokenHQ(const TokenHQ &old)
+/*TokenHQ::TokenHQ(const TokenHQ &old)
 {
-    setMod(old.getMod()->clone());
-}
+    mod_ = old.getMod()->clone();
+}*/
 
 std::string TokenHQ::typeName="hq";
 
