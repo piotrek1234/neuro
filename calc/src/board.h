@@ -12,7 +12,7 @@ public:
     Board();
     ~Board();
     bool addToken(Hex pos, TokenPutable* token, int angle=-1);
-    bool moveToken(Hex src, Hex dst, int angle=0);
+    bool moveToken(Hex src, Hex dst, int angle=-1);
     bool deleteToken(Hex pos, bool permanent = true);
     bool pushToken(Hex pusher, Hex pushed);
     TokenPutable* getToken(Hex pos);

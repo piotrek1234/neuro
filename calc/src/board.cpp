@@ -7,6 +7,8 @@ Board::Board()
 
 bool Board::addToken(Hex pos, TokenPutable *token, int angle)
 {
+    if(!pos.isValid())
+        return false;
     if(board_.find(pos) == board_.end())
     {
         token->setPosition(pos);
@@ -24,13 +26,24 @@ bool Board::moveToken(Hex src, Hex dst, int angle)
 
     if(srcField == board_.end())    //jeśli pole źródłowe jest puste
         return false;
+    //czy pola leżą na plaszy
+    if(!src.isValid())
+        return false;
+    if(!dst.isValid())
+        return false;
 
-    if(board_.find(dst) == board_.end())  //pole docelowe jest wolne
+    if((board_.find(dst) == board_.end())||(dst == src))  //pole docelowe jest wolne lub robimy tylko obrót
     {
         srcField->second->setPosition(dst);
-        srcField->second->setAngle(angle);
-        addToken(dst, srcField->second);
-        deleteToken(src);
+
+        if(angle != -1)
+            srcField->second->setAngle(angle);
+
+        if(dst != src)  //przesunięcie
+        {
+            addToken(dst, srcField->second);
+            deleteToken(src, false);
+        }
         return true;
     }
     return false;
@@ -95,9 +108,10 @@ bool Board::pushToken(Hex pusher, Hex pushed)
         return false;
     if(board_.find(pushed) == board_.end()) //pushed nie istnieje
         return false;
+    if(pusher == pushed)    //pchnięcie samego siebie
+        return false;
 
     Hex destination = pushed.getNeighbor(pushed - pusher);
-    //może sprawdzić też czy pusher i pushed istnieją?
 
     if(destination.isValid()) //pole jest na planszy
     {
