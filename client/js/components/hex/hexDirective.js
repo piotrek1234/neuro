@@ -69,7 +69,7 @@ angular.module('hexDirective', [])
 
 				function dragstartHandler (event) {
 					var $srcElement = event.target;
-					var center = Point(event.pageX, event.pageY);
+					var center = Point(-100, -100);
 					var corners = hexLibrary.setHexCorners(center);
 
 					var $svg = document.getElementsByTagName('svg')[0];
@@ -95,6 +95,7 @@ angular.module('hexDirective', [])
 				};
 
 				function dragendHandler (event) {
+					selectedElement.remove();
 					selectedElement = null;
 				};
 
