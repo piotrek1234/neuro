@@ -8,7 +8,8 @@ angular.module('userBoardDirective', [])
 				color: "=",
 				sizeBase: "=",
 				login: "=",
-				draggable: "="
+				draggable: "=",
+				dopable: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/user-board/userBoard.html',
@@ -29,7 +30,7 @@ angular.module('userBoardDirective', [])
 				$scope.className = $scope.color + "-token";
 			},
 			link: function ($scope, $element, attr) {
-
+				
 			}
 		};
 	});

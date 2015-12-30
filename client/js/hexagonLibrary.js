@@ -57,7 +57,6 @@ function hexLibraryConstructor () {
         var y = (M.f2 * h.q + M.f3 * h.r) * size.y;
         return Point(x + origin.x, y + origin.y);
     };
-
     
     this.layout_flat = this.Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
     this.flat = this.Layout(this.layout_flat, Point(70, 70), Point(280, 300));

@@ -5,7 +5,8 @@ angular.module('hexDirective', [])
 			scope: {
 				corners: '=',
 				color: '=',
-				draggable: '='
+				draggable: '=',
+				dropable: '='
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex/hex.html',
@@ -44,6 +45,62 @@ angular.module('hexDirective', [])
 
 				setColorClass($scope.color);
 				setDraggableAttribute($scope.draggable);
+			},
+			link: function ($scope, $element, attr) {
+				var hexLibrary = new hexLibraryConstructor();
+				var isDragable = ($scope.draggable === true || $scope.draggable === 'true') ? true : false;
+				var isDropable = ($scope.dropable === true || $scope.dropable === 'true') ? true : false;
+
+				if (isDragable) {
+					$element.on('dragstart', dragstartHandler);
+				 	$element.on('drag', dragHandler);
+				 	$element.on('dragend', dragendHandler);
+				}
+
+				if (isDropable) {
+					// $element.on('dragover', function () { console.log("dragover") });
+				 	$element.on('drop', dropHandler);
+				}
+
+				var selectedElement = null;
+
+				var correctionX = null;
+				var correctionY = null;
+
+				function dragstartHandler (event) {
+					var $srcElement = event.target;
+					var center = Point(event.pageX, event.pageY);
+					var corners = hexLibrary.setHexCorners(center);
+
+					var $svg = document.getElementsByTagName('svg')[0];
+					var svgBoundingRect = $svg.getBoundingClientRect();
+
+					correctionX = -svgBoundingRect.left;
+					correctionY = -svgBoundingRect.top;
+
+					var canvas = d3.select($svg);
+					
+					selectedElement = canvas
+						.append("polygon")
+					 	.attr("points", getCornersString(corners));
+				};
+
+				function dragHandler (event) {
+					var $srcElement = event.target;
+					var center = Point(event.pageX+correctionX, event.pageY+correctionY);
+					var corners = hexLibrary.setHexCorners(center);
+					
+					selectedElement
+						.attr("points", getCornersString(corners));
+				};
+
+				function dragendHandler (event) {
+					selectedElement = null;
+				};
+
+				function dropHandler (event) {
+					console.log("dropHandler");
+				};
 			}
 		};
 	});
