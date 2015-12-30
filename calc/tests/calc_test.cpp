@@ -16,9 +16,9 @@
 
 #include "../src/game.h"
 #include "../src/player.h"
+#include "../src/board.h"
 #include "../src/hex.h"
 #include "../src/modadditionalaction.h"
-#include "../src/modlife.h"
 #include "../src/tokencreature.h"
 #include "../src/tokenhq.h"
 #include "../src/tokenmodule.h"
@@ -32,7 +32,8 @@
 
 using namespace boost;
 using boost::unit_test::test_suite;
-std::string configPath="/home/magda/neurohex/calc/config.xml";
+//std::string configPath="/home/magda/neurohex/calc/config.xml";
+std::string configPath="calc/config.xml";
 
 BOOST_AUTO_TEST_SUITE( calc_test )
 
@@ -361,6 +362,51 @@ BOOST_AUTO_TEST_CASE( GameTest )
     BOOST_CHECK_EQUAL(Game::getInstance().killPlayer(Color::GREEN), true);
     /*BOOST_CHECK_EQUAL(Game::getInstance().killPlayer(Color::YELLOW), true);
     BOOST_CHECK_EQUAL( Game::getInstance().getPlayers().size(), 2 );*/
+}
+
+BOOST_AUTO_TEST_CASE( BoardTest )
+{
+    Board* board = new Board();
+    TokenPutable* tc = new TokenCreature();
+    tc->setAngle(4);
+    BOOST_CHECK_EQUAL(board->addToken(Hex(1,-1), tc), true);
+    BOOST_CHECK_EQUAL(tc->getPosition(), Hex(1,-1));
+    BOOST_CHECK_EQUAL(tc->getAngle(), 4);
+    tc = tc->clone();
+    board->addToken(Hex(2,-2), tc, 2);
+    BOOST_CHECK_EQUAL(tc->getAngle(), 2);
+    tc = tc->clone();
+    BOOST_CHECK_EQUAL(board->addToken(Hex(1,-1), tc), false);
+    BOOST_CHECK_EQUAL(board->addToken(Hex(10,-1), tc), false);
+
+    board->addToken(Hex(0,0), tc);
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(0,-1), Hex(1, -2)), false);  //z pustego
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(10,-1), Hex(1, -2)), false); //spoza planszy
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(1,-1), Hex(2, -2)), false);  //na zajęte
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(2,-2), Hex(10, -2)), false); //poza planszę
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(0,0), Hex(0, -1)), true);  //na wolne
+    BOOST_CHECK_EQUAL(tc->getPosition(), Hex(0, -1));   //czy token wie o nowym miejscu
+    BOOST_CHECK_EQUAL(board->getToken(Hex(0,0)), nullptr);   //czy miejsce się zwolniło
+    BOOST_CHECK_EQUAL(board->moveToken(Hex(0,-1), Hex(0,0), 3), true); //z powrotem, obrócony
+    BOOST_CHECK_EQUAL(tc->getAngle(), 3);   //czy został obrócony
+
+    tc = tc->clone();
+    board->addToken(Hex(2,-1), tc);
+    BOOST_CHECK_EQUAL(board->deleteToken(Hex(0,-1)), false);    //z pustego
+    BOOST_CHECK_EQUAL(board->deleteToken(Hex(2,-1), true), true);   //z zajętego
+    BOOST_CHECK_EQUAL(board->getToken(Hex(2,-1)), nullptr); //czy miejsce się zwolniło
+
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(0,-1), Hex(1,-1)), false);   //nie ma kto pchnąć
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(1,-1), Hex(2,-1)), false);   //nie ma kogo pchnąć
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(1,-1), Hex(1,-1)), false);   //pchnięcie siebie
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(1,-1), Hex(2,-2)), false);   //pchnięcie poza planszę
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(0,-0), Hex(1,-1)), false);   //pchnięcie na zajęte pole
+    BOOST_CHECK_EQUAL(board->pushToken(Hex(1,-1), Hex(0,0)), true);     //prawidłowe pchnięcie
+    BOOST_CHECK_EQUAL(board->getToken(Hex(0,0)), nullptr);  //czy miejsce się zwolniło
+    BOOST_CHECK_EQUAL(board->getToken(Hex(-1,1))->getPosition(), Hex(-1,1));    //czy pchnięty wie o tym
+
+    BOOST_CHECK_EQUAL(board->getNeighbourToken(Hex(1,-1), 0), nullptr);
+    BOOST_CHECK_EQUAL(board->getNeighbourToken(Hex(1,-1), 5)->getPosition(), Hex(2,-2));
 }
 
 

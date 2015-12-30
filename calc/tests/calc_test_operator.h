@@ -50,6 +50,11 @@ namespace std{
       s << "Color(" << (int)c << ")";
       return s;
     }
+
+    std::ostream& operator<<(std::ostream& s, std::nullptr_t) {
+      s << "nullptr";
+      return s;
+    }
 }
 
 #endif // CALC_TEST_OPERATOR_H
