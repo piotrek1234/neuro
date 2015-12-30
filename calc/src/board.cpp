@@ -32,13 +32,18 @@ bool Board::moveToken(Hex src, Hex dst, int angle)
     if(!dst.isValid())
         return false;
 
-    if(board_.find(dst) == board_.end())  //pole docelowe jest wolne
+    if((board_.find(dst) == board_.end())||(dst == src))  //pole docelowe jest wolne lub robimy tylko obrót
     {
         srcField->second->setPosition(dst);
+
         if(angle != -1)
             srcField->second->setAngle(angle);
-        addToken(dst, srcField->second);
-        deleteToken(src, false);
+
+        if(dst != src)  //przesunięcie
+        {
+            addToken(dst, srcField->second);
+            deleteToken(src, false);
+        }
         return true;
     }
     return false;

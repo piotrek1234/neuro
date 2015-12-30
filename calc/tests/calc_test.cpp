@@ -29,6 +29,7 @@
 #include "../src/actiontype.h"
 #include "../src/stack.h"
 #include "../src/color.h"
+#include "../src/moduleapplier.h"
 
 using namespace boost;
 using boost::unit_test::test_suite;
@@ -211,8 +212,7 @@ BOOST_AUTO_TEST_CASE( TokenCreatureTest )
     BOOST_CHECK_EQUAL(ss.str(), "000000");
     ss.str("");
 
-    //clone
-    ///todo
+    delete tc;
 }
 
 BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
@@ -407,6 +407,107 @@ BOOST_AUTO_TEST_CASE( BoardTest )
 
     BOOST_CHECK_EQUAL(board->getNeighbourToken(Hex(1,-1), 0), nullptr);
     BOOST_CHECK_EQUAL(board->getNeighbourToken(Hex(1,-1), 5)->getPosition(), Hex(2,-2));
+
+    delete board;
+}
+
+BOOST_AUTO_TEST_CASE( ModuleApplierAndModTest )
+{
+    //1: czy własny moduł wskazujący na żeton przeprowadzi modyfikacje
+    //2: czy własny moduł niewskazujący na żeton przeprowadzi modyfikacje
+    //3: czy obcy moduł wskazujący na żeton przeprowadzi modyfikacje
+    //4: czy własne hq przeprowadzi modyfikacje
+    //5: czy obce hq przeprowadzi modyfikacje
+    //6: czy ModuleApplier przyjmie TokenCreature jako moduł i go zignoruje
+
+    ModuleApplier ma;
+    Board* board = new Board();
+    TokenCreature* tc = new TokenCreature(Color::RED);
+    tc->addAttack(1,1);
+    //tc: life(1), attack(1:1), priority(0), additionalAction(false)
+    board->addToken(Hex(0,0), tc);
+    ma.setTarget(tc);
+
+    //zwykła jednostka - ma nie modyfikować, ale ModuleApplier ma ją przyjąć
+    TokenCreature* tc2 = new TokenCreature(Color::RED);
+    board->addToken(Hex(0,-1), tc2);
+    tc2->accept(ma);
+
+    //własny ModAdditionalAction, wskazuje na TokenCreature, obrócony
+    TokenModule* tm = new TokenModule(Color::RED);
+    std::vector<int> d1 = {0};
+    Mod* mod = new ModAdditionalAction(d1);
+    tm->setMod(mod);
+    board->addToken(Hex(-1,0), tm, 4);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getAdditionalAction(), true);
+
+    //własny ModAttack(+1), wskazuje na TokenCreature, nieobrócony
+    tm = new TokenModule(Color::RED);
+    std::vector<int> d2 = {2,5};
+    mod = new ModAttack(d2, 1);
+    tm->setMod(mod);
+    board->addToken(Hex(1,-1), tm);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getAttack(1), 2); //czy zmodyfikował atak który istniał
+    BOOST_CHECK_EQUAL(tc->getAttack(2), 0); //czy zmodyfikował atak który nie istniał
+
+    //własny ModPriority, nie wskazuje na TokenCreature
+    tm = new TokenModule(Color::RED);
+    std::vector<int> d3 = {4,5};
+    mod = new ModPriority(d3);
+    tm->setMod(mod);
+    board->addToken(Hex(1,0), tm);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getPriority(), 0);
+
+    //teraz wskazuje
+    board->moveToken(Hex(1,0), Hex(1,0), 2);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getPriority(), 1);
+
+    //obcy ModLife, wskazuje na TokenCreature
+    tm = new TokenModule(Color::BLUE);
+    std::vector<int> d4 = {2,5};
+    mod = new ModLife(d4);
+    tm->setMod(mod);
+    board->addToken(Hex(-1,1), tm);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getLife(), 1);
+
+    //własny ModLife, wskazuje na TokenCreature
+    tm = new TokenModule(Color::RED);
+    std::vector<int> d5 = {0};
+    mod = new ModLife(d5);
+    tm->setMod(mod);
+    board->addToken(Hex(0,1), tm);
+    tm->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getLife(), 2);
+
+    board->deleteToken(Hex(-1, 0));
+    board->deleteToken(Hex(-1, 1));
+    board->deleteToken(Hex(1,0));
+    board->deleteToken(Hex(1,-1));
+    board->deleteToken(Hex(0,1));
+
+    //własny HQ z ModLife
+    TokenHQ* th = new TokenHQ(Color::RED);
+    mod = new ModLife();
+    th->setMod(mod);
+    board->addToken(Hex(-1,0), th);
+    th->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getLife(), 3);
+
+    //obcy HQ z ModAttack
+    th = new TokenHQ(Color::YELLOW);
+    mod = new ModAttack(d5, 2);
+    th->setMod(mod);
+    board->addToken(Hex(1,0), th);
+    th->accept(ma);
+    BOOST_CHECK_EQUAL(tc->getAttack(1), 2);
+    BOOST_CHECK_EQUAL(tc->getAttack(0), 0);
+
+    delete board;
 }
 
 
