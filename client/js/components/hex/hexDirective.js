@@ -69,8 +69,13 @@ angular.module('hexDirective', [])
 
 				function dragstartHandler (event) {
 					var $srcElement = event.target;
+					var src = d3.select($srcElement);
+
 					var center = Point(-100, -100);
 					var corners = hexLibrary.setHexCorners(center);
+
+					src
+						.attr("class", "hex");
 
 					var $svg = document.getElementsByTagName('svg')[0];
 					var svgBoundingRect = $svg.getBoundingClientRect();
@@ -79,13 +84,14 @@ angular.module('hexDirective', [])
 					correctionY = -svgBoundingRect.top;
 
 					var canvas = d3.select($svg);
-					
+
 					selectedElement = canvas
 						.append("polygon")
 					 	.attr("points", getCornersString(corners));
 				};
 
 				function dragHandler (event) {
+					
 					var $srcElement = event.target;
 					var center = Point(event.pageX+correctionX, event.pageY+correctionY);
 					var corners = hexLibrary.setHexCorners(center);
@@ -95,6 +101,11 @@ angular.module('hexDirective', [])
 				};
 
 				function dragendHandler (event) {
+					var $srcElement = event.target;
+					var src = d3.select($srcElement);
+
+					src.attr("display", "");
+
 					selectedElement.remove();
 					selectedElement = null;
 				};

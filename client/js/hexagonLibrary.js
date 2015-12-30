@@ -58,6 +58,39 @@ function hexLibraryConstructor () {
         return Point(x + origin.x, y + origin.y);
     };
     
+    this.getHexCenter = function (cornersString) {
+        var center = null;
+
+        var pointsArray = this.convertCornersStringToArray(cornersString);
+
+        var firstCorner = pointsArray[0];
+        var fourthCorner = pointsArray[3];
+
+        center = new Point(firstCorner.x - fourthCorner.x, parseInt(firstCorner.y));
+        
+        return center;
+    };
+
+    this.convertCornersStringToArray = function (cornersString) {
+        var pointsArray = [];
+        var cornersStringArray = cornersString.split('\n');
+
+        removeWhitespacesFromStringArray(cornersStringArray);
+
+        cornersStringArray.forEach(function (element) {
+            var stringCoordinates = element.split(',');
+            pointsArray.push(Point(stringCoordinates[0], stringCoordinates[1]));
+        });
+
+        return pointsArray;
+    };
+
+    function removeWhitespacesFromStringArray (stringArray) {
+        stringArray.forEach( function (element, index) {
+            stringArray[index] = element.replace(/\s/g,'');
+        });  
+    };
+
     this.layout_flat = this.Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
     this.flat = this.Layout(this.layout_flat, Point(70, 70), Point(280, 300));
 };
