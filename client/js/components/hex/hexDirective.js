@@ -57,22 +57,19 @@ angular.module('hexDirective', [])
 				 	$element.on('dragend', dragendHandler);
 				}
 
-				if (isDropable) {
-					// $element.on('dragover', function () { console.log("dragover") });
-				 	$element.on('drop', dropHandler);
-				}
-
 				var selectedElement = null;
 
 				var correctionX = null;
 				var correctionY = null;
 
-				function dragstartHandler (event) {
+				function dragstartHandler (event) {  
 					var $srcElement = event.target;
 					var src = d3.select($srcElement);
 
 					var center = Point(-100, -100);
 					var corners = hexLibrary.setHexCorners(center);
+
+					var srcClass = src.attr("class");
 
 					src
 						.attr("class", "hex");
@@ -87,13 +84,15 @@ angular.module('hexDirective', [])
 
 					selectedElement = canvas
 						.append("polygon")
+						.attr("class", srcClass)
 					 	.attr("points", getCornersString(corners));
+
+					event.dataTransfer.setData('text/html', null);
 				};
 
 				function dragHandler (event) {
-					
 					var $srcElement = event.target;
-					var center = Point(event.pageX+correctionX, event.pageY+correctionY);
+					var center = Point(event.pageX+correctionX+60, event.pageY+correctionY+60);
 					var corners = hexLibrary.setHexCorners(center);
 					
 					selectedElement
@@ -101,17 +100,8 @@ angular.module('hexDirective', [])
 				};
 
 				function dragendHandler (event) {
-					var $srcElement = event.target;
-					var src = d3.select($srcElement);
-
-					src.attr("display", "");
-
 					selectedElement.remove();
 					selectedElement = null;
-				};
-
-				function dropHandler (event) {
-					console.log("dropHandler");
 				};
 			}
 		};
