@@ -28,7 +28,7 @@ angular.module('hexDirective', [])
 				};
 
 				function setColorTokenClass (colorClass) {
-					$scope.className += colorClass + '-token';
+					$scope.className += 'tokenClass-' + colorClass;
 				};
 
 				function setDefaultHexClass () {
@@ -62,11 +62,15 @@ angular.module('hexDirective', [])
 				var correctionX = null;
 				var correctionY = null;
 
+				var startPoint = null;
+				var endPoint = null;
+
 				function dragstartHandler (event) {  
 					var $srcElement = event.target;
 					var src = d3.select($srcElement);
 
-					var center = Point(-100, -100);
+					;
+					var center = new Point(-100, -100);
 					var corners = hexLibrary.setHexCorners(center);
 
 					var srcClass = src.attr("class");
@@ -79,29 +83,75 @@ angular.module('hexDirective', [])
 
 					correctionX = -svgBoundingRect.left;
 					correctionY = -svgBoundingRect.top;
-
+					startPoint = new Point(event.pageX+correctionX, event.pageY+correctionY);
 					var canvas = d3.select($svg);
-
+					
 					selectedElement = canvas
 						.append("polygon")
+						.attr("id", "dragged-item")
 						.attr("class", srcClass)
 					 	.attr("points", getCornersString(corners));
 
-					event.dataTransfer.setData('text/html', null);
+					var tokenClass = getTokenClass(srcClass);
+
+					event.dataTransfer.setData('tokenClass', tokenClass);
+					event.dataTransfer.setData('dragItemId', "dragged-item");
+				};
+
+				function getTokenClass (inputClass) {
+					var result = null;
+					var classArray = inputClass.split(" ");
+
+					var patt = new RegExp("tokenClass");
+
+					classArray.some(function (element) {
+						return patt.test(element) ? ((result = element), true) : false;
+					});
+					
+					return result;
 				};
 
 				function dragHandler (event) {
+					console.log("dragHandler# pageX: " + event.pageX + ", pageY: " +event.pageY);
 					var $srcElement = event.target;
 					var center = Point(event.pageX+correctionX+60, event.pageY+correctionY+60);
 					var corners = hexLibrary.setHexCorners(center);
 					
 					selectedElement
 						.attr("points", getCornersString(corners));
+
+					if (event.pageX !== 0 && event.pageY !== 0) {
+						endPoint = center;
+					}
 				};
 
 				function dragendHandler (event) {
+					if (!(selectedElement.attr("drag-success") === "true" || selectedElement.attr("drag-success") === true)) {
+						returnToStartingPosition(selectedElement);
+					} else {
+						removeSelectedElement();	
+					}
+				};
+
+				function removeSelectedElement () {
 					selectedElement.remove();
 					selectedElement = null;
+				};
+
+				function returnToStartingPosition ($element) {
+					console.log("returnToStartingPosition# pageX: " + endPoint.x + ", pageY: " +endPoint.y);
+					var $srcElement = event.target;
+					var corners = hexLibrary.setHexCorners(endPoint);
+					
+					selectedElement
+						.attr("points", getCornersString(corners));
+
+					corners = hexLibrary.setHexCorners(startPoint);
+					
+					selectedElement.transition()
+						.attr("points", getCornersString(corners))
+						.duration(1000)
+						.each("end", removeSelectedElement);
 				};
 			}
 		};
