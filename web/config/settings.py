@@ -19,8 +19,11 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#CORS_ORIGIN_ALLOW_ALL = True
+
 # Application definition
 INSTALLED_APPS = (
+    #'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -28,10 +31,13 @@ INSTALLED_APPS = (
 #    'django.contrib.staticfiles',
     'version',
     'current',
-    'calcpy'
+    'calcpy',
+    'django_socketio'
 )
 
 MIDDLEWARE_CLASSES = (
+    #'corsheaders.middleware.CorsMiddleware',
+    #'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,6 +47,12 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'config.urls'
+
+SOCKETIO_HOST = '127.0.0.1'
+SOCKETIO_PORT = '50007'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = '/'
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

@@ -17,7 +17,7 @@ MYAPP_VER_STRING = str(MYAPP_VER_MAJOR) + '.' + str(MYAPP_VER_MINOR) + '.' + MYA
 
 #web
 WWW_BROWSER_WINDOWS='chrome'
-WWW_BROWSER_LINUX='google-chrome'
+WWW_BROWSER_LINUX='firefox'
 WEB_SRV_PREFIX = 'srvmyapp'
 WEB_SRV_HOST = '127.0.0.1'
 WEB_SRV_PORT = '50007'
@@ -74,7 +74,8 @@ if env['r'] == 'l':
     os.system('lighttpd -f client/lighttpd.develop')
 
     if platform.system() == "Linux":
-        os.system('gunicorn --chdir build_web --timeout 0 --workers 1 --bind \'{addr}:{port}\' wsgi:application'.format(addr=WEB_SRV_HOST, port=WEB_SRV_PORT))
+        #os.system('gunicorn --chdir build_web --timeout 0 --worker-class django_socketio.gunicorn.workers.GeventSocketIOWorker --workers 1 --bind \'{addr}:{port}\' wsgi:application'.format(addr=WEB_SRV_HOST, port=WEB_SRV_PORT))
+        os.system('python build_web/manage.py runserver_socketio')
     elif platform.system() == "Windows":
         os.system('python build_web/manage.py runfcgi daemonize=false method=threaded host=' + WEB_SRV_HOST + ' port=' + WEB_SRV_PORT)
 
@@ -84,7 +85,8 @@ if env['r'] == 'l':
         os.system('taskkill /F /T /IM lighttpd.exe')
 elif env['r'] == 'd':
     os.system(BROWSER_CMD)
-    os.system('python build_web/manage.py runserver ' + WEB_CLIENT_HOST + ':' + WEB_CLIENT_PORT)
+    os.system('python build_web/manage.py runserver_socketio ' + WEB_CLIENT_HOST + ':' + WEB_CLIENT_PORT)
+    print '>> leci django <<'
 elif env['t'] == 'w':
     if(platform.system() == "Linux"):
         os.system('python build_web/manage.py test version current calcpy')
