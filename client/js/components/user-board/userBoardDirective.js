@@ -27,7 +27,7 @@ angular.module('userBoardDirective', [])
 				
 				$scope.cornersSet = cornersSet;
 
-				$scope.className = $scope.color + "-token";
+				$scope.className = "tokenClass-" + $scope.color;
 			},
 			link: function ($scope, $element, attr) {
 				

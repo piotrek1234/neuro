@@ -120,26 +120,26 @@ body {
     background: url('/pict/dark-wood.jpg')
 }
 
-.green-token {
-    fill: #00B52A;
-    stroke: black;
+.draggable {
+    cursor: pointer;
 }
 
-.red-token {
+.tokenClass-red {
     fill: #EB1717;
     stroke: black;
 }
 
-.blue-token {
+.tokenClass-green {
+    fill: #00B52A;
+    stroke: black;
+}
+
+.tokenClass-blue {
     fill: #1069E6;
     stroke: black;
 }
 
-.yellow-token {
+.tokenClass-yellow {
     fill: #EBD809;
     stroke: black;
-}
-
-.draggable {
-    cursor: pointer;
 }

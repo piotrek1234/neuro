@@ -29,7 +29,7 @@ angular.module('hexMapDirective', [])
 			 	$scope.cornersSet = cornersSet;
 			},
 			link: function (scope, element, attr) {
-				element.on('mouseover', function (event) {
+				element.on('dragover', function (event) {
 					var srcElement = d3.select(event.target);
 					
 					if (!srcElement.classed("hex")) {
@@ -44,6 +44,47 @@ angular.module('hexMapDirective', [])
 					srcElement
 						.classed("hex-active", true);			
 				});
+
+				element.on('drop', function (event) {
+					var srcElement = d3.select(event.target);
+					
+					if (!srcElement.classed("hex")) {
+						return;
+					}
+					//TODO dodać klasę empty
+					var tokenClass = event.dataTransfer.getData("tokenClass");
+					srcElement
+						.classed("hex-active", false);	
+
+					if (tokenClass == null) {
+						return;
+					}
+
+					srcElement
+						.classed(tokenClass, true);	
+
+					var id = event.dataTransfer.getData("dragItemId");
+					setDraggedItemFlag(id);
+				});
+
+				element.on('dragleave', function (event) {
+					var srcElement = d3.select(event.target);
+					
+					if (!srcElement.classed("hex")) {
+						return;
+					}
+
+					srcElement
+						.classed("hex-active", false);			
+				});
+
+
+				function setDraggedItemFlag (id) {
+					var $item = d3.select(document.getElementById(id));
+
+					$item
+						.attr("drag-success", true);
+				};
 			}
 		};
 	});
