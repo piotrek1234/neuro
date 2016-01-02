@@ -28,11 +28,11 @@ angular.module('hexDirective', [])
 				};
 
 				function setColorTokenClass (colorClass) {
-					$scope.className += 'tokenClass-' + colorClass;
+					$scope.className += 'token token-' + colorClass;
 				};
 
 				function setDefaultHexClass () {
-					$scope.className += 'hex';
+					$scope.className += 'hex-empty';
 				};
 
 				function setDraggableAttribute (draggable) {
@@ -57,7 +57,9 @@ angular.module('hexDirective', [])
 				 	$element.on('dragend', dragendHandler);
 				}
 
-				var selectedElement = null;
+				var _selectedElement = null;
+				var $startElement = null;
+				var startElementClass = null;
 
 				var correctionX = null;
 				var correctionY = null;
@@ -67,16 +69,21 @@ angular.module('hexDirective', [])
 
 				function dragstartHandler (event) {  
 					var $srcElement = event.target;
-					var src = d3.select($srcElement);
+					var _src = d3.select($srcElement);
 
-					;
+					if (!_src.classed("token")) {
+						return;
+					}
+
 					var center = new Point(-100, -100);
 					var corners = hexLibrary.setHexCorners(center);
 
-					var srcClass = src.attr("class");
+					var srcClass = _src.attr("class");
 
-					src
-						.attr("class", "hex");
+					$startElement = $srcElement;
+					startElementClass = _src.attr("class");
+					_src
+						.attr("class", "hex-empty");
 
 					var $svg = document.getElementsByTagName('svg')[0];
 					var svgBoundingRect = $svg.getBoundingClientRect();
@@ -86,14 +93,14 @@ angular.module('hexDirective', [])
 					startPoint = new Point(event.pageX+correctionX, event.pageY+correctionY);
 					var canvas = d3.select($svg);
 					
-					selectedElement = canvas
+					_selectedElement = canvas
 						.append("polygon")
 						.attr("id", "dragged-item")
 						.attr("class", srcClass)
 					 	.attr("points", getCornersString(corners));
 
 					var tokenClass = getTokenClass(srcClass);
-
+					
 					event.dataTransfer.setData('tokenClass', tokenClass);
 					event.dataTransfer.setData('dragItemId', "dragged-item");
 				};
@@ -102,22 +109,26 @@ angular.module('hexDirective', [])
 					var result = null;
 					var classArray = inputClass.split(" ");
 
-					var patt = new RegExp("tokenClass");
+					var patt = new RegExp("token-");
 
 					classArray.some(function (element) {
-						return patt.test(element) ? ((result = element), true) : false;
+						return patt.test(element) ? ((result = "token " + element), true) : false;
 					});
 					
 					return result;
 				};
 
 				function dragHandler (event) {
-					console.log("dragHandler# pageX: " + event.pageX + ", pageY: " +event.pageY);
 					var $srcElement = event.target;
+					var _src = d3.select($srcElement);
 					var center = Point(event.pageX+correctionX+60, event.pageY+correctionY+60);
 					var corners = hexLibrary.setHexCorners(center);
 					
-					selectedElement
+					if (_selectedElement == null) {
+						return;
+					}
+
+					_selectedElement
 						.attr("points", getCornersString(corners));
 
 					if (event.pageX !== 0 && event.pageY !== 0) {
@@ -126,33 +137,45 @@ angular.module('hexDirective', [])
 				};
 
 				function dragendHandler (event) {
-					if (!(selectedElement.attr("drag-success") === "true" || selectedElement.attr("drag-success") === true)) {
-						returnToStartingPosition(selectedElement);
+					if (_selectedElement == null) {
+						return;
+					} else if (!(_selectedElement.attr("drag-success") === "true" || _selectedElement.attr("drag-success") === true)) {
+						returnToStartingPosition(_selectedElement);
 					} else {
 						removeSelectedElement();	
 					}
 				};
 
 				function removeSelectedElement () {
-					selectedElement.remove();
-					selectedElement = null;
+					_selectedElement.remove();
+					_selectedElement = null;
+					startElement = null;
 				};
 
 				function returnToStartingPosition ($element) {
-					console.log("returnToStartingPosition# pageX: " + endPoint.x + ", pageY: " +endPoint.y);
 					var $srcElement = event.target;
 					var corners = hexLibrary.setHexCorners(endPoint);
 					
-					selectedElement
+					_selectedElement
 						.attr("points", getCornersString(corners));
 
 					corners = hexLibrary.setHexCorners(startPoint);
 					
-					selectedElement.transition()
+					_selectedElement.transition()
 						.attr("points", getCornersString(corners))
 						.duration(1000)
-						.each("end", removeSelectedElement);
+						.each("end", afterTransitionCallback);
 				};
+
+				function afterTransitionCallback () {
+					removeSelectedElement();
+					
+					d3.select($startElement)
+						.attr("class", startElementClass); 
+
+					$startElement = null;
+					startElementClass = null;
+				}
 			}
 		};
 	});

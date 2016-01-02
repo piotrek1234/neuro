@@ -32,58 +32,83 @@ angular.module('hexMapDirective', [])
 				element.on('dragover', function (event) {
 					var srcElement = d3.select(event.target);
 					
-					if (!srcElement.classed("hex")) {
-						return;
-					}
-
 					event.preventDefault();
+					
+					if (!srcElement.classed("hex-empty")) {
+						return;
+					}					
 
-					d3.select(".hex-active")
-						.classed("hex-active", false);
-
+					setActiveHexToEmpty();
+					
 					srcElement
-						.classed("hex-active", true);			
+						.classed("hex-active", true)
+						.classed("hex-empty", false);
 				});
 
 				element.on('drop', function (event) {
 					var srcElement = d3.select(event.target);
-					
-					if (!srcElement.classed("hex")) {
-						return;
-					}
-					//TODO dodać klasę empty
 					var tokenClass = event.dataTransfer.getData("tokenClass");
-					srcElement
-						.classed("hex-active", false);	
 
-					if (tokenClass == null) {
+					if (!srcElement.classed("hex-active") || tokenClass == null) {
+						return;
+					}
+
+					var dragItemId = event.dataTransfer.getData("dragItemId");
+					setActiveHexToEmpty();
+
+					if (dragItemId === "") {
 						return;
 					}
 
 					srcElement
-						.classed(tokenClass, true);	
-
-					var id = event.dataTransfer.getData("dragItemId");
-					setDraggedItemFlag(id);
+						.classed("hex-empty", false)
+						.classed(tokenClass, true)
+						.classed("hex-occupied", true);
+					
+					setDraggedItemFlag(dragItemId);
 				});
 
 				element.on('dragleave', function (event) {
 					var srcElement = d3.select(event.target);
 					
-					if (!srcElement.classed("hex")) {
+					if (!srcElement.classed("hex-active")) {
 						return;
 					}
 
 					srcElement
-						.classed("hex-active", false);			
+						.classed("hex-active", false)
+						.classed("hex-empty", true);			
 				});
 
+				element.on('dragenter', function () {
+					event.preventDefault();
+				});
+
+				element.on('click', clickHandler);
 
 				function setDraggedItemFlag (id) {
 					var $item = d3.select(document.getElementById(id));
 
 					$item
 						.attr("drag-success", true);
+				};
+
+				function clickHandler (event) {
+					var $srcElement = event.target;
+
+					selectElement($srcElement);
+				};
+
+				function selectElement ($element) {
+					var _elemenet = d3.select($element);
+
+					debugger;
+				};
+
+				function setActiveHexToEmpty () {
+					d3.select(".hex-active")
+						.classed("hex-active", false)
+						.classed("hex-empty", true);
 				};
 			}
 		};
