@@ -162,6 +162,11 @@ body {
     fill: #EBD809;
 }
 
+.token-selected {
+    stroke: #33E842;
+    stroke-width: 20;
+}
+
 .hex-empty {
     fill: #2F3233;
     stroke: black;

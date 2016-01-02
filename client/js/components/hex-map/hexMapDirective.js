@@ -64,7 +64,7 @@ angular.module('hexMapDirective', [])
 						.classed("hex-empty", false)
 						.classed(tokenClass, true)
 						.classed("hex-occupied", true);
-					
+
 					setDraggedItemFlag(dragItemId);
 				});
 
@@ -87,22 +87,57 @@ angular.module('hexMapDirective', [])
 				element.on('click', clickHandler);
 
 				function setDraggedItemFlag (id) {
-					var $item = d3.select(document.getElementById(id));
+					event.preventDefault();
+					var _item = d3.select(document.getElementById(id));
 
-					$item
+					_item
 						.attr("drag-success", true);
 				};
 
 				function clickHandler (event) {
 					var $srcElement = event.target;
+					var _element = d3.select($srcElement);
+					
+					if (!_element.classed("token") 
+						|| _element.classed("hex-empty")) {
+						return;
+					}
 
-					selectElement($srcElement);
+					event.preventDefault();
+					event.stopPropagation();
+
+					unselectElement();
+					selectElement(_element);
+					setupBodyEventHandler();
 				};
 
-				function selectElement ($element) {
-					var _elemenet = d3.select($element);
+				function selectElement (_element) {
+					_element
+						.classed("token-selected", true);
+				};
 
-					debugger;
+				function unselectElement () {
+					d3.select(".token-selected")
+						.classed("token-selected", false);
+				};
+
+				function setupBodyEventHandler () {
+					var _body = d3.select("body");
+
+					_body
+						.on("click", clickBodyHandler);
+				}
+
+				function removeBodyClickHandler () {
+					var _body = d3.select("body");
+
+					_body
+						.on("click", null);
+				};
+
+				function clickBodyHandler () {
+					unselectElement();
+					removeBodyClickHandler();
 				};
 
 				function setActiveHexToEmpty () {
