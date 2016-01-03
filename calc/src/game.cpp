@@ -4,8 +4,8 @@ Game::Game() : MaxPlayersNum(4)
 {
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
-    TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
-    TokenFactory::getInstance().registerFun(TokenHQ::typeName, TokenHQ::create);
+    TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
     //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
@@ -101,10 +101,15 @@ void Game::restartGame()
     currentPlayerNum=0;    
 }
 
-bool Game::addToken(int tokenId, Color color, Hex pos)
+bool Game::addToken(int tokenId, Color color, Hex pos, int angle)
 {
     TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)]->getToken(tokenId));
-    return board_->addToken(pos, token);
+    if(token!=nullptr)
+    {
+        token->setAngle(angle);
+        return board_->addToken(pos, token);
+    }
+    return false;
 }
 
 bool Game::throwToken(int tokenId, Color color)
@@ -114,14 +119,16 @@ bool Game::throwToken(int tokenId, Color color)
 
 Player* Game::getNextPlayer()
 {
-    currentPlayerNum = (currentPlayerNum + 1)%MaxPlayersNum;
+    currentPlayerNum = (currentPlayerNum + 1)%players.size();
     players[currentPlayerNum]->getNextTokensOnHandIds();
     return getCurrentPlayer();
 }
 
 Player* Game::getCurrentPlayer()
 {
-    return players[currentPlayerNum];
+    if(currentPlayerNum<players.size())
+        return players[currentPlayerNum];
+    return nullptr;
 }
 
 bool Game::actionToken(int tokenId, Color color, ActionArgs args)
@@ -164,15 +171,10 @@ bool Game::killPlayer(Color color)
     int id=getPlayerId(color);
     if(id!=-1)
     {
-        std::cout<<"kill player "<<id<<std::endl;
         Player* player=players[id];
-        std::cout<<"get player "<<std::endl;
         players.erase(players.begin() + id);
-        std::cout<<"erase player "<<std::endl;
         playersMap.erase(color);
-        std::cout<<"erase color "<<std::endl;
         delete player;
-        std::cout<<"delete player "<<std::endl;
         return true;
     }
     return false;

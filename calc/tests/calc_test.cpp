@@ -33,7 +33,6 @@
 
 using namespace boost;
 using boost::unit_test::test_suite;
-//std::string configPath="/home/magda/neurohex/calc/config.xml";
 std::string configPath="calc/config.xml";
 
 BOOST_AUTO_TEST_SUITE( calc_test )
@@ -217,15 +216,15 @@ BOOST_AUTO_TEST_CASE( TokenCreatureTest )
 
 BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
 {
-    TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
-    TokenFactory::getInstance().registerFun(TokenCreature::typeName, TokenCreature::create);
-    TokenFactory::getInstance().registerFun(TokenAction::typeName, TokenAction::create);
-    TokenFactory::getInstance().registerFun(TokenHQ::typeName, TokenHQ::create);
+    TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
+    TokenFactory::getInstance().registerFun(TokenCreature::typeName(), TokenCreature::create);
+    TokenFactory::getInstance().registerFun(TokenAction::typeName(), TokenAction::create);
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
     
-    ModFactory::getInstance().registerFun(ModAdditionalAction::typeName, ModAdditionalAction::create);
-    ModFactory::getInstance().registerFun(ModAttack::typeName, ModAttack::create);
-    ModFactory::getInstance().registerFun(ModLife::typeName, ModLife::create);
-    ModFactory::getInstance().registerFun(ModPriority::typeName, ModPriority::create);
+    ModFactory::getInstance().registerFun(ModAdditionalAction::typeName(), ModAdditionalAction::create);
+    ModFactory::getInstance().registerFun(ModAttack::typeName(), ModAttack::create);
+    ModFactory::getInstance().registerFun(ModLife::typeName(), ModLife::create);
+    ModFactory::getInstance().registerFun(ModPriority::typeName(), ModPriority::create);
     
     std::vector<Token*> tokens=TokenFactory::getInstance().createTokensFromFile(configPath, Color::BLUE);
     BOOST_CHECK_EQUAL(tokens.size(), 7);
@@ -315,8 +314,8 @@ BOOST_AUTO_TEST_CASE( PlayerTest )
     BOOST_CHECK_EQUAL(player.getName(), "Pawel");
     player.setStack(Color::RED, configPath);
     BOOST_CHECK(player.getColor()==Color::RED);
-    BOOST_CHECK(player.getToken(1)==nullptr);
-    BOOST_CHECK_EQUAL(player.getTokensOnHandIds().size(), 0);
+    BOOST_CHECK(player.getToken(2)==nullptr);
+    BOOST_CHECK_EQUAL(player.getTokensOnHandIds().size(), 1);
     BOOST_CHECK_EQUAL(player.getNextTokensOnHandIds().size(), 1);
     BOOST_CHECK(player.getToken(5)==nullptr);
     player.getToken(1);
@@ -360,8 +359,22 @@ BOOST_AUTO_TEST_CASE( GameTest )
     BOOST_CHECK_EQUAL(Game::getInstance().getPlayers()[1]->stackSize(), 7);
     
     BOOST_CHECK_EQUAL(Game::getInstance().killPlayer(Color::GREEN), true);
-    /*BOOST_CHECK_EQUAL(Game::getInstance().killPlayer(Color::YELLOW), true);
-    BOOST_CHECK_EQUAL( Game::getInstance().getPlayers().size(), 2 );*/
+    BOOST_CHECK_EQUAL(Game::getInstance().killPlayer(Color::YELLOW), true);
+    BOOST_CHECK_EQUAL( Game::getInstance().getPlayers().size(), 2 );
+    BOOST_CHECK_EQUAL( Game::getInstance().getCurrentPlayer()->getName(),"player1");
+    
+    BOOST_CHECK_EQUAL(Game::getInstance().addToken(1, Color::BLUE, Hex(1,-1), 0), true);
+    BOOST_CHECK_EQUAL(Game::getInstance().addToken(1, Color::BLUE, Hex(1,-1), 0), false);
+    
+    BOOST_CHECK_EQUAL( Game::getInstance().getNextPlayer()->getName(),"player2");
+    BOOST_CHECK_EQUAL(Game::getInstance().throwToken(1, Color::RED), false);
+    
+    BOOST_CHECK_EQUAL( Game::getInstance().getNextPlayer()->getName(),"player1");
+    BOOST_CHECK_EQUAL( Game::getInstance().getCurrentPlayer()->getTokensOnHandIds().size(),3);
+    
+    Game::getInstance().restartGame();
+    BOOST_CHECK_EQUAL( Game::getInstance().getPlayers().size(), 0);
+    BOOST_CHECK( Game::getInstance().getCurrentPlayer()==nullptr);
 }
 
 BOOST_AUTO_TEST_CASE( BoardTest )

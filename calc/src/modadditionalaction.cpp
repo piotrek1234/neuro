@@ -25,4 +25,4 @@ Mod* ModAdditionalAction::create(ptree xml)
     return new ModAdditionalAction(directions);
 }
 
-std::string ModAdditionalAction::typeName="additional_action";
+std::string ModAdditionalAction::typeName_="additional_action";

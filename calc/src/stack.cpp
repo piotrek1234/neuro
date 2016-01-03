@@ -61,10 +61,13 @@ std::vector<int> Stack::getCurrentTokensIds()
 
 std::vector<int> Stack::getNextTokensIds()
 {
-    if(hq && currentTokens.size()<1)
+    if(hq)
     {
-        currentTokens.push_back(tokens.front());
-        tokens.erase(tokens.begin());
+        if(currentTokens.size()<1)
+        {
+            currentTokens.push_back(tokens.front());
+            tokens.erase(tokens.begin());
+        }
     }
     else
     {

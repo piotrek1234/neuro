@@ -35,7 +35,7 @@ public:
     void clearShield();
     
     static Token* create(ptree Ptree, Color color);
-    static std::string typeName;
+    static std::string typeName() {return typeName_;}
 
 private:
     //TokenCreature(const TokenCreature&) = default;
@@ -44,6 +44,7 @@ private:
     int priority_;
     bool additionalAction_;
     bool movable_;
+    static std::string typeName_;
 };
 
 #endif // TOKENCREATURE_H

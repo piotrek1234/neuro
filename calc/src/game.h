@@ -35,7 +35,7 @@ public:
     Board* getBoard();
     std::vector<Player*> getPlayers();
     void restartGame();
-    bool addToken(int tokenId, Color color, Hex pos);
+    bool addToken(int tokenId, Color color, Hex pos, int angle);
     bool throwToken(int tokenId, Color color);
     Player* getNextPlayer();
     Player* getCurrentPlayer();
@@ -62,7 +62,7 @@ private:
         template<typename T> void operator()(T)
         {
             std::cout<<"register fig"<<std::endl;
-            F::getInstance().registerFun(T::typeName, T::create);
+            F::getInstance().registerFun(T::typeName(), T::create);
             std::cout<<"register fig ended"<<std::endl;
         }
     };

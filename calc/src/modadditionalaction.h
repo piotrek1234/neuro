@@ -16,7 +16,10 @@ public:
     virtual Mod* clone() const;
     virtual void modify(TokenCreature* tc);
     static Mod* create(ptree xml);
-    static std::string typeName;
+    static std::string typeName() {return typeName_;}
+    
+private:
+    static std::string typeName_;
 };
 
 #endif // MODADDITIONALACTION_H

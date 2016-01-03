@@ -35,4 +35,4 @@ Token* TokenModule::create(ptree Ptree, Color color)
     return token;
 }
 
-std::string TokenModule::typeName="module";
+std::string TokenModule::typeName_="module";
