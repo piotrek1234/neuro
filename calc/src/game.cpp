@@ -131,7 +131,7 @@ Player* Game::getCurrentPlayer()
     return nullptr;
 }
 
-bool Game::actionToken(int tokenId, Color color, ActionArgs args)
+bool Game::actionTokenBattle(int tokenId, Color color)
 {
     TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::BATTLE)
@@ -139,29 +139,34 @@ bool Game::actionToken(int tokenId, Color color, ActionArgs args)
         //BattleHandler::getInstance().handleBattle();
         return true;
     }
+    return false;
+}
+
+bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
+{
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::MOVE)
     {
-            std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
-            Hex from = fromTo.first;
-            Hex to = fromTo.second;
-            TokenPutable* tokenToMove = board_->getToken(from);
-            if (color==tokenToMove->getColor())
-            {
-                return board_->moveToken(from, to);
-            }
-            return false;
+        TokenPutable* tokenToMove = board_->getToken(from);
+        if (color==tokenToMove->getColor())
+        {
+            return board_->moveToken(from, to);
+        }
+        return false;
     }
+    return false;
+}
+
+bool Game::actionTokenPush(int tokenId, Color color, Hex from, Hex to)
+{
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::PUSH)
     {
-        std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
-        Hex from = fromTo.first;
-        Hex to = fromTo.second;
         TokenPutable* tokenToMove = board_->getToken(from);
         if (color!=tokenToMove->getColor())
         {
             return board_->pushToken(from, to);
         }
-        return false;
     }
     return false;
 }

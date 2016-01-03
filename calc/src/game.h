@@ -27,7 +27,6 @@
 class Game {
 public:
     ~Game();
-    typedef boost::variant<std::pair<Hex, Hex>, bool> ActionArgs;
     static Game& getInstance();
     bool addPlayer(std::string name);
     void removeAllPlayers();
@@ -39,7 +38,9 @@ public:
     bool throwToken(int tokenId, Color color);
     Player* getNextPlayer();
     Player* getCurrentPlayer();
-    bool actionToken(int tokenId, Color color, ActionArgs args);
+    bool actionTokenBattle(int tokenId, Color color);
+    bool actionTokenMove(int tokenId, Color color, Hex from, Hex to);
+    bool actionTokenPush(int tokenId, Color color, Hex from, Hex to);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
     
