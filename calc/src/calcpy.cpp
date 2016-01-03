@@ -181,7 +181,7 @@ BOOST_PYTHON_MODULE( calc )
 
     class_<CommandManagerPy>("CommandManager")
 		.def( "addPlayer", &CommandManagerPy::addPlayer )
-		.def( "getPlayersName", &CommandManagerPy::getPlayersNames )
+		.def( "getPlayersNames", &CommandManagerPy::getPlayersNames )
 		.def( "removeAllPlayers", &CommandManagerPy::removeAllPlayers)
 		.def( "getPlayers", &CommandManagerPy::getPlayers)
 		.def( "getBoard", &CommandManagerPy::getBoard)
