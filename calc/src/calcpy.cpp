@@ -21,6 +21,7 @@
 #include "player.h"
 #include "board.h"
 #include "hex.h"
+#include <iostream>
 
 using namespace boost::python;
 using namespace std;
@@ -32,6 +33,7 @@ public:
 	
 	bool addPlayer(std::string name)
 	{
+		std::cout<<"add player"<<std::endl;
 		return Game::getInstance().addPlayer(name);
 	}
 	

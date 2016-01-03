@@ -12,7 +12,7 @@ cmdmgr = calc.CommandManager()
 
 def addPlayer(name):
     """add player command"""
-    cmd_id = cmdmgr.addPlayer(name)
+    return cmdmgr.addPlayer(name)
 
 def getPlayersNames():
     """get players names list command"""
