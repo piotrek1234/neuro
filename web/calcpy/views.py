@@ -35,37 +35,37 @@ def restartGame():
     cmdgr.restartGame()
 
 def addToken(tokenId, color, q, r , angle):
-    """get tokens on board command"""
+    """add token on board command"""
     return cmdmgr.addToken(tokenId, color, q, r , angle)
 
 def throwToken(tokenId, color):
-    """get tokens on board command"""
+    """throw away token from players stack command"""
     return cmdmgr.throwToken(tokenId, color)
 
 def getNextPlayer():
-    """get tokens on board command"""
+    """get next player decription with tokens on hands and change current player command"""
     return cmdmgr.getNextPlayer()
 
 def getCurrentPlayer():
-    """get tokens on board command"""
+    """get current player decription with tokens on hands command"""
     return cmdmgr.getCurrentPlayer()
 
 def killPlayer(color):
-    """get tokens on board command"""
+    """kill player command"""
     return cmdmgr.killPlayer(color)
 
 def addTokenConfigPath(color, path):
-    """get tokens on board command"""
+    """add path to file with token config command"""
     return cmdmgr.addTokenConfigPath(color, path)
 
 def actionTokenBattle(tokenId, color):
-    """get tokens on board command"""
+    """command for token action of type battle"""
     return cmdmgr.actionTokenBattle(tokenId, color)
 
 def actionTokenMove(tokenId, color, fromQ, fromR, toQ, toR):
-    """get tokens on board command"""
+    """command for token action of type move"""
     return cmdmgr.actionTokenMove(tokenId, color, fromQ, fromR, toQ, toR)
 
 def actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR):
-    """get tokens on board command"""
+    """command for token action of type push"""
     return cmdmgr.actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR)
