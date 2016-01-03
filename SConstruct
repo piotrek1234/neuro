@@ -16,7 +16,7 @@ except BaseException:
 MYAPP_VER_STRING = str(MYAPP_VER_MAJOR) + '.' + str(MYAPP_VER_MINOR) + '.' + MYAPP_VER_COMPILATION
 
 #web
-WWW_BROWSER_WINDOWS='chrome'
+WWW_BROWSER_WINDOWS='"c:\\program files\\google\\chrome\\application\\chrome.exe"'
 WWW_BROWSER_LINUX='google-chrome'
 WEB_SRV_PREFIX = 'srvmyapp'
 WEB_SRV_HOST = '127.0.0.1'
@@ -77,7 +77,8 @@ if env['r'] == 'l':
         #os.system('gunicorn --chdir build_web --timeout 0 --worker-class django_socketio.gunicorn.workers.GeventSocketIOWorker --workers 1 --bind \'{addr}:{port}\' wsgi:application'.format(addr=WEB_SRV_HOST, port=WEB_SRV_PORT))
         os.system('python build_web/manage.py runserver_socketio')
     elif platform.system() == "Windows":
-        os.system('python build_web/manage.py runfcgi daemonize=false method=threaded host=' + WEB_SRV_HOST + ' port=' + WEB_SRV_PORT)
+        #os.system('python build_web/manage.py runfcgi daemonize=false method=threaded host=' + WEB_SRV_HOST + ' port=' + WEB_SRV_PORT)
+        os.system('python build_web/manage.py runserver_socketio')
 
     if (platform.system() == "Linux"):
         os.system('kill `cat client/lighttpd.pid`')

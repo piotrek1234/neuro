@@ -17,10 +17,9 @@ public:
     virtual void modify(TokenCreature* tc);
     int getAttackValue(){return attackBoost_;}
     static Mod* create(ptree xml);
-    static std::string typeName() {return typeName_;}
-    
+    static std::string typeName() {return /*typeName_*/"attack";}
 private:
-    static std::string typeName_;
+    //static std::string typeName_;
     int attackBoost_;
 };
 

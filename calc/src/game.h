@@ -24,7 +24,7 @@
 #include <iostream>
 #include "battlehandler.h"
 
-class Game {
+class CALC_DLL()Game {
 public:
     ~Game();
     typedef boost::variant<std::pair<Hex, Hex>, bool> ActionArgs;

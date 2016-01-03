@@ -9,7 +9,7 @@
 #include "tokenfactory.h"
 #include <string>
 
-class Stack {
+class CALC_DLL()Stack {
 public:
     Stack();
     ~Stack();

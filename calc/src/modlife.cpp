@@ -26,4 +26,4 @@ Mod* ModLife::create(ptree xml)
     return new ModLife(directions);
 }
 
-std::string ModLife::typeName_="life";
+// std::string ModLife::typeName_="life";

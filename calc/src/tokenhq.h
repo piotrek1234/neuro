@@ -16,10 +16,10 @@ public:
     virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
     static Token* create(ptree Ptree, Color color);
-    static std::string typeName() {return typeName_;}
+    static std::string typeName() {return /*typeName_*/"hq";}
     
 private:
-    static std::string typeName_;
+    // static std::string typeName_;
 };
 
 #endif // TOKENHQ_H
