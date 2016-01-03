@@ -22,6 +22,7 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
 <script type="text/javascript" src="js/hexagonLibrary.js" data-cover></script>
+<script type="text/javascript" src="js/socket.io.js" data-cover></script>
 
 <!-- Components paths -->
 <script type="text/javascript" src="js/components/hex-map/hexMapDirective.js" data-cover></script>
@@ -37,6 +38,31 @@
 
 <link rel="stylesheet" type="text/css" href="css/styles.css" />
 
+<script type="text/javascript">
+var polaczenie = function()
+{
+	//socket.subscribe("ch1");
+}
+
+var odbior = function(data)
+{
+	alert(data.odp);
+}
+
+var wyslij = function(data)
+{
+	socket.send({'tresc': data});
+}
+
+function jazda()
+{
+socket = new io.Socket();
+socket.connect();
+socket.on('connect', polaczenie);
+socket.on('message', odbior);
+}
+window.onload = jazda;
+</script>
 
         <!-- above are elements copied automatically using file_include.py script -->
 
@@ -62,6 +88,7 @@
 	  <a id="a_lang_{{lang}}" ng-click="changeLanguage(lang)"><img ng-src="pict/{{lang}}.png" /></a>
 	</li>
   </ul>
+<a href="javascript:void(0)" onclick="wyslij('123');">wyślij</a>
 </div>
 
 <div id="content" class="container" ng-view>

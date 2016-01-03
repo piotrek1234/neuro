@@ -13,7 +13,7 @@
 #include <string>
 #include "utils.h"
 
-class ModFactory
+class CALC_DLL()ModFactory
 {
     public:
         typedef Mod*(*ModCreateFun)(ptree);

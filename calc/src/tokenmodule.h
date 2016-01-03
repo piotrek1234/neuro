@@ -19,8 +19,10 @@ public:
     virtual TokenPutable* clone() const;
     virtual void accept(Visitor& v);
     static Token* create(ptree Ptree, Color color);
-    static std::string typeName;
-    //TokenModule(const TokenModule& old);
+    static std::string typeName() {return /*typeName_*/"module";}
+    
+private:
+    //static std::string typeName_;
 };
 
 #endif // TOKENMODULE_H

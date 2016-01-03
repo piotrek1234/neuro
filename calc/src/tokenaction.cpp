@@ -26,4 +26,4 @@ ActionType TokenAction::getActionTypeByName(std::string name)
     return ActionType::NONE;
 }
 
-std::string TokenAction::typeName="action";
+// std::string TokenAction::typeName_="action";

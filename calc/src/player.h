@@ -13,7 +13,7 @@
 #include <vector>
 #include "color.h"
 
-class Player {
+class CALC_DLL()Player {
 public:
 	Player(std::string name_);
     std::string getName();

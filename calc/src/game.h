@@ -24,10 +24,9 @@
 #include <iostream>
 #include "battlehandler.h"
 
-class Game {
+class CALC_DLL()Game {
 public:
     ~Game();
-    typedef boost::variant<std::pair<Hex, Hex>, bool> ActionArgs;
     static Game& getInstance();
     bool addPlayer(std::string name);
     void removeAllPlayers();
@@ -35,11 +34,13 @@ public:
     Board* getBoard();
     std::vector<Player*> getPlayers();
     void restartGame();
-    bool addToken(int tokenId, Color color, Hex pos);
+    bool addToken(int tokenId, Color color, Hex pos, int angle);
     bool throwToken(int tokenId, Color color);
     Player* getNextPlayer();
     Player* getCurrentPlayer();
-    bool actionToken(int tokenId, Color color, ActionArgs args);
+    bool actionTokenBattle(int tokenId, Color color);
+    bool actionTokenMove(int tokenId, Color color, Hex from, Hex to);
+    bool actionTokenPush(int tokenId, Color color, Hex from, Hex to);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
     
@@ -62,7 +63,7 @@ private:
         template<typename T> void operator()(T)
         {
             std::cout<<"register fig"<<std::endl;
-            F::getInstance().registerFun(T::typeName, T::create);
+            F::getInstance().registerFun(T::typeName(), T::create);
             std::cout<<"register fig ended"<<std::endl;
         }
     };

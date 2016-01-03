@@ -22,11 +22,6 @@ void TokenModule::accept(Visitor &v)
     v.visit(this);
 }
 
-/*TokenModule::TokenModule(const TokenModule &old)
-{
-    mod_ = old.getMod()->clone();
-}*/
-
 Token* TokenModule::create(ptree Ptree, Color color)
 {
     TokenModule* token=new TokenModule(color);
@@ -35,4 +30,4 @@ Token* TokenModule::create(ptree Ptree, Color color)
     return token;
 }
 
-std::string TokenModule::typeName="module";
+//std::string TokenModule::typeName_="module";

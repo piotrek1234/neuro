@@ -4,8 +4,8 @@ Game::Game() : MaxPlayersNum(4)
 {
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
-    TokenFactory::getInstance().registerFun(TokenModule::typeName, TokenModule::create);
-    TokenFactory::getInstance().registerFun(TokenHQ::typeName, TokenHQ::create);
+    TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
     //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
@@ -101,10 +101,15 @@ void Game::restartGame()
     currentPlayerNum=0;    
 }
 
-bool Game::addToken(int tokenId, Color color, Hex pos)
+bool Game::addToken(int tokenId, Color color, Hex pos, int angle)
 {
     TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)]->getToken(tokenId));
-    return board_->addToken(pos, token);
+    if(token!=nullptr)
+    {
+        token->setAngle(angle);
+        return board_->addToken(pos, token);
+    }
+    return false;
 }
 
 bool Game::throwToken(int tokenId, Color color)
@@ -114,17 +119,19 @@ bool Game::throwToken(int tokenId, Color color)
 
 Player* Game::getNextPlayer()
 {
-    currentPlayerNum = (currentPlayerNum + 1)%MaxPlayersNum;
+    currentPlayerNum = (currentPlayerNum + 1)%players.size();
     players[currentPlayerNum]->getNextTokensOnHandIds();
     return getCurrentPlayer();
 }
 
 Player* Game::getCurrentPlayer()
 {
-    return players[currentPlayerNum];
+    if(currentPlayerNum<players.size())
+        return players[currentPlayerNum];
+    return nullptr;
 }
 
-bool Game::actionToken(int tokenId, Color color, ActionArgs args)
+bool Game::actionTokenBattle(int tokenId, Color color)
 {
     TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::BATTLE)
@@ -132,29 +139,34 @@ bool Game::actionToken(int tokenId, Color color, ActionArgs args)
         //BattleHandler::getInstance().handleBattle();
         return true;
     }
+    return false;
+}
+
+bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
+{
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::MOVE)
     {
-            std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
-            Hex from = fromTo.first;
-            Hex to = fromTo.second;
-            TokenPutable* tokenToMove = board_->getToken(from);
-            if (color==tokenToMove->getColor())
-            {
-                return board_->moveToken(from, to);
-            }
-            return false;
+        TokenPutable* tokenToMove = board_->getToken(from);
+        if (color==tokenToMove->getColor())
+        {
+            return board_->moveToken(from, to);
+        }
+        return false;
     }
+    return false;
+}
+
+bool Game::actionTokenPush(int tokenId, Color color, Hex from, Hex to)
+{
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::PUSH)
     {
-        std::pair<Hex, Hex> fromTo = boost::get<std::pair<Hex, Hex>>(args);
-        Hex from = fromTo.first;
-        Hex to = fromTo.second;
         TokenPutable* tokenToMove = board_->getToken(from);
         if (color!=tokenToMove->getColor())
         {
             return board_->pushToken(from, to);
         }
-        return false;
     }
     return false;
 }
@@ -164,15 +176,10 @@ bool Game::killPlayer(Color color)
     int id=getPlayerId(color);
     if(id!=-1)
     {
-        std::cout<<"kill player "<<id<<std::endl;
         Player* player=players[id];
-        std::cout<<"get player "<<std::endl;
         players.erase(players.begin() + id);
-        std::cout<<"erase player "<<std::endl;
         playersMap.erase(color);
-        std::cout<<"erase color "<<std::endl;
         delete player;
-        std::cout<<"delete player "<<std::endl;
         return true;
     }
     return false;

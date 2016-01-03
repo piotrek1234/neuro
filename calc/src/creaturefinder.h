@@ -17,6 +17,7 @@ class CALC_DLL()CreatureFinder : public Visitor
 {
 public:
     CreatureFinder();
+    virtual ~CreatureFinder(){}
     virtual void visit(TokenCreature* tc);
     virtual void visit(TokenHQ* th);
     virtual void visit(TokenModule*) {}

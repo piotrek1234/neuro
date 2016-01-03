@@ -18,6 +18,9 @@
 #include <string>
 #include "game.h"
 #include "color.h"
+#include "player.h"
+#include "board.h"
+#include "hex.h"
 
 using namespace boost::python;
 using namespace std;
@@ -27,14 +30,130 @@ using namespace std;
 class CommandManagerPy {
 public:
 	
-	void addPlayer(std::string name)
+	bool addPlayer(std::string name)
 	{
-		Game::getInstance().addPlayer(name);
+		return Game::getInstance().addPlayer(name);
 	}
 	
-	std::vector<std::string> getPlayers()
+	boost::python::list getPlayersNames()
 	{
-		return Game::getInstance().getPlayersNames();
+		std::vector<std::string> players = Game::getInstance().getPlayersNames();
+		boost::python::list out;
+		for(std::vector<std::string>::const_iterator i=players.begin(); i!=players.end(); ++i)
+		{
+			out.append(*i);
+		}
+		return out;
+	}
+	
+	void removeAllPlayers()
+	{
+		Game::getInstance().removeAllPlayers();
+	}
+	
+	boost::python::list getPlayers()
+	{
+		std::vector<Player*> players = Game::getInstance().getPlayers();
+		boost::python::list out;
+		for(std::vector<Player*>::const_iterator i=players.begin(); i!=players.end(); ++i)
+		{
+			boost::python::dict player = playerDict(*i);
+			out.append(player);
+		}
+		return out;
+	}
+	
+	boost::python::dict getBoard()
+	{
+		boost::python::dict out;
+		Board* board = Game::getInstance().getBoard();
+		for(auto i=board->getMapBegin(); i!=board->getMapEnd(); ++i)
+		{
+			if(i->second!=nullptr)
+			{
+				Hex pos = i->first;
+				out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
+			}
+		}
+		return out;
+	}
+	
+	void restartGame()
+	{
+		Game::getInstance().restartGame();
+	}
+	
+	
+    bool addToken(int tokenId, Color color, int q, int r, int angle)
+	{
+		return Game::getInstance().addToken(tokenId, color, Hex(q, r), angle);
+	}
+	
+    bool throwToken(int tokenId, Color color)
+	{
+		return Game::getInstance().throwToken(tokenId, color);	
+	}
+	
+	boost::python::dict getNextPlayer()
+	{
+		Player* p=Game::getInstance().getNextPlayer();
+		return playerDict(p);
+	}
+	
+	boost::python::dict getCurrentPlayer()
+	{
+		Player* p=Game::getInstance().getCurrentPlayer();
+		return playerDict(p);
+	}
+    
+    bool killPlayer(Color color)
+	{
+		return Game::getInstance().killPlayer(color);
+	}
+	
+    void addTokenConfigPath(Color color, std::string path)
+	{
+		Game::getInstance().addTokenConfigPath(color, path);
+	}
+
+	bool actionTokenBattle(int tokenId, Color color)
+	{
+		return Game::getInstance().actionTokenBattle(tokenId, color);
+	}
+	
+    bool actionTokenMove(int tokenId, Color color, int fromQ, int fromR, int toQ, int toR)
+	{
+		return Game::getInstance().actionTokenMove(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
+	}
+	
+    bool actionTokenPush(int tokenId, Color color, int fromQ, int fromR, int toQ, int toR)
+	{
+		return Game::getInstance().actionTokenPush(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
+	}
+	
+private:
+	
+	boost::python::list listOfInt(std::vector<int> v)
+	{
+		boost::python::list out;
+		for(std::vector<int>::const_iterator i=v.begin(); i!=v.end(); ++i)
+		{
+			out.append(*i);
+		}
+		return out;
+	}	
+	
+	boost::python::dict playerDict(Player* p)
+	{
+		boost::python::dict player;
+		if(p!=nullptr)
+		{
+			player["name"] = p->getName();
+			player["color"] = p->getColor();
+			player["tokens"] = listOfInt(p->getTokensOnHandIds());
+			player["stack_size"] = p->stackSize();
+		}
+		return player;
 	}
 };
 
@@ -62,7 +181,30 @@ BOOST_PYTHON_MODULE( calc )
 
     class_<CommandManagerPy>("CommandManager")
 		.def( "addPlayer", &CommandManagerPy::addPlayer )
-		.def( "getPlayers", &CommandManagerPy::getPlayers )
-        ;
+		.def( "getPlayersName", &CommandManagerPy::getPlayersNames )
+		.def( "removeAllPlayers", &CommandManagerPy::removeAllPlayers)
+		.def( "getPlayers", &CommandManagerPy::getPlayers)
+		.def( "getBoard", &CommandManagerPy::getBoard)
+		.def( "restartGame", &CommandManagerPy::restartGame)
+		.def( "addToken", &CommandManagerPy::addToken)
+        .def( "throwToken", &CommandManagerPy::throwToken)
+		.def( "getNextPlayer", &CommandManagerPy::getNextPlayer)
+		.def( "getCurrentPlayer", &CommandManagerPy::getCurrentPlayer)
+		.def( "killPlayer", &CommandManagerPy::killPlayer)
+		.def( "addTokenConfigPath", &CommandManagerPy::addTokenConfigPath)
+		.def( "actionTokenBattle", &CommandManagerPy::actionTokenBattle)
+		.def( "actionTokenMove", &CommandManagerPy::actionTokenMove)
+		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
+		;
+		
+	boost::python::enum_<Color>("Color")
+		.value("RED", Color::RED)
+		.value("BLUE", Color::BLUE)
+		.value("YELLOW", Color::YELLOW)
+		.value("GREEN", Color::GREEN)
+		.value("NONE", Color::NONE)
+		.export_values()
+		;
 
+	
 }

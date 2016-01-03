@@ -20,6 +20,7 @@ void Player::setStack(Color color, std::string tokensConfigPath)
     {
         stack.readTokens(color, tokensConfigPath);
     }
+    stack.getNextTokensIds();
 }
 
 Token* Player::getToken(unsigned int tokenId){
