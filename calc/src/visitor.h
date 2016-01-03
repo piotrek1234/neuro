@@ -15,7 +15,7 @@ class TokenCreature;
 class TokenModule;
 class TokenHQ;
 
-class Visitor
+class CALC_DLL()Visitor
 {
 public:
     Visitor();

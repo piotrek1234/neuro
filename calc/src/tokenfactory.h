@@ -16,7 +16,7 @@
 #include <boost/foreach.hpp>
 #include <iostream>
 
-class TokenFactory
+class CALC_DLL()TokenFactory
 {
     public:
         typedef Token*(*TokenCreateFun)(ptree, Color);

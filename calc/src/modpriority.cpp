@@ -25,4 +25,4 @@ Mod* ModPriority::create(ptree xml)
     return new ModPriority(directions);
 }
 
-std::string ModPriority::typeName_="priority";
+// std::string ModPriority::typeName_="priority";

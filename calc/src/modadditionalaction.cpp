@@ -1,5 +1,7 @@
 #include "modadditionalaction.h"
 
+//std::string ModAdditionalAction::typeName_="additional_action";
+
 ModAdditionalAction::~ModAdditionalAction()
 {
 
@@ -24,5 +26,3 @@ Mod* ModAdditionalAction::create(ptree xml)
     }
     return new ModAdditionalAction(directions);
 }
-
-std::string ModAdditionalAction::typeName_="additional_action";

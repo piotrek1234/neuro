@@ -17,12 +17,12 @@ public:
     virtual bool isPutable() const { return false; }
     ActionType getType() const { return actionType_; }
     static Token* create(ptree Ptree, Color color);
-    static std::string typeName() {return typeName_;}
+    static std::string typeName() {return /*typeName_*/"action";}
     
 private:
     ActionType actionType_;
     static ActionType getActionTypeByName(std::string name);
-    static std::string typeName_;
+    //static std::string typeName_;
 };
 
 #endif // TOKENACTION_H

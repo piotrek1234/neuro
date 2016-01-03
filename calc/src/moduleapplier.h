@@ -13,6 +13,7 @@ class CALC_DLL()ModuleApplier : public Visitor
 {
 public:
     ModuleApplier() {}
+    virtual ~ModuleApplier(){}
     void setTarget(TokenCreature* tc) { tc_ = tc; }
     virtual void visit(TokenCreature*) {}
     virtual void visit(TokenHQ* th);

@@ -24,7 +24,7 @@
 #include <iostream>
 #include "battlehandler.h"
 
-class Game {
+class CALC_DLL()Game {
 public:
     ~Game();
     static Game& getInstance();
