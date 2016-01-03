@@ -4,7 +4,9 @@ angular.module('hexMapDirective', [])
 			restrict: 'E',
 			scope: {
 				hexCount: "=hexCount",
-				size: "="
+				size: "=",
+
+				selectClickFn: '&'
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex-map/hexMap.html',
@@ -28,7 +30,7 @@ angular.module('hexMapDirective', [])
 			 	
 			 	$scope.cornersSet = cornersSet;
 			},
-			link: function (scope, element, attr) {
+			link: function ($scope, element, attr) {
 				element.on('dragover', function (event) {
 					var srcElement = d3.select(event.target);
 					
@@ -109,6 +111,18 @@ angular.module('hexMapDirective', [])
 					unselectElement();
 					selectElement(_element);
 					setupBodyEventHandler();
+					
+					emitSelectClickHandler($srcElement)
+				};
+
+				function emitSelectClickHandler ($element) {
+					if ($scope.selectClickFn == null) {
+						return;
+					}
+
+					var hexClass = $element.getAttribute("class");
+
+					$scope.$emit('test', {hexClass: hexClass});
 				};
 
 				function selectElement (_element) {

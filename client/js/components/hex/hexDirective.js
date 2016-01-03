@@ -6,7 +6,11 @@ angular.module('hexDirective', [])
 				corners: '=',
 				color: '=',
 				draggable: '=',
-				dropable: '='
+				dropable: '=',
+
+				centerX: '=',
+				centerY: '=',
+				size: '='
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex/hex.html',
@@ -43,8 +47,22 @@ angular.module('hexDirective', [])
 					}
 				};
 
+				function setCornersFromCenterPoint (x, y) {
+					var hexLibrary = new hexLibraryConstructor();
+					var center = new Point(x, y);
+
+					hexLibrary.setLayoutSize(Point($scope.size, $scope.size));
+					
+					var corners = hexLibrary.setHexCorners(center);
+					return corners;
+				};
+
 				setColorClass($scope.color);
 				setDraggableAttribute($scope.draggable);
+ 				
+				if (!!$scope.centerX || !!$scope.centerY) {
+					$scope.corners = setCornersFromCenterPoint($scope.centerX, $scope.centerY);
+				}
 			},
 			link: function ($scope, $element, attr) {
 				var hexLibrary = new hexLibraryConstructor();
@@ -175,7 +193,7 @@ angular.module('hexDirective', [])
 
 					$startElement = null;
 					startElementClass = null;
-				}
+				};
 			}
 		};
 	});

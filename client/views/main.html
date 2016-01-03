@@ -37,6 +37,12 @@
       <pattern id="user-board-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" >
         <image xlink:href="/pict/cracked-wood.jpg" x="0" y="0" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" />
       </pattern>
+      <pattern id="right-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="56.3">
+        <image xlink:href="/pict/right-arrow.gif" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
+      </pattern>
+      <pattern id="left-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="56.3">
+        <image xlink:href="/pict/left-arrow.gif" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
+      </pattern>
     </defs>
 
        <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
@@ -54,10 +60,17 @@
 
         </g>
 
-        <g ng-attr-transform="translate(0, {{hexSize*9}})">
-           <rect class="main-board" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" fill=url(#user-board-img) />
+        <g ng-attr-transform="translate(0, {{hexSize*9}})" ng-controller="operationBoardController">
+        
+           <rect class="main-board" ng-attr-width="{{mainBoard.width}}" ng-attr-height="{{mainBoard.height}}" fill=url(#user-board-img) />
 
-           <rect ng-attr-x="{{hexSize/2}}" ng-attr-y="{{hexSize/2}}" ng-attr-width="{{hexSize*7}}" ng-attr-height="{{hexSize*2}}" fill-opacity="0.4">
+           <rect ng-attr-x="{{board.x}}" ng-attr-y="{{board.y}}" ng-attr-width="{{board.width}}" ng-attr-height="{{board.height}}" fill-opacity="0.4" />
+
+            <hex center-x="hexCenterX" center-y="hexCenterY" size="hexSize"></hex>
+
+            <rect ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" fill=url(#left-arrow-img) />
+
+            <rect ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" fill=url(#right-arrow-img) />
         </g>
 
     </svg>
