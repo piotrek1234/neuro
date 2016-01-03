@@ -80,6 +80,10 @@ angular.module('myAppControllers', [])
 		 	};
 
 		 	$scope.userBoard = userBoard;
+
+		 	$scope.$on('test', function (event, data) {
+		 		debugger;
+		 	});
 		 }])
 	.controller('welcomePopup', 
 		['$scope',
