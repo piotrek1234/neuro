@@ -125,7 +125,7 @@ Token* TokenCreature::create(ptree xmlnode, Color color)
         }
         if(label == "shield")
         {
-            token->setShield(v.second.get<unsigned int>("dir_id"), v.second.get<bool>("value"));
+            token->setShield(v.second.get<unsigned int>("dir_id"), true);
             //break;
         }
     }
