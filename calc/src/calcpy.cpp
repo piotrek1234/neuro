@@ -74,7 +74,8 @@ public:
 			if(i->second!=nullptr)
 			{
 				Hex pos = i->first;
-				out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
+				//out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
+				out[boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS())] = i->second->getId();
 			}
 		}
 		return out;
