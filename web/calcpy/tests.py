@@ -59,6 +59,7 @@ class CalcPyLibraryTestCase(django.test.TestCase):
         self.assertEqual(cmdmgr.getPlayersNames(), [])
     
     def test02getPlayers(self):
+        cmdmgr.restartGame()
         self.assertEqual(cmdmgr.addPlayer("player1"), True)
         self.assertEqual(cmdmgr.addPlayer("player2"), True)
         self.assertEqual(cmdmgr.getPlayersNames(), ["player1", "player2"])
@@ -82,17 +83,17 @@ class CalcPyLibraryTestCase(django.test.TestCase):
         self.assertEqual(player["name"], "player1")
         
         players= cmdmgr.getPlayers()
-        self.assertEqual(players, {})
+        self.assertEqual(players, [{'color': calc.Color.BLUE, 'tokens': [1], 'name': 'player1', 'stack_size': 7}, {'color': calc.Color.RED, 'tokens': [1], 'name': 'player2', 'stack_size': 7}])
         
     
     def test03addAndThrowTokens(self):
+        cmdmgr.restartGame()
         self.assertEqual(cmdmgr.addPlayer("player1"), True)
         self.assertEqual(cmdmgr.addPlayer("player2"), True)
         self.assertEqual(cmdmgr.getPlayersNames(), ["player1", "player2"])
         player = cmdmgr.getCurrentPlayer()
         self.assertEqual(player["name"], "player1")
         self.assertEqual(player["stack_size"], 7)
-        self.assertEqual(cmdmgr.getPlayersNames(), ["player1", "player2"])
         self.assertFalse(cmdmgr.addToken(5, calc.Color.BLUE, 1, -1, 0))
         self.assertTrue(cmdmgr.addToken(1, calc.Color.BLUE, 1, -1, 0))
         self.assertFalse(cmdmgr.addToken(1, calc.Color.BLUE, 1, -1, 0))
@@ -104,23 +105,23 @@ class CalcPyLibraryTestCase(django.test.TestCase):
         player = cmdmgr.getNextPlayer()
         self.assertEqual(player["name"], "player2")
         self.assertEqual(player["stack_size"], 7)
-        self.assertFalse(calc.throwToken(1, calc.Color.RED))
-        self.assertFalse(calc.addToken(1, calc.Color.RED, 1, -1, 0))
-        self.assertTrue(calc.addToken(1, calc.Color.RED, 2, -2, 0))
+        self.assertFalse(cmdmgr.throwToken(1, calc.Color.RED))
+        self.assertFalse(cmdmgr.addToken(1, calc.Color.RED, 1, -1, 0))
+        self.assertTrue(cmdmgr.addToken(1, calc.Color.RED, 0, -1, 0))
         player = cmdmgr.getCurrentPlayer()
         self.assertEqual(player["stack_size"], 6)
         
         player = cmdmgr.getNextPlayer()
         self.assertEqual(player["name"], "player1")
         self.assertEqual(player["tokens"], [2, 3, 4])
-        self.assertTrue(calc.throwToken(2, calc.Color.RED))
+        self.assertTrue(cmdmgr.throwToken(2, calc.Color.BLUE))
         player = cmdmgr.getCurrentPlayer()
         self.assertEqual(player["stack_size"], 5)
         self.assertEqual(player["tokens"], [3, 4])
     
     def test04getBoard(self):
         board = cmdmgr.getBoard()
-        self.assertEqual(board, {})
+        self.assertEqual(board,  {(1, -1, 0): 1, (0, -1, 1): 1})
     
     def test05actionTokens(self):
         pass

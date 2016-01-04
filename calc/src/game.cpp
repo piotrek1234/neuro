@@ -103,11 +103,15 @@ void Game::restartGame()
 
 bool Game::addToken(int tokenId, Color color, Hex pos, int angle)
 {
-    TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)]->getToken(tokenId));
-    if(token!=nullptr)
+    int playerId=getPlayerId(color);
+    if(playerId!=-1 && board_->getToken(pos)==nullptr)
     {
-        token->setAngle(angle);
-        return board_->addToken(pos, token);
+        TokenPutable* token=dynamic_cast<TokenPutable*>(players[playerId]->getToken(tokenId));
+        if(token!=nullptr)
+        {
+            token->setAngle(angle);
+            return board_->addToken(pos, token);
+        }
     }
     return false;
 }
@@ -144,15 +148,19 @@ bool Game::actionTokenBattle(int tokenId, Color color)
 
 bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
 {
-    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
-    if(token->getType() == ActionType::MOVE)
+    int playerId=getPlayerId(color);
+    if(playerId!=-1)
     {
-        TokenPutable* tokenToMove = board_->getToken(from);
-        if (color==tokenToMove->getColor())
+        TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId));
+        if(token->getType() == ActionType::MOVE)
         {
-            return board_->moveToken(from, to);
+            TokenPutable* tokenToMove = board_->getToken(from);
+            if (color==tokenToMove->getColor())
+            {
+                return board_->moveToken(from, to);
+            }
+            return false;
         }
-        return false;
     }
     return false;
 }

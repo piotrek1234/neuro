@@ -8,18 +8,15 @@ Stack::Stack()
 
 Stack::~Stack()
 {
-    std::cout<<"stack dest"<<std::endl;
     for(unsigned int i=0; i<currentTokens.size(); ++i)
     {
         delete currentTokens[i];
     }
-    std::cout<<"curr deleted"<<std::endl;
     for(unsigned int i=0; i<tokens.size(); ++i)
     {
         std::cout<<i<<std::endl;
         delete tokens[i];
     }
-    std::cout<<"stack dest end"<<std::endl;
 }
 
 void Stack::readTokens(Color color, std::string tokensConfigPath)
