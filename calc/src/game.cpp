@@ -192,3 +192,10 @@ int Game::getPlayerId(Color color)
         return playersMap[color];
     return -1;
 }
+
+
+std::string Game::getTokenName(int tokenId, Color color)
+{
+    Token* token = players[getPlayerId(color)]->getToken(tokenId);
+    return token->getName();
+}

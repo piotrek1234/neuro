@@ -12,6 +12,7 @@ Token* TokenAction::create(ptree xmlnode, Color color)
     Token* token=new TokenAction(action);
     token->setColor(color);
     token->setId(xmlnode.get<int>("id"));
+    token->setName(xmlnode.get<std::string>("name"));
     return token;
 }
 

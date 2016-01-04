@@ -2,6 +2,7 @@
   <token><!-- hq -->
     <id>1</id>
     <type>hq</type>
+    <name>rd_hq</name>
     <module_type>attack</module_type>
     <value>1</value>
     <directions></directions>
@@ -10,6 +11,7 @@
   <token><!-- rd_cre_01, 3 -->
     <id>2</id>
     <type>creature</type>
+    <name>rd_cre_01</name>
     <life>2</life>
     <priority>0</priority>
     <additional_action>0</additional_action>
@@ -22,6 +24,7 @@
   <token><!-- rd_cre_02, 2 -->
     <id>3</id>
     <type>creature</type>
+    <name>rd_cre_02</name>
     <life>1</life>
     <priority>3</priority>
     <additional_action>0</additional_action>
@@ -35,6 +38,7 @@
   <token><!-- rd_cre_03, 1 -->
     <id>4</id>
     <type>creature</type>
+    <name>rd_cre_03</name>
     <life>2</life>
     <priority>1</priority>
     <additional_action>0</additional_action>
@@ -48,6 +52,7 @@
   <token><!-- rd_cre_04, 1 -->
     <id>5</id>
     <type>creature</type>
+    <name>rd_cre_04</name>
     <life>2</life>
     <priority>1</priority>
     <additional_action>0</additional_action>
@@ -66,6 +71,7 @@
   <token><!-- rd_cre_05, 1 -->
     <id>6</id>
     <type>creature</type>
+    <name>rd_cre_05</name>
     <life>2</life>
     <priority>2</priority>
     <additional_action>0</additional_action>
@@ -81,6 +87,7 @@
   <token><!-- rd_cre_06, 2 -->
     <id>7</id>
     <type>creature</type>
+    <name>rd_cre_06</name>
     <life>1</life>
     <priority>3</priority>
     <additional_action>0</additional_action>
@@ -100,6 +107,7 @@
   <token><!-- rd_cre_07, 1 -->
     <id>8</id>
     <type>creature</type>
+    <name>rd_cre_07</name>
     <life>2</life>
     <priority>1</priority>
     <additional_action>0</additional_action>
@@ -117,6 +125,7 @@
   <token><!-- rd_cre_08, 1 -->
     <id>10</id>
     <type>creature</type>
+    <name>rd_cre_08</name>
     <life>1</life>
     <priority>2</priority>
     <additional_action>0</additional_action>
@@ -134,6 +143,7 @@
   <token><!-- rd_cre_09, 1 -->
     <id>11</id>
     <type>creature</type>
+    <name>rd_cre_09</name>
     <life>1</life>
     <priority>2</priority>
     <additional_action>0</additional_action>
@@ -147,6 +157,7 @@
   <token><!-- rd_cre_10, 1 -->
     <id>12</id>
     <type>creature</type>
+    <name>rd_cre_10</name>
     <life>2</life>
     <priority>2</priority>
     <additional_action>1</additional_action>
@@ -158,19 +169,10 @@
     <shield></shield>
   </token>
 <!-- modules -->
- <token><!-- rd_mod_life, 2 -->
-  <id>13</id>
-  <type>module</type>
-  <module_type>life</module_type>
-  <directions>
-   <dir_id>0</dir_id>
-   <dir_id>1</dir_id>
-   <dir_id>5</dir_id>
-  </directions>
- </token>
  <token><!-- rd_mod_attack, 2 -->
   <id>14</id>
   <type>module</type>
+  <name>rd_mod_attack</name>
   <module_type>attack</module_type>
   <value>1</value>
   <directions>
@@ -182,6 +184,7 @@
  <token><!-- rd_mod_priority, 1 -->
   <id>15</id>
   <type>module</type>
+  <name>rd_mod_priority</name>
   <module_type>priority</module_type>
   <directions>
    <dir_id>0</dir_id>
@@ -192,6 +195,7 @@
  <token><!-- rd_mod_life, 2 -->
   <id>16</id>
   <type>module</type>
+  <name>rd_mod_life</name>
   <module_type>life</module_type>
   <directions>
    <dir_id>0</dir_id>
@@ -202,6 +206,7 @@
  <token><!-- rd_mod_additional, 1 -->
   <id>17</id>
   <type>module</type>
+  <name>rd_mod_additional</name>
   <module_type>additional_action</module_type>
   <directions>
    <dir_id>0</dir_id>
@@ -211,16 +216,19 @@
  <token><!-- rd_act_battle, 5 -->
   <id>18</id> 
   <type>action</type>
+  <name>rd_act_battle</name>
   <action_type>battle</action_type>
  </token>
  <token><!-- rd_act_move, 4 -->
   <id>19</id> 
   <type>action</type>
+  <name>rd_act_move</name>
   <action_type>move</action_type>
  </token>
  <token><!-- rd_act_push, 2 -->
   <id>20</id> 
   <type>action</type>
+  <name>rd_act_push</name>
   <action_type>push</action_type>
  </token>
 </tokens>

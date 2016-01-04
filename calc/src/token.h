@@ -8,6 +8,7 @@
 #endif
 
 #include "color.h"
+#include <string>
 
 class CALC_DLL()Token
 {
@@ -20,10 +21,12 @@ public:
     void setColor(const Color &value);
     int getId() const;
     void setId(int id);
-
+    void setName(std::string name);
+    std::string getName();
 private:
     Color color_;
     int id_;
+    std::string name_;
 };
 
 #endif // TOKEN_H

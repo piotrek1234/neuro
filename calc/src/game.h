@@ -43,6 +43,7 @@ public:
     bool actionTokenPush(int tokenId, Color color, Hex from, Hex to);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
+    std::string getTokenName(int tokenId, Color color);
     
 private:
     Game();

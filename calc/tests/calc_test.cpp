@@ -232,6 +232,7 @@ BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
     TokenHQ* hq=dynamic_cast<TokenHQ*>(tokens[0]);
     BOOST_CHECK(hq!=nullptr);
     BOOST_CHECK_EQUAL(hq->getId(), 1);
+    BOOST_CHECK_EQUAL(hq->getName(), "hq1");
     
     TokenCreature* creature=dynamic_cast<TokenCreature*>(tokens[1]);
     BOOST_CHECK(creature!=nullptr);
@@ -243,11 +244,13 @@ BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
     BOOST_CHECK_EQUAL(creature->getShield(1), true);
     BOOST_CHECK_EQUAL(creature->getShield(2), 0);
     BOOST_CHECK_EQUAL(creature->getId(), 2);
+    BOOST_CHECK_EQUAL(creature->getName(), "cre01");
     
     TokenAction* action=dynamic_cast<TokenAction*>(tokens[2]);
     BOOST_CHECK(action!=nullptr);
     BOOST_CHECK(action->getType()==ActionType::BATTLE);
     BOOST_CHECK_EQUAL(action->getId(), 3);
+    BOOST_CHECK_EQUAL(action->getName(), "action_battle");
     
     TokenModule* modLife=dynamic_cast<TokenModule*>(tokens[3]);
     BOOST_CHECK(modLife!=nullptr);
@@ -256,6 +259,7 @@ BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
     BOOST_CHECK_EQUAL(*(life->getDirectionBegin()), 1);
     BOOST_CHECK_EQUAL(*(life->getDirectionBegin()+1), 2);
     BOOST_CHECK_EQUAL(modLife->getId(), 4);
+    BOOST_CHECK_EQUAL(modLife->getName(), "mod_life");
     
     TokenModule* modAttack=dynamic_cast<TokenModule*>(tokens[4]);
     BOOST_CHECK(modAttack!=nullptr);

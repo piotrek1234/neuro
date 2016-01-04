@@ -132,6 +132,11 @@ public:
 	{
 		return Game::getInstance().actionTokenPush(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
 	}
+
+    std::string getTokenName(int tokenId, Color color)
+    {
+        return Game::getInstance().getTokenName(tokenId, color);
+    }
 	
 private:
 	
@@ -197,6 +202,7 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenBattle", &CommandManagerPy::actionTokenBattle)
 		.def( "actionTokenMove", &CommandManagerPy::actionTokenMove)
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
+        .def( "getTokenName", &CommandManagerPy::getTokenName)
 		;
 		
 	boost::python::enum_<Color>("Color")

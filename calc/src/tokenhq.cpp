@@ -26,6 +26,7 @@ Token* TokenHQ::create(ptree Ptree, Color color)
     TokenHQ* token = new TokenHQ();
     token->setColor(color);
     token->setId(Ptree.get<int>("id"));
+    token->setName(Ptree.get<std::string>("name"));
     token->setMod(ModFactory::getInstance().create(Ptree));
     return token;
 }
