@@ -21,6 +21,10 @@
             <dir_id>1</dir_id>
             <value>2</value>
         </attack>
+        <attack>
+          <dir_id>4</dir_id>
+            <value>1</value>
+        </attack>
         <shield>
             <dir_id>1</dir_id>
         </shield>

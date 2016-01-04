@@ -73,7 +73,7 @@ std::vector<int> Stack::getNextTokensIds()
     {
         while(currentTokens.size()!=3)
         {
-            currentTokens.push_back(tokens.front());
+            currentTokens.push_back(tokens.front());///todo: niech będzie losowe zamiast front
             tokens.erase(tokens.begin());
         }
     }

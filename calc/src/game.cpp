@@ -4,8 +4,8 @@ Game::Game() : MaxPlayersNum(4)
 {
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
-    TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
-    TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
+    //TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
+    //TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
     //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
@@ -76,7 +76,7 @@ void Game::removeAllPlayers()
 std::vector<std::string> Game::getPlayersNames()
 {
     std::vector<std::string> names;
-    for(auto i=players.begin(); i<players.end(); ++i)
+    for(auto i=players.begin(); i!=players.end(); ++i)
     {
         names.push_back((*i)->getName());
     }
