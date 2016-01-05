@@ -11,7 +11,12 @@ var on_received = function(data)
 			case 'playersList':
 				console.log(data.list);
 				break;
+			case 'setColor':
+				console.log('My color: '+data.color);
+				break;
 			case 'gameState':
+				if(data.state == 1)
+					socket.send({'action': 'getColor'});
 				console.log('All ready. Game state: '+data.state);
 				break;
 			case 'hello':
