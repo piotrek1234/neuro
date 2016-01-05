@@ -19,7 +19,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- gr_cre_02, 1 -->
     <id>3</id>
@@ -33,7 +32,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- gr_cre_03, 5 -->
     <id>4</id>
@@ -47,7 +45,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- gr_cre_04, 1 -->
     <id>5</id>
@@ -61,7 +58,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- gr_cre_05, 2 -->
     <id>6</id>
@@ -75,7 +71,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- gr_cre_06, 1 -->
     <id>7</id>
@@ -88,10 +83,11 @@
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
 <!-- modules -->
  <token><!-- gr_mod_life, 2 -->

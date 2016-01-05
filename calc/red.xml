@@ -16,7 +16,6 @@
     <priority>0</priority>
     <additional_action>0</additional_action>
     <movable>1</movable>
-    <attack></attack>
     <shield>
      <dir_id>0</dir_id>
     </shield>
@@ -33,7 +32,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- rd_cre_03, 1 -->
     <id>4</id>
@@ -47,7 +45,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- rd_cre_04, 1 -->
     <id>5</id>
@@ -60,11 +57,15 @@
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
     <shield>
      <dir_id>0</dir_id>
+     </shield>
+     <shield>
      <dir_id>2</dir_id>
     </shield>
   </token>
@@ -79,10 +80,11 @@
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- rd_cre_06, 2 -->
     <id>7</id>
@@ -95,14 +97,19 @@
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>3</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- rd_cre_07, 1 -->
     <id>8</id>
@@ -115,6 +122,8 @@
     <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
@@ -133,6 +142,8 @@
     <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
@@ -152,7 +163,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- rd_cre_10, 1 -->
     <id>12</id>
@@ -166,7 +176,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
 <!-- modules -->
  <token><!-- rd_mod_attack, 2 -->

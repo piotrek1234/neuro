@@ -75,7 +75,8 @@ public:
 			{
 				Hex pos = i->first;
 				//out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
-				out[boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS())] = i->second->getId();
+                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = \
+                        boost::python::make_tuple(i->second->getId(), i->second->getColor());
 			}
 		}
 		return out;
@@ -96,6 +97,12 @@ public:
 	{
 		return Game::getInstance().throwToken(tokenId, color);	
 	}
+
+    boost::python::dict getTokenInfo(int tokenId, Color color)
+    {
+        Token* token = Game::getInstance().getToken(tokenId, color);
+        return tokenDict(token);
+    }
 	
 	boost::python::dict getNextPlayer()
 	{
@@ -163,6 +170,26 @@ private:
 		}
 		return player;
 	}
+
+    boost::python::dict tokenDict(Token* t)
+    {
+        boost::python::dict token;
+        if(t!=nullptr)
+        {
+            token["id"]=t->getId();
+            token["color"]=t->getColor();
+            token["name"]=t->getName();
+            if(TokenPutable* tp = dynamic_cast<TokenPutable*>(t))
+            {
+                token["life"]=tp->getLife();
+                token["angle"]=tp->getAngle();
+            }
+            /*if(dynamic_cast<TokenHQ*>(t))
+                token["type"]="hq";*/
+
+        }
+        return token;
+    }
 };
 
 /**
@@ -204,6 +231,7 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenMove", &CommandManagerPy::actionTokenMove)
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
         .def( "getTokenName", &CommandManagerPy::getTokenName)
+        .def( "getTokenInfo", &CommandManagerPy::getTokenInfo)
 		;
 		
 	boost::python::enum_<Color>("Color")

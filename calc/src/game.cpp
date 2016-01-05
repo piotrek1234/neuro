@@ -4,8 +4,8 @@ Game::Game() : MaxPlayersNum(4)
 {
     boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     boost::mpl::for_each<tokensTypes>(RegisterTypeInFactory<TokenFactory>());
-    //TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
-    //TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
+    TokenFactory::getInstance().registerFun(TokenModule::typeName(), TokenModule::create);
+    TokenFactory::getInstance().registerFun(TokenHQ::typeName(), TokenHQ::create);
     //boost::mpl::for_each<modsTypes>(RegisterTypeInFactory<ModFactory>());
     board_ = new Board;
     currentPlayerNum=0;
@@ -206,4 +206,16 @@ std::string Game::getTokenName(int tokenId, Color color)
 {
     Token* token = players[getPlayerId(color)]->getToken(tokenId);
     return token->getName();
+}
+
+
+Token* Game::getToken(int tokenId, Color color)
+{
+    for(auto i=board_->getMapBegin(); i!=board_->getMapEnd(); ++i)
+    {
+        if(i->second->getId()==tokenId)
+            if(i->second->getColor() == color)
+                return i->second;
+    }
+    return nullptr;
 }

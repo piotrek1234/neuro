@@ -43,6 +43,7 @@ public:
     bool actionTokenPush(int tokenId, Color color, Hex from, Hex to);
     bool killPlayer(Color color);
     void addTokenConfigPath(Color color, string path);
+    Token* getToken(int tokenId, Color color);
     std::string getTokenName(int tokenId, Color color);
     
 private:
@@ -57,7 +58,7 @@ private:
     const unsigned int MaxPlayersNum;
     std::map<Color, int> playersMap;
     int getPlayerId(Color color);
-    typedef boost::mpl::vector<TokenAction, TokenCreature, TokenHQ, TokenModule> tokensTypes;
+    typedef boost::mpl::vector<TokenAction, TokenCreature/*, TokenHQ, TokenModule*/> tokensTypes;
     typedef boost::mpl::vector<ModAdditionalAction, ModAttack, ModLife, ModPriority> modsTypes;
     template<typename F> struct RegisterTypeInFactory
     {

@@ -20,7 +20,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_02, 1 -->
     <id>3</id>
@@ -33,12 +32,15 @@
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_03, 3 -->
     <id>4</id>
@@ -52,7 +54,6 @@
       <dir_id>0</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_04, 1 -->
     <id>5</id>
@@ -65,12 +66,15 @@
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_05, 1 -->
     <id>6</id>
@@ -83,12 +87,15 @@
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_06, 3 -->
     <id>7</id>
@@ -102,7 +109,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- yl_cre_07, 2 -->
     <id>8</id>
@@ -134,6 +140,8 @@
     </attack>
     <shield>
      <dir_id>1</dir_id>
+     </shield>
+     <shield>
      <dir_id>5</dir_id>
     </shield>
   </token>

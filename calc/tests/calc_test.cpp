@@ -240,6 +240,7 @@ BOOST_AUTO_TEST_CASE( TokenModFactoryTest )
     BOOST_CHECK_EQUAL(creature->getPriority(), 2);
     BOOST_CHECK_EQUAL(creature->getAdditionalAction(), false);
     BOOST_CHECK_EQUAL(creature->getAttack(1), 2);
+    BOOST_CHECK_EQUAL(creature->getAttack(4), 1);
     BOOST_CHECK_EQUAL(creature->getAttack(2), 0);
     BOOST_CHECK_EQUAL(creature->getShield(1), true);
     BOOST_CHECK_EQUAL(creature->getShield(2), 0);

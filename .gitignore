@@ -3,6 +3,10 @@ lighttpd.develop
 *.dll
 *.so
 *.os
+.sconsign.dblite
+calc/calc_test
+calc/tests/calc_test.o
+
 #################
 ## Eclipse
 #################

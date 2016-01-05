@@ -18,14 +18,22 @@
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
     <shield>
      <dir_id>0</dir_id>
+    </shield>
+    <shield>
     <dir_id>1</dir_id>
+    </shield>
+    <shield>
      <dir_id>5</dir_id>
     </shield>
   </token>
@@ -40,10 +48,11 @@
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- bl_cre_03, 6 -->
     <id>4</id>
@@ -56,12 +65,15 @@
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>1</dir_id>
       <value>1</value>
+    </attack>
+    <attack>
       <dir_id>5</dir_id>
       <value>1</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- bl_cre_04, 2 -->
     <id>5</id>
@@ -91,7 +103,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
   <token><!-- bl_cre_06, 2 -->
     <id>7</id>
@@ -105,7 +116,6 @@
       <dir_id>0</dir_id>
       <value>2</value>
     </attack>
-    <shield></shield>
   </token>
 <!-- modules -->
  <token><!-- bl_mod_life, 1 -->

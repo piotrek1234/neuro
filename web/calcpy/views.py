@@ -73,3 +73,7 @@ def actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR):
 def getTokenName(tokenId, color):
     """get friendly name of token by its id and color"""
     return cmdmgr.getTokenName(tokenId, color)
+
+def getTokenInfo(tokenId, color):
+    """get details for given token from board"""
+    return cmdmgr.getTokenInfo(tokenId, color)
