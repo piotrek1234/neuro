@@ -9,12 +9,10 @@ export calculation results to client
 import calc
 
 cmdmgr = calc.CommandManager()
-## pomyslec nad przerabianiem argumentow przed podaniem do konkretnej funkcji,
-## np. cmdmgr.addPlayer(name.encode("UTF-8"))
 
 def addPlayer(name):
     """add player command"""
-    return cmdmgr.addPlayer(name)
+    return cmdmgr.addPlayer(name.encode("UTF-8"))
 
 def getPlayersNames():
     """get players names list command"""
