@@ -9,7 +9,9 @@ angular.module('userBoardDirective', [])
 				sizeBase: "=",
 				login: "=",
 				draggable: "=",
-				dopable: "="
+				dopable: "=",
+
+				click: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/user-board/userBoard.html',
@@ -29,8 +31,70 @@ angular.module('userBoardDirective', [])
 
 				$scope.className = "board board-" + $scope.color;
 			},
-			link: function ($scope, $element, attr) {
-				
+			link: function ($scope, element, attr) {
+				if (!!$scope.click) {
+					element.on('click', clickHandler);
+				}
+
+				function clickHandler (event) {
+					var $srcElement = event.target;
+					var _element = d3.select($srcElement);
+					
+					if (!_element.classed("token") 
+						|| _element.classed("hex-empty")) {
+						return;
+					}
+					
+					event.preventDefault();
+					event.stopPropagation();
+
+					unselectElement();
+					selectElement($srcElement);
+					setupBodyEventHandler();
+				};
+
+				function selectElement ($element) {
+					var _element = d3.select($element);
+
+					_element
+						.classed("token-selected", true);
+
+					emitSelectClickHandler($element);
+				};
+
+				function unselectElement () {
+					d3.select(".token-selected")
+						.classed("token-selected", false);
+
+					emitUnselectClickHandler();
+				};
+
+				function setupBodyEventHandler () {
+					var _body = d3.select("body");
+
+					_body
+						.on("click", clickBodyHandler);
+				}
+
+				function removeBodyClickHandler () {
+					var _body = d3.select("body");
+
+					_body
+						.on("click", null);
+				};
+
+				function clickBodyHandler () {
+					unselectElement();
+					removeBodyClickHandler();
+				};
+
+				function emitSelectClickHandler ($element) {
+					$scope.$emit('token:select', {$token: $element});
+				};
+
+				function emitUnselectClickHandler () {
+					$scope.$emit('token:unselect', {});
+				};
 			}
 		};
 	});

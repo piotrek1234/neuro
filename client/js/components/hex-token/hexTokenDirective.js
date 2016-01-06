@@ -57,7 +57,6 @@ angular.module('hexTokenDirective', [])
 
 				function setTokenRotateArrows ($token) {
 					var corners = convertPointsStringToArray($token.attr("points"));
-					debugger;
 				};
 
 				function getMinYCoordinate (corners) {
