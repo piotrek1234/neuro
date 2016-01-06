@@ -39,6 +39,7 @@ def messageFromPlayer(request, socket, context, message):
 	print '>>>> ', message
 	act = message['action']
 
+	# oczekiwanie na graczy: join, getColor, getPlayers, ready
 	if act == 'join':
 		if game['state'] != 0:
 			# gra juz trwa
@@ -52,12 +53,10 @@ def messageFromPlayer(request, socket, context, message):
 		else:
 			game['players'][message['name']]= \
 				{'ready': False, 'socket': socket.session.session_id, 'color': Color.NONE.real}
-			socket.send({'action':'joinState', 'joined': True})
+			socket.send({'action':'joinState', 'joined': True, 'playerName': message['name']})
 			sendPlayersList()
 	elif act == 'getColor':
-		for p in game['players'].itervalues():
-			if p['socket'] == socket.session.session_id:
-				socket.send({'action': 'setColor', 'color': p['color'].real})
+		socket.send({'action': 'setColor', 'color': game['players'][getNameBySocket(socket)]['color']})
 	elif act == 'getPlayers':
 		socket.send({'action':'playersList', 'list': game['players']})
 	elif act == 'ready':
@@ -69,15 +68,42 @@ def messageFromPlayer(request, socket, context, message):
 				all_ready = False
 		sendPlayersList()
 		if all_ready:
-			colors = (Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-			i=0
-			for name in game['players'].iterkeys():
-				game['players'][name]['color'] = colors[i].real
-				cv.addPlayer(name)
-				i=i+1
-			game['state']=1
-			broadcast({'action': 'gameState', 'state':1})
+			if game['players'].__len__() > 1:
+				colors = (Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
+				i=0
+				for name in game['players'].iterkeys():
+					game['players'][name]['color'] = colors[i].real
+					cv.addPlayer(name)
+					i=i+1
+				game['state']=1
+				broadcast({'action': 'gameState', 'state': 1})
+				player = cv.getCurrentPlayer()
+				print player
+				game['current_player'] = player['name']
+				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': player['tokens']})
+
+	# wlasciwa rozgrywka
+	elif act == 'nextTurn':
+		# czy nextTurn przyszlo od aktualnego gracza
+		if getNameBySocket(socket) == game['current_player']:
+			player = cv.getNextPlayer()
+			game['current_player'] = player['name']
+			broadcast({'action': 'turn', 'player': player['name'] ,'tokens': player['tokens']})
+	elif act == 'putToken':
+		color = Color.values[game['players'][getNameBySocket(socket)]['color']]
+		added = cv.addToken(message['id'], color, message['q'], message['r'], message['angle'])
+		if added:
+			token = cv.getTokenInfo(message['id'], color)
+			broadcast({'action': 'tokenAdded', 'color': color.real, 'id': message['id'], 'name': token['name'],\
+				'q': message['q'], 'r': message['r'], 'angle': message['angle']})
+		else:
+			socket.send({'action': 'tokenAddError'})
 
 def sendPlayersList():
 	global game
 	broadcast({'action':'playersList', 'list': game['players']})
+
+def getNameBySocket(socket):
+	for k, v in game['players'].iteritems():
+			if v['socket'] == socket.session.session_id:
+				return k

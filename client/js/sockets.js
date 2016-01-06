@@ -1,3 +1,13 @@
+/*
+ *  trzymane w sessionStorage:
+ *	playerName - własne imię
+ *	playerColor - własny kolor
+ *	currentTurn - imię gracza który teraz wykonuje ruch
+ *	players - słownik z graczami (klucz: imię gracza)
+ *		{'color': int - kolor gracza
+ *		 'tokens': lista intów - żetonów na ręku gracza
+ *		}
+ */
 var on_connected = function()
 {
 	socket.send({'action': 'getPlayers'});
@@ -14,6 +24,7 @@ var on_received = function(data)
 				break;
 			case 'setColor':
 				console.log('My color: '+data.color);
+				sessionStorage.setItem('playerColor', data.color);
 				//przydzielić gdzieś graczowi kolor
 				break;
 			case 'gameState':
@@ -29,7 +40,8 @@ var on_received = function(data)
 			case 'joinState':
 				if(data.joined == true)
 				{
-					console.log('Joined game.');
+					console.log('Joined game as '+data.playerName+'.');
+					sessionStorage.setItem('playerName', data.playerName);
 					//ukryć pole do wpisywania imienia
 				}	
 				else
@@ -37,8 +49,41 @@ var on_received = function(data)
 					console.log('Failed to join. Reason: '+data.reason);
 					//nie ukrywać pola, ewentualnie wyświetlić komunikat czemu się nie udało
 				}
+				break;
+			case 'turn':
+				console.log('Turn for player '+data.player);
+				console.log(data.tokens);
+				sessionStorage.setItem('currentTurn', data.player);
+				// zaktualizować konkretnemu graczowi tokeny i je wyświetlić
+				if(data.turn == sessionStorage.playerName)
+				{
+					//odblokować interfejs do żetonów, poinformować że jest tura gracza
+				}
+				break;
+			case 'tokenAdded':
+				console.log('New token on board: color('+data.color+'), id('+data.id+'), name('+data.name+
+					'), pos('+data.q+', '+data.r+'), angle('+data.angle+').');
+				//wstawić na planszę żeton
+				//odblokować interfejs
+				break;
+			case 'tokenAddError':
+				console.log('Failed to add token.');
+				//cofnąć dodanie tokenu, odblokować interfejs
+				break;
 		}
 	}
+}
+
+var endTurn = function()
+{
+	socket.send({'action': 'nextTurn'});
+	//zablokować interfejs
+}
+
+var putToken = function(id, q, r, angle)
+{
+	socket.send({'action': 'putToken', 'id': id, 'q': q, 'r': r, 'angle': angle});
+	//zawieś interfejs aż do uzyskania odpowiedzi - action:tokenAdded
 }
 
 var join = function(data)
@@ -46,7 +91,7 @@ var join = function(data)
 	socket.send({'action': 'join', 'name': data});
 }
 
-var set_ready = function(is_ready)
+var setReady = function(is_ready)
 {
 	socket.send({'action': 'ready', 'is_ready': is_ready})
 }
