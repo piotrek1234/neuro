@@ -25,7 +25,7 @@
   <div><input type=submit value="Zagraj ponownie" onclick="newGame();"></div>
 </div> -->
 
-<div class="main" ng-controller="hexagonController">
+<div class="main" ng-controller="mainController">
     <svg id="grid-axial" class="middle"
     ng-attr-width="{{hexSize*18}}" 
     ng-attr-height="{{hexSize*12}}">
@@ -56,7 +56,7 @@
 
           <user-board x="hexSize/2" y="hexSize/2*11" size-base="hexSize" color="'blue'" login="'Gracz 3'"/>
 
-          <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"  color="'red'" login="'Gracz 4'" draggable="'true'"/>
+          <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"  color="'red'" login="'Gracz 4'" draggable="'true'" click="'true'"/>
 
         </g>
 
@@ -66,11 +66,15 @@
 
            <rect ng-attr-x="{{board.x}}" ng-attr-y="{{board.y}}" ng-attr-width="{{board.width}}" ng-attr-height="{{board.height}}" fill-opacity="0.4" />
 
-            <hex center-x="hexCenterX" center-y="hexCenterY" size="hexSize"></hex>
+            <hex ng-attr-id="board-item" center-x="hexCenterX" center-y="hexCenterY" size="hexSize"></hex>
 
-            <rect ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" fill=url(#left-arrow-img) />
+            <rect class="board-background-button" ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" />
 
-            <rect ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" fill=url(#right-arrow-img) />
+            <rect id="left-arrow" class="board-button" ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" fill=url(#left-arrow-img) />
+
+            <rect class="board-background-button" ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" />
+
+            <rect id="right-arrow" class="board-button" ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" fill=url(#right-arrow-img) />
         </g>
 
     </svg>

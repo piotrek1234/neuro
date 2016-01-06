@@ -26,6 +26,10 @@ body {
     background: url('/pict/bright-wood.jpg');
 }
 
+svg {
+    overflow: scroll;
+}
+
 #icons_ul {
 	list-style-type:none;
 	margin:0;
@@ -175,4 +179,19 @@ body {
 
 .hex-occupied {
     opacity: 1;
+}
+
+.board-background-button {
+    fill: #8F4709;
+    opacity: 0.6;
+}
+
+.board-button {
+    stroke: black;
+    stroke-width: 8;
+}
+
+.board-button-active {
+    stroke: #33E842;
+    stroke-width: 8;    
 }

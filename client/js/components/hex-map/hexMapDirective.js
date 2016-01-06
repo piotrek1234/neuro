@@ -4,9 +4,7 @@ angular.module('hexMapDirective', [])
 			restrict: 'E',
 			scope: {
 				hexCount: "=hexCount",
-				size: "=",
-
-				selectClickFn: '&'
+				size: "="
 			},
 			templateNamespace: 'svg',
 			templateUrl: 'js/components/hex-map/hexMap.html',
@@ -31,7 +29,15 @@ angular.module('hexMapDirective', [])
 			 	$scope.cornersSet = cornersSet;
 			},
 			link: function ($scope, element, attr) {
-				element.on('dragover', function (event) {
+				element.on('dragover', dragoverHandler);
+				element.on('drop', dropHandler);
+				element.on('dragleave', dragleaveHandler);
+
+				element.on('dragenter', function () {
+					event.preventDefault();
+				});
+
+				function dragoverHandler (event) {
 					var srcElement = d3.select(event.target);
 					
 					event.preventDefault();
@@ -45,9 +51,9 @@ angular.module('hexMapDirective', [])
 					srcElement
 						.classed("hex-active", true)
 						.classed("hex-empty", false);
-				});
+				};
 
-				element.on('drop', function (event) {
+				function dropHandler (event) {
 					var srcElement = d3.select(event.target);
 					var tokenClass = event.dataTransfer.getData("tokenClass");
 
@@ -68,9 +74,9 @@ angular.module('hexMapDirective', [])
 						.classed("hex-occupied", true);
 
 					setDraggedItemFlag(dragItemId);
-				});
+				};
 
-				element.on('dragleave', function (event) {
+				function dragleaveHandler (event) {
 					var srcElement = d3.select(event.target);
 					
 					if (!srcElement.classed("hex-active")) {
@@ -79,14 +85,8 @@ angular.module('hexMapDirective', [])
 
 					srcElement
 						.classed("hex-active", false)
-						.classed("hex-empty", true);			
-				});
-
-				element.on('dragenter', function () {
-					event.preventDefault();
-				});
-
-				element.on('click', clickHandler);
+						.classed("hex-empty", true);
+				};
 
 				function setDraggedItemFlag (id) {
 					event.preventDefault();
@@ -94,64 +94,6 @@ angular.module('hexMapDirective', [])
 
 					_item
 						.attr("drag-success", true);
-				};
-
-				function clickHandler (event) {
-					var $srcElement = event.target;
-					var _element = d3.select($srcElement);
-					
-					if (!_element.classed("token") 
-						|| _element.classed("hex-empty")) {
-						return;
-					}
-
-					event.preventDefault();
-					event.stopPropagation();
-
-					unselectElement();
-					selectElement(_element);
-					setupBodyEventHandler();
-					
-					emitSelectClickHandler($srcElement)
-				};
-
-				function emitSelectClickHandler ($element) {
-					if ($scope.selectClickFn == null) {
-						return;
-					}
-
-					var hexClass = $element.getAttribute("class");
-
-					$scope.$emit('test', {hexClass: hexClass});
-				};
-
-				function selectElement (_element) {
-					_element
-						.classed("token-selected", true);
-				};
-
-				function unselectElement () {
-					d3.select(".token-selected")
-						.classed("token-selected", false);
-				};
-
-				function setupBodyEventHandler () {
-					var _body = d3.select("body");
-
-					_body
-						.on("click", clickBodyHandler);
-				}
-
-				function removeBodyClickHandler () {
-					var _body = d3.select("body");
-
-					_body
-						.on("click", null);
-				};
-
-				function clickBodyHandler () {
-					unselectElement();
-					removeBodyClickHandler();
 				};
 
 				function setActiveHexToEmpty () {

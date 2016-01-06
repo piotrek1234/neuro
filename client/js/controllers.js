@@ -71,19 +71,7 @@ angular.module('myAppControllers', [])
 	.controller('hexagonController',
 		['$scope',
 		 function ($scope, srvInfo, srvCommands) {
-		 	$scope.mapSize = 2;
-		 	$scope.hexSize = 75;
-
-		 	var userBoard = {
-		 		width: 500,
-		 		height: 300
-		 	};
-
-		 	$scope.userBoard = userBoard;
-
-		 	$scope.$on('test', function (event, data) {
-		 		debugger;
-		 	});
+		 	
 		 }])
 	.controller('welcomePopup', 
 		['$scope',

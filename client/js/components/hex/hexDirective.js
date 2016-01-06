@@ -3,6 +3,8 @@ angular.module('hexDirective', [])
 		return {
 			restrict: 'E',
 			scope: {
+				id: '=',
+
 				corners: '=',
 				color: '=',
 				draggable: '=',
