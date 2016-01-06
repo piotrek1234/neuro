@@ -29,7 +29,7 @@ def playerDisconnected(request, socket, context):
 			print '>>>> ', k, ' disconnected'
 			tmp_k = k
 	# usunac gracza z c++
-	# cv.removePlayer(message['name'].encode("utf-8"))
+	# cv.removePlayer(message['name'])
 	del game['players'][tmp_k]
 	sendPlayersList()
 
@@ -38,14 +38,22 @@ def messageFromPlayer(request, socket, context, message):
 	global game
 	print '>>>> ', message
 	act = message['action']
+
 	if act == 'join':
-		#brakuje sprawdzania czy taki gracz juz jest i czy nie ma za duzo graczy
-		#cv.addPlayer przydziela kolor od razu, trzeba to zgrac ze soba
-		game['players'][message['name']]= \
-			{'ready': False, 'socket': socket.session.session_id, 'color': Color.NONE.real}
-		cv.addPlayer(message['name'].encode("utf-8"))
-		socket.send({'action':'info', 'content': 'Dodany.'})
-		sendPlayersList()
+		if game['state'] != 0:
+			# gra juz trwa
+			socket.send({'action': 'joinState', 'joined': False, 'reason': 'gameInProgress'})
+		elif game['players'].__len__() > 3:
+			# za duzo graczy
+			socket.send({'action': 'joinState', 'joined': False, 'reason': 'playersCount'})
+		elif message['name'] in game['players']:
+			# gracz o podanym imieniu istnieje
+			socket.send({'action': 'joinState', 'joined': False, 'reason': 'nameNotAvailable'})
+		else:
+			game['players'][message['name']]= \
+				{'ready': False, 'socket': socket.session.session_id, 'color': Color.NONE.real}
+			socket.send({'action':'joinState', 'joined': True})
+			sendPlayersList()
 	elif act == 'getColor':
 		for p in game['players'].itervalues():
 			if p['socket'] == socket.session.session_id:
@@ -53,17 +61,19 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'getPlayers':
 		socket.send({'action':'playersList', 'list': game['players']})
 	elif act == 'ready':
-		game['players'][message['name']]['ready'] = message['is_ready']
-		sendPlayersList()
 		all_ready = True
 		for p in game['players'].itervalues():
+			if p['socket'] == socket.session.session_id:
+				p['ready'] = message['is_ready']
 			if not p['ready']:
 				all_ready = False
+		sendPlayersList()
 		if all_ready:
 			colors = (Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
 			i=0
 			for name in game['players'].iterkeys():
 				game['players'][name]['color'] = colors[i].real
+				cv.addPlayer(name)
 				i=i+1
 			game['state']=1
 			broadcast({'action': 'gameState', 'state':1})
