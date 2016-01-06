@@ -1,0 +1,224 @@
+﻿<tokens><!-- nazwa, ile sztuk -->
+  <token><!-- hq -->
+    <id>1</id>
+    <type>hq</type>
+    <name>yl_hq</name>
+    <module_type>attack</module_type>
+    <value>1</value>
+    <directions></directions>
+  </token>
+<!-- creatures --> 
+  <token><!-- yl_cre_01, 1 -->
+    <id>2</id>
+    <type>creature</type>
+    <name>yl_cre_01</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>1</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_02, 1 -->
+    <id>3</id>
+    <type>creature</type>
+    <name>yl_cre_02</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>2</value>
+    </attack>
+    <attack>
+      <dir_id>1</dir_id>
+      <value>1</value>
+    </attack>
+    <attack>
+      <dir_id>5</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_03, 3 -->
+    <id>4</id>
+    <type>creature</type>
+    <name>yl_cre_03</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_04, 1 -->
+    <id>5</id>
+    <type>creature</type>
+    <name>yl_cre_04</name>
+    <life>1</life>
+    <priority>1</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>2</value>
+    </attack>
+    <attack>
+      <dir_id>1</dir_id>
+      <value>2</value>
+    </attack>
+    <attack>
+      <dir_id>5</dir_id>
+      <value>2</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_05, 1 -->
+    <id>6</id>
+    <type>creature</type>
+    <name>yl_cre_05</name>
+    <life>2</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+    <attack>
+      <dir_id>1</dir_id>
+      <value>1</value>
+    </attack>
+    <attack>
+      <dir_id>5</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_06, 3 -->
+    <id>7</id>
+    <type>creature</type>
+    <name>yl_cre_06</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>2</value>
+    </attack>
+  </token>
+  <token><!-- yl_cre_07, 2 -->
+    <id>8</id>
+    <type>creature</type>
+    <name>yl_cre_07</name>
+    <life>1</life>
+    <priority>1</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+    <shield>
+     <dir_id>0</dir_id>
+    </shield>
+  </token>
+  <token><!-- yl_cre_08, 1 -->
+    <id>10</id>
+    <type>creature</type>
+    <name>yl_cre_08</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+    <shield>
+     <dir_id>1</dir_id>
+     </shield>
+     <shield>
+     <dir_id>5</dir_id>
+    </shield>
+  </token>
+<!-- modules -->
+ <token><!-- yl_mod_life, 1 -->
+  <id>11</id>
+  <type>module</type>
+  <name>yl_mod_life</name>
+  <module_type>life</module_type>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+   <dir_id>5</dir_id>
+  </directions>
+ </token>
+ <token><!-- yl_mod_attack, 2 -->
+  <id>12</id>
+  <type>module</type>
+  <name>yl_mod_attack</name>
+  <module_type>attack</module_type>
+  <value>1</value>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+   <dir_id>5</dir_id>
+  </directions>
+ </token>
+ <token><!-- yl_mod_attack2, 2 -->
+  <id>13</id>
+  <type>module</type>
+  <name>yl_mod_attack2</name>
+  <module_type>attack</module_type>
+  <value>1</value>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+  </directions>
+ </token>
+ <token><!-- yl_mod_attack3, 1 -->
+  <id>14</id>
+  <type>module</type>
+  <name>yl_mod_attack3</name>
+  <module_type>attack</module_type>
+  <value>2</value>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+  </directions>
+ </token>
+ <token><!-- yl_mod_priority, 1 -->
+  <id>15</id>
+  <type>module</type>
+    <name>yl_mod_priority</name>
+  <module_type>priority</module_type>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+   <dir_id>5</dir_id>
+  </directions>
+ </token>
+<!-- actions -->
+ <token><!-- yl_act_battle, 5 -->
+  <id>16</id> 
+  <type>action</type>
+  <name>yl_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- yl_act_move, 3 -->
+  <id>17</id> 
+  <type>action</type>
+  <name>yl_act_move</name>
+  <action_type>move</action_type>
+ </token>
+ <token><!-- yl_act_push, 2 -->
+  <id>18</id> 
+  <type>action</type>
+  <name>yl_act_push</name>
+  <action_type>push</action_type>
+ </token>
+</tokens>

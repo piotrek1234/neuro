@@ -76,7 +76,7 @@ void Game::removeAllPlayers()
 std::vector<std::string> Game::getPlayersNames()
 {
     std::vector<std::string> names;
-    for(auto i=players.begin(); i<players.end(); ++i)
+    for(auto i=players.begin(); i!=players.end(); ++i)
     {
         names.push_back((*i)->getName());
     }
@@ -103,11 +103,15 @@ void Game::restartGame()
 
 bool Game::addToken(int tokenId, Color color, Hex pos, int angle)
 {
-    TokenPutable* token=dynamic_cast<TokenPutable*>(players[getPlayerId(color)]->getToken(tokenId));
-    if(token!=nullptr)
+    int playerId=getPlayerId(color);
+    if(playerId!=-1 && board_->getToken(pos)==nullptr)
     {
-        token->setAngle(angle);
-        return board_->addToken(pos, token);
+        TokenPutable* token=dynamic_cast<TokenPutable*>(players[playerId]->getToken(tokenId));
+        if(token!=nullptr)
+        {
+            token->setAngle(angle);
+            return board_->addToken(pos, token);
+        }
     }
     return false;
 }
@@ -144,15 +148,19 @@ bool Game::actionTokenBattle(int tokenId, Color color)
 
 bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
 {
-    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
-    if(token->getType() == ActionType::MOVE)
+    int playerId=getPlayerId(color);
+    if(playerId!=-1)
     {
-        TokenPutable* tokenToMove = board_->getToken(from);
-        if (color==tokenToMove->getColor())
+        TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId));
+        if(token->getType() == ActionType::MOVE)
         {
-            return board_->moveToken(from, to);
+            TokenPutable* tokenToMove = board_->getToken(from);
+            if (color==tokenToMove->getColor())
+            {
+                return board_->moveToken(from, to);
+            }
+            return false;
         }
-        return false;
     }
     return false;
 }
@@ -191,4 +199,23 @@ int Game::getPlayerId(Color color)
     if(it!=playersMap.end())
         return playersMap[color];
     return -1;
+}
+
+
+std::string Game::getTokenName(int tokenId, Color color)
+{
+    Token* token = players[getPlayerId(color)]->getToken(tokenId);
+    return token->getName();
+}
+
+
+Token* Game::getToken(int tokenId, Color color)
+{
+    for(auto i=board_->getMapBegin(); i!=board_->getMapEnd(); ++i)
+    {
+        if(i->second->getId()==tokenId)
+            if(i->second->getColor() == color)
+                return i->second;
+    }
+    return nullptr;
 }

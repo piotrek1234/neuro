@@ -7,6 +7,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 #include <map>
+#include <string>
 
 class CALC_DLL()TokenCreature : public TokenPutable
 {

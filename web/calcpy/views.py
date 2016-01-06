@@ -9,10 +9,12 @@ export calculation results to client
 import calc
 
 cmdmgr = calc.CommandManager()
+## pomyslec nad przerabianiem argumentow przed podaniem do konkretnej funkcji,
+## np. cmdmgr.addPlayer(name.encode("UTF-8"))
 
 def addPlayer(name):
     """add player command"""
-    cmd_id = cmdmgr.addPlayer(name)
+    return cmdmgr.addPlayer(name)
 
 def getPlayersNames():
     """get players names list command"""
@@ -69,3 +71,11 @@ def actionTokenMove(tokenId, color, fromQ, fromR, toQ, toR):
 def actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR):
     """command for token action of type push"""
     return cmdmgr.actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR)
+
+def getTokenName(tokenId, color):
+    """get friendly name of token by its id and color"""
+    return cmdmgr.getTokenName(tokenId, color)
+
+def getTokenInfo(tokenId, color):
+    """get details for given token from board"""
+    return cmdmgr.getTokenInfo(tokenId, color)

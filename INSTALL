@@ -1,0 +1,20 @@
+1. Install bioweb (README_EN)
+
+(Ubuntu)
+2a $ sudo apt-get install libevent-dev
+2b $ sudo pip install -U django-socketio
+2c $ sudo pip install importlib
+2d $ sudo pip uninstall gevent-socketio gevent
+2e $ sudo pip install gevent-socketio==0.2.1 gevent==0.13.6
+2f open with root rights: /usr/local/lib/python2.7/disk-packages/django_socketio/urls.py
+
+(Windows)
+2a Download and install Microsoft Visual C++ Compiler for Python 2.7  (http://aka.ms/vcpython27)
+2b Download and install gevent-0.13.7.win32-py2.7 (https://pypi.python.org/simple/gevent/)
+2c > pip install -U django-socketio
+2d > pip-install importlib
+2e > pip uninstall gevent-socketio gevent
+2f > pip install gevent-socketio==0.2.1
+2g open C:\Python27\Lib\site-packages\django_socketio\urls.py
+
+3. Change line 'from django.utils.importlib import import_module' to from 'from importlib import import_module'

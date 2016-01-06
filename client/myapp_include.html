@@ -24,33 +24,6 @@
 <script type="text/javascript" src="js/app.js" data-cover></script>
 <script type="text/javascript" src="js/services.js" data-cover></script>
 <script type="text/javascript" src="js/controllers.js" data-cover></script>
-
+<script type="text/javascript" src="js/sockets.js" data-cover></script>
 
 <link rel="stylesheet" type="text/css" href="css/styles.css" />
-
-<script type="text/javascript">
-var polaczenie = function()
-{
-	//socket.subscribe("ch1");
-}
-
-var odbior = function(data)
-{
-	alert(data.odp);
-}
-
-var wyslij = function(data)
-{
-	socket.send({'tresc': data});
-}
-
-function jazda()
-{
-socket = new io.Socket();
-socket.connect();
-socket.on('connect', polaczenie);
-socket.on('message', odbior);
-}
-window.onload = jazda;
-</script>
-

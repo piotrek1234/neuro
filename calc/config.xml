@@ -1,7 +1,8 @@
-<tokens>
+﻿<tokens>
     <token>
         <id>1</id>
         <type>hq</type>
+        <name>hq1</name>
         <module_type>attack</module_type>
         <value>2</value>
         <directions>
@@ -11,6 +12,7 @@
     <token>
         <id>2</id>
         <type>creature</type>
+        <name>cre01</name>
         <life>2</life>
         <priority>2</priority>
         <additional_action>0</additional_action>
@@ -19,19 +21,24 @@
             <dir_id>1</dir_id>
             <value>2</value>
         </attack>
+        <attack>
+          <dir_id>4</dir_id>
+            <value>1</value>
+        </attack>
         <shield>
             <dir_id>1</dir_id>
-            <value>1</value>
         </shield>
     </token>
     <token>
         <id>3</id>
         <type>action</type>
+        <name>action_battle</name>
         <action_type>battle</action_type>
     </token>
     <token>
         <id>4</id>
         <type>module</type>
+        <name>mod_life</name>
         <module_type>life</module_type>
         <directions>
             <dir_id>1</dir_id>
@@ -41,6 +48,7 @@
     <token>
         <id>5</id>
         <type>module</type>
+        <name>mod_attack</name>
         <module_type>attack</module_type>
         <directions>
             <dir_id>1</dir_id>
@@ -50,6 +58,7 @@
     <token>
         <id>6</id>
         <type>module</type>
+        <name>mod_priority</name>
         <module_type>priority</module_type>
         <directions>
             <dir_id>1</dir_id>
@@ -58,6 +67,7 @@
     <token>
         <id>7</id>
         <type>module</type>
+        <name>mod_additional</name>
         <module_type>additional_action</module_type>
         <directions>
             <dir_id>1</dir_id>

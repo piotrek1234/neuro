@@ -3,6 +3,7 @@
 
 #include "tokenmodhq.h"
 #include "modfactory.h"
+#include <string>
 
 class Mod;
 

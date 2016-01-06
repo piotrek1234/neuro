@@ -23,5 +23,13 @@ void Token::setId(int id)
     id_ = id;
 }
 
+void Token::setName(std::string name)
+{
+    name_ = name;
+}
 
 
+std::string Token::getName()
+{
+    return name_;
+}

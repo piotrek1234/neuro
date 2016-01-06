@@ -21,6 +21,7 @@
 #include "player.h"
 #include "board.h"
 #include "hex.h"
+#include <iostream>
 
 using namespace boost::python;
 using namespace std;
@@ -32,6 +33,7 @@ public:
 	
 	bool addPlayer(std::string name)
 	{
+		std::cout<<"add player"<<std::endl;
 		return Game::getInstance().addPlayer(name);
 	}
 	
@@ -72,7 +74,9 @@ public:
 			if(i->second!=nullptr)
 			{
 				Hex pos = i->first;
-				out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
+				//out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
+                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = \
+                        boost::python::make_tuple(i->second->getId(), i->second->getColor());
 			}
 		}
 		return out;
@@ -93,6 +97,12 @@ public:
 	{
 		return Game::getInstance().throwToken(tokenId, color);	
 	}
+
+    boost::python::dict getTokenInfo(int tokenId, Color color)
+    {
+        Token* token = Game::getInstance().getToken(tokenId, color);
+        return tokenDict(token);
+    }
 	
 	boost::python::dict getNextPlayer()
 	{
@@ -130,6 +140,11 @@ public:
 	{
 		return Game::getInstance().actionTokenPush(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
 	}
+
+    std::string getTokenName(int tokenId, Color color)
+    {
+        return Game::getInstance().getTokenName(tokenId, color);
+    }
 	
 private:
 	
@@ -155,6 +170,26 @@ private:
 		}
 		return player;
 	}
+
+    boost::python::dict tokenDict(Token* t)
+    {
+        boost::python::dict token;
+        if(t!=nullptr)
+        {
+            token["id"]=t->getId();
+            token["color"]=t->getColor();
+            token["name"]=t->getName();
+            if(TokenPutable* tp = dynamic_cast<TokenPutable*>(t))
+            {
+                token["life"]=tp->getLife();
+                token["angle"]=tp->getAngle();
+            }
+            /*if(dynamic_cast<TokenHQ*>(t))
+                token["type"]="hq";*/
+
+        }
+        return token;
+    }
 };
 
 /**
@@ -195,6 +230,8 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenBattle", &CommandManagerPy::actionTokenBattle)
 		.def( "actionTokenMove", &CommandManagerPy::actionTokenMove)
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
+        .def( "getTokenName", &CommandManagerPy::getTokenName)
+        .def( "getTokenInfo", &CommandManagerPy::getTokenInfo)
 		;
 		
 	boost::python::enum_<Color>("Color")
