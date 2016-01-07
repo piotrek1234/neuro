@@ -3,7 +3,7 @@ angular.module('hexDirective', [])
 		return {
 			restrict: 'E',
 			scope: {
-				id: '=',
+				moving: '=',
 
 				corners: '=',
 				color: '=',
@@ -19,6 +19,7 @@ angular.module('hexDirective', [])
 			replace: true,
 			controller: function ($scope) {
 				$scope.className = '';
+				$scope.moving = !!$scope.moving || false;
 
 				function setColorClass (className) {
 					switch (className) {
@@ -76,7 +77,7 @@ angular.module('hexDirective', [])
 				 	$element.on('drag', dragHandler);
 				 	$element.on('dragend', dragendHandler);
 				}
-
+				
 				var _selectedElement = null;
 				var $startElement = null;
 				var startElementClass = null;

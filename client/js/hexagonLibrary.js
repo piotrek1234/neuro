@@ -65,7 +65,7 @@ function hexLibraryConstructor () {
 
         var firstCorner = pointsArray[0];
         var fourthCorner = pointsArray[3];
-
+        debugger;
         center = new Point(firstCorner.x - fourthCorner.x, parseInt(firstCorner.y));
         
         return center;
@@ -104,8 +104,6 @@ function Point (x, y) {
 function Hex (q, r, s) {
     return {q: q, r: r, s: s};
 };
-
-
 
 function getCornersString (corners) {
     var result = "";

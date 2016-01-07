@@ -6,6 +6,7 @@ angular.module('operationBoardController', [])
 		 	var $rightArrow = null;
 		 	var $selectedToken = null;
 		 	var $boardItem = null;
+
 		 	var defaultCssClass = null;
 
 		 	function setupParameters() {
@@ -73,8 +74,8 @@ angular.module('operationBoardController', [])
 				$scope.$on('main:selectToken', selectTokenHandler);
 				$scope.$on('main:unselectToken', unselectTokenHandler);
 
-				$rightArrow.addEventListener("click", clickRightArrowHandler);
-				$leftArrow.addEventListener("click", clickLeftArrowHandler);
+				$rightArrow.addEventListener("click", clickRightArrowHandler.bind(this));
+				$leftArrow.addEventListener("click", clickLeftArrowHandler.bind(this));
 			};
 
 			function clickRightArrowHandler () {
@@ -83,9 +84,13 @@ angular.module('operationBoardController', [])
 			};
 
 			function rotateRight ($element) {
+				var hexLibrary = new hexLibraryConstructor();
+				var corners = d3.select($element).attr("points");
+				var center = hexLibrary.getHexCenter(corners);
+
 				d3.select($element)
 					.transition()
-					.attr("transform", "rotate(-60)")
+					.attr("transform", "rotate(-60 " + center.x + " " + center.y + ")")
 					.duration(1000);
 			};
 
@@ -95,16 +100,20 @@ angular.module('operationBoardController', [])
 			};
 
 			function rotateLeft ($element) {
+				var hexLibrary = new hexLibraryConstructor();
+				var corners = d3.select($element).attr("points");
+				var center = hexLibrary.getHexCenter(corners);
+
 				d3.select($element)
 					.transition()
-					.attr("transform", "rotate(60)")
+					.attr("transform", "rotate(60 " + center.x + " " + center.y + ")")
 					.duration(1000);
 			};
 
 			function selectTokenHandler (event, data) {
 				$selectedToken = data.$token;
-				$boardItem = document.getElementById("board-item");
-
+				$boardItem = document.querySelector("polygon[ng-moving=true]");
+				
 				var cssTokenClass = d3.select($selectedToken)
 					.attr("class");
 
