@@ -108,7 +108,7 @@ void BattleHandler::handleBattle()
         {
             if((*it)->getLife() < 1)
             {
-                ///+ powiadomić o porażce gracza
+                //+ powiadomić o porażce gracza
                 //usunąć wszystkie żetony tego gracza
                 //rozwiązane przez ustawienie życia żetonów na 0 (usuwanie jest zrobione dalej)
                 for(auto i = Game::getInstance().getBoard()->getMapBegin(); \

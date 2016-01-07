@@ -140,7 +140,7 @@ bool Game::actionTokenBattle(int tokenId, Color color)
     TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
     if(token->getType() == ActionType::BATTLE)
     {
-        //BattleHandler::getInstance().handleBattle();
+        BattleHandler::getInstance().handleBattle();
         return true;
     }
     return false;
@@ -149,19 +149,20 @@ bool Game::actionTokenBattle(int tokenId, Color color)
 bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
 {
     int playerId=getPlayerId(color);
-    if(playerId!=-1)
-    {
-        TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId));
-        if(token->getType() == ActionType::MOVE)
+    TokenPutable* tokenToMove = board_->getToken(from);
+
+    if(tokenToMove != nullptr)
+        if (color==tokenToMove->getColor())
         {
-            TokenPutable* tokenToMove = board_->getToken(from);
-            if (color==tokenToMove->getColor())
+            if(playerId!=-1)
             {
-                return board_->moveToken(from, to);
+                TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId));
+                if(token->getType() == ActionType::MOVE)
+                {
+                        return board_->moveToken(from, to);
+                }
             }
-            return false;
         }
-    }
     return false;
 }
 

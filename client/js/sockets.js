@@ -41,7 +41,7 @@ var on_received = function(data)
 				console.log('Error. '+data.error);
 				break;
 			case 'hello':
-				console.log('Connected.');
+				console.log('Connected. Game state: '+data.gameState);
 				break;
 			case 'joinState':
 				if(data.joined == true)
@@ -73,9 +73,11 @@ var on_received = function(data)
 				//odblokować interfejs
 				break;
 			case 'tokenMoved':
-				//log o przesunięciu
+				console.log('Token have been moved: color('+data.color+'), id('+data.id+')+, name('+data.name+
+					'), from('+data.src_q+','+data.src_r+'), to('+data.dst_q+','+data.dst_r+').');
 				//przesunąć
 				//odblokować interfejs
+				break;
 			case 'tokenAddError':
 				console.log('Failed to add token.');
 				//cofnąć dodanie tokenu, odblokować interfejs
@@ -98,19 +100,26 @@ var endTurn = function()
 	//zablokować interfejs
 }
 
-var moveToken = function(src_q, src_r, dst_q, dst_r)
+var moveToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
 {
-	socket.send({'action': 'move', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+	socket.send({'action': 'move', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+		'dst_q': dst_q, 'dst_r': dst_r});
 }
 
-var pushToken = function(src_q, src_r, dst_q, dst_r)
+var pushToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
 {
-	socket.send({'action': 'push', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+	socket.send({'action': 'push', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+		'dst_q': dst_q, 'dst_r': dst_r});
 }
 
-var battle = function()
+var battle = function(tokenActionId)
 {
-	socket.send({'action': 'battle'});
+	socket.send({'action': 'battle', 'token': tokenActionId});
+}
+
+var getBoard = function()
+{
+	socket.send({'action': 'getBoard'});
 }
 
 //byc moze nie potrzebne

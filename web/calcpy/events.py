@@ -11,6 +11,7 @@ cv.addTokenConfigPath(Color.RED, 'calc/red.xml')
 cv.addTokenConfigPath(Color.GREEN, 'calc/green.xml')
 cv.addTokenConfigPath(Color.YELLOW, 'calc/yellow.xml')
 
+#game['state']: 0=oczekiwanie na graczy, 1=gra, 2=bitwa koncowa, 3=gra zakonczona
 game = {'state': 0,
 		'players': {},
 		'current_player': ''
@@ -19,7 +20,7 @@ game = {'state': 0,
 @on_connect
 def playerConnected(request, socket, context):
 	print '>>>> connected'
-	socket.send({'action':'hello'})
+	socket.send({'action':'hello', 'gameState': game['state']})
 
 @on_disconnect
 def playerDisconnected(request, socket, context):
@@ -31,6 +32,9 @@ def playerDisconnected(request, socket, context):
 	# usunac gracza z c++
 	# cv.removePlayer(message['name'])
 	del game['players'][tmp_k]
+	if game['players'].__len__() == 0:
+		cv.restartGame()
+		game['state'] = 0
 	sendPlayersList()
 
 @on_message
@@ -94,7 +98,12 @@ def messageFromPlayer(request, socket, context, message):
 			for i in player['tokens']:
 				tokens[i] = cv.getTokenHand(i, player['color'])
 				tokens[i]['color'] = tokens[i]['color'].real
-			broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+			if tokens.__len__() == 0:
+				game['state'] = 2
+				performBattle()
+				#
+			else:
+				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
 		else:
 			socket.send({'action': 'error', 'error': 'notYourTurn'})
 	elif act == 'putToken':
@@ -120,13 +129,14 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'move':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
-			token_id = cv.getTokenBoard(message['src_q'], message['src_r'])['id']
-			moved = cv.actionTokenMove(token_id, player['color'], message['src_q'], message['src_r'], \
+			token = cv.getTokenBoard(message['src_q'], message['src_r'])
+			moved = cv.actionTokenMove(message['token'], player['color'], message['src_q'], message['src_r'], \
 				message['dst_q'], message['dst_r'])
 			if moved:
-				token = cv.getTokenBoard(message['dst_q'], message['dst_r'])
 				# broadcast: info o przesunietym tokenie
-				# broadcast({'action': 'tokenMoved', })
+				broadcast({'action': 'tokenMoved', 'id': token['id'], 'color': token['color'].real, \
+					'src_q': message['src_q'], 'src_r': message['src_r'], 'dst_q': message['dst_q'], \
+					'dst_r': message['dst_r'], 'name': token['name']})
 			else:
 				socket.send({'action': 'tokenMoveError'})
 		else:
@@ -134,19 +144,33 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'push':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
-			token_id = cv.getTokenBoard(message['src_q'], message['src_r'])['id']
-			moved = cv.actionTokenPush(token_id, player['color'], message['src_q'], message['src_r'], \
+			token = cv.getTokenBoard(message['src_q'], message['src_r'])
+			pushed = cv.getTokenBoard(message['dst_q'], message['dst_r'])
+			moved = cv.actionTokenPush(message['token'], player['color'], message['src_q'], message['src_r'], \
 				message['dst_q'], message['dst_r'])
 			if moved:
-				pass
-				# token = cv.getTokenBoard(message['dst_q'], message['dst_r'])
-				# ^ pozycja bedzie inna niz dst, trzeba policzyc
-				# broadcast: info o przesunietym tokenie
-				# broadcast({'action': 'tokenMoved', })
+				pushed_q = 2*message['dst_q']-message['src_q']
+				pushed_r = 2*message['dst_r']-message['src_r']
+				broadcast({'action': 'tokenMoved', 'id': pushed['id'], 'color': pushed['color'].real, \
+					'src_q': message['dst_q'], 'src_r': message['dst_r'], 'dst_q': pushed_q, \
+					'dst_r': pushed_r})
 			else:
-				socket.send({'action': 'tokenMoveError'})
+				socket.send({'action': 'tokenPushError'})
 		else:
 			socket.send({'action': 'error', 'error': 'notYourTurn'})
+	elif act == 'battle':
+		if getNameBySocket(socket) == game['current_player']:
+			player = cv.getCurrentPlayer()
+			performBattle(message['token'], player['color'])
+			#broadcast({'action': 'battle', 'newBoard': board})
+			#broadcast o smierci graczy
+			#ewentualny broadcast o koncu gry
+		else:
+			socket.send({'action': 'error', 'error': 'notYourTurn'})
+	#debug
+	elif act == 'getBoard':
+		socket.send({'action': 'board', 'board': cv.getBoard()})
+		print cv.getBoard()
 
 def sendPlayersList():
 	global game
@@ -156,3 +180,17 @@ def getNameBySocket(socket):
 	for k, v in game['players'].iteritems():
 			if v['socket'] == socket.session.session_id:
 				return k
+
+def performBattle(tokenActionId, color):
+	#cv.battle
+	#przeslac plansze
+	#ustawic zycie graczom
+	#przeslac aktualna liste graczy
+	#przeslac plansze po bitwie
+	if game['state'] == 1:
+		#next turn
+		pass
+	else:
+		#koniec gry
+		game['state'] = 2
+		#oglosic wyniki

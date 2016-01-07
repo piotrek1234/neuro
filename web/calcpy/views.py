@@ -32,7 +32,7 @@ def getBoard():
 
 def restartGame():
     """restart game command"""
-    cmdgr.restartGame()
+    cmdmgr.restartGame()
 
 def addToken(tokenId, color, q, r , angle):
     """add token on board command"""
