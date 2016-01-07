@@ -13,6 +13,9 @@ var on_connected = function()
 	socket.send({'action': 'getPlayers'});
 }
 
+// todo:
+// połączyć wszystkie funkcje typu *Error
+
 var on_received = function(data)
 {
 	if(data.action)
@@ -33,6 +36,9 @@ var on_received = function(data)
 					socket.send({'action': 'getColor'});
 					console.log('All ready. Game state: '+data.state);
 				}
+				break;
+			case 'error':
+				console.log('Error. '+data.error);
 				break;
 			case 'hello':
 				console.log('Connected.');
@@ -66,9 +72,21 @@ var on_received = function(data)
 				//wstawić na planszę żeton
 				//odblokować interfejs
 				break;
+			case 'tokenMoved':
+				//log o przesunięciu
+				//przesunąć
+				//odblokować interfejs
 			case 'tokenAddError':
 				console.log('Failed to add token.');
 				//cofnąć dodanie tokenu, odblokować interfejs
+				break;
+			case 'tokenMoveError':
+				console.log('Failed to move token.');
+				//cofnąć przesunięcie tokenu, odblokować interfejs
+				break;
+			case 'tokenPushError':
+				console.log('Failed to push token.');
+				//cofnąć pchnięcie tokenu, odblokować interfejs
 				break;
 		}
 	}
@@ -78,6 +96,27 @@ var endTurn = function()
 {
 	socket.send({'action': 'nextTurn'});
 	//zablokować interfejs
+}
+
+var moveToken = function(src_q, src_r, dst_q, dst_r)
+{
+	socket.send({'action': 'move', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+}
+
+var pushToken = function(src_q, src_r, dst_q, dst_r)
+{
+	socket.send({'action': 'push', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+}
+
+var battle = function()
+{
+	socket.send({'action': 'battle'});
+}
+
+//byc moze nie potrzebne
+var whoseTurn = function()
+{
+	socket.send({'action': 'currentPlayer'});
 }
 
 var putToken = function(id, q, r, angle)

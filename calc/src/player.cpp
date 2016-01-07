@@ -23,8 +23,8 @@ void Player::setStack(Color color, std::string tokensConfigPath)
     stack.getNextTokensIds();
 }
 
-Token* Player::getToken(unsigned int tokenId){
-    return stack.getToken(tokenId);
+Token* Player::getToken(unsigned int tokenId, bool info_only){
+    return stack.getToken(tokenId, info_only);
 }
 
 bool Player::throwToken(unsigned int tokenId){

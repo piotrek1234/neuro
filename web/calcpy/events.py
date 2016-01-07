@@ -69,35 +69,84 @@ def messageFromPlayer(request, socket, context, message):
 		sendPlayersList()
 		if all_ready:
 			if game['players'].__len__() > 1:
-				colors = (Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-				i=0
+				#colors = (Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
+				i=1
 				for name in game['players'].iterkeys():
-					game['players'][name]['color'] = colors[i].real
+					game['players'][name]['color'] = i
 					cv.addPlayer(name)
 					i=i+1
 				game['state']=1
 				broadcast({'action': 'gameState', 'state': 1})
 				player = cv.getCurrentPlayer()
-				print player
+				tokens = {}
 				game['current_player'] = player['name']
-				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': player['tokens']})
+				for i in player['tokens']:
+					tokens[i] = cv.getTokenHand(i, player['color'])
+					tokens[i]['color'] = tokens[i]['color'].real
+				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
 
 	# wlasciwa rozgrywka
 	elif act == 'nextTurn':
-		# czy nextTurn przyszlo od aktualnego gracza
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getNextPlayer()
 			game['current_player'] = player['name']
-			broadcast({'action': 'turn', 'player': player['name'] ,'tokens': player['tokens']})
-	elif act == 'putToken':
-		color = Color.values[game['players'][getNameBySocket(socket)]['color']]
-		added = cv.addToken(message['id'], color, message['q'], message['r'], message['angle'])
-		if added:
-			token = cv.getTokenInfo(message['id'], color)
-			broadcast({'action': 'tokenAdded', 'color': color.real, 'id': message['id'], 'name': token['name'],\
-				'q': message['q'], 'r': message['r'], 'angle': message['angle']})
+			tokens = {}
+			for i in player['tokens']:
+				tokens[i] = cv.getTokenHand(i, player['color'])
+				tokens[i]['color'] = tokens[i]['color'].real
+			broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
 		else:
-			socket.send({'action': 'tokenAddError'})
+			socket.send({'action': 'error', 'error': 'notYourTurn'})
+	elif act == 'putToken':
+		if getNameBySocket(socket) == game['current_player']:
+			color = Color.values[game['players'][getNameBySocket(socket)]['color']]
+			added = cv.addToken(message['id'], color, message['q'], message['r'], message['angle'])
+			if added:
+				token = cv.getTokenBoard(message['q'], message['r'])
+				broadcast({'action': 'tokenAdded', 'color': color.real, 'id': message['id'],\
+					'name': token['name'],'q': message['q'], 'r': message['r'], 'angle': message['angle']})
+			else:
+				socket.send({'action': 'tokenAddError'})
+		else:
+			socket.send({'action': 'error', 'error': 'notYourTurn'})
+	# byc moze nie potrzebne
+	elif act == 'currentPlayer':
+		player = cv.getCurrentPlayer()
+		tokens = {}
+		for i in player['tokens']:
+			tokens[i] = cv.getTokenHand(i, player['color'])
+			tokens[i]['color'] = tokens[i]['color'].real
+		socket.send({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+	elif act == 'move':
+		if getNameBySocket(socket) == game['current_player']:
+			player = cv.getCurrentPlayer()
+			token_id = cv.getTokenBoard(message['src_q'], message['src_r'])['id']
+			moved = cv.actionTokenMove(token_id, player['color'], message['src_q'], message['src_r'], \
+				message['dst_q'], message['dst_r'])
+			if moved:
+				token = cv.getTokenBoard(message['dst_q'], message['dst_r'])
+				# broadcast: info o przesunietym tokenie
+				# broadcast({'action': 'tokenMoved', })
+			else:
+				socket.send({'action': 'tokenMoveError'})
+		else:
+			socket.send({'action': 'error', 'error': 'notYourTurn'})
+	elif act == 'push':
+		if getNameBySocket(socket) == game['current_player']:
+			player = cv.getCurrentPlayer()
+			token_id = cv.getTokenBoard(message['src_q'], message['src_r'])['id']
+			moved = cv.actionTokenPush(token_id, player['color'], message['src_q'], message['src_r'], \
+				message['dst_q'], message['dst_r'])
+			if moved:
+				pass
+				# token = cv.getTokenBoard(message['dst_q'], message['dst_r'])
+				# ^ pozycja bedzie inna niz dst, trzeba policzyc
+				# broadcast: info o przesunietym tokenie
+				# broadcast({'action': 'tokenMoved', })
+			else:
+				socket.send({'action': 'tokenMoveError'})
+		else:
+			socket.send({'action': 'error', 'error': 'notYourTurn'})
 
 def sendPlayersList():
 	global game

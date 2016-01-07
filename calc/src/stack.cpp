@@ -68,7 +68,7 @@ std::vector<int> Stack::getNextTokensIds()
     }
     else
     {
-        while(currentTokens.size()!=3)
+        while((currentTokens.size()!=3) && (tokens.size()>0))
         {
             currentTokens.push_back(tokens.front());///todo: niech będzie losowe zamiast front
             tokens.erase(tokens.begin());
@@ -77,16 +77,19 @@ std::vector<int> Stack::getNextTokensIds()
     return getCurrentTokensIds();
 }
 
-Token* Stack::getToken(int id)
+Token* Stack::getToken(int id, bool info_only)
 {
     auto it = findInCurrent(id);
     if(it!=currentTokens.end())
     {
         Token* token = *it;
-        this->currentTokens.erase(it);
-        if(hq)
+        if(!info_only)
         {
-            hq=false;
+            this->currentTokens.erase(it);
+            if(hq)
+            {
+                hq=false;
+            }
         }
         return token;
     }

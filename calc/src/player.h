@@ -19,7 +19,7 @@ public:
     std::string getName();
     void setStack(Color color, std::string tokensConfigPath);
     Color getColor();
-    Token* getToken(unsigned int tokenId);
+    Token* getToken(unsigned int tokenId, bool info_only=false);
     bool throwToken(unsigned int tokenId);
     std::vector<int> getTokensOnHandIds();
     std::vector<int> getNextTokensOnHandIds();

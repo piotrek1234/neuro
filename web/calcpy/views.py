@@ -70,10 +70,10 @@ def actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR):
     """command for token action of type push"""
     return cmdmgr.actionTokenPush(tokenId, color, fromQ, fromR, toQ, toR)
 
-def getTokenName(tokenId, color):
-    """get friendly name of token by its id and color"""
-    return cmdmgr.getTokenName(tokenId, color)
+def getTokenHand(tokenId, color):
+    """get details for given token from hand"""
+    return cmdmgr.getTokenHand(tokenId, color)
 
-def getTokenInfo(tokenId, color):
+def getTokenBoard(q, r):
     """get details for given token from board"""
-    return cmdmgr.getTokenInfo(tokenId, color)
+    return cmdmgr.getTokenBoard(q, r)

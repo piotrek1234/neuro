@@ -202,20 +202,15 @@ int Game::getPlayerId(Color color)
 }
 
 
-std::string Game::getTokenName(int tokenId, Color color)
+Token* Game::getTokenHand(int tokenId, Color color)
 {
-    Token* token = players[getPlayerId(color)]->getToken(tokenId);
-    return token->getName();
+    Token* token = players[getPlayerId(color)]->getToken(tokenId, true);
+    return token;
 }
 
 
-Token* Game::getToken(int tokenId, Color color)
+Token* Game::getTokenBoard(Hex pos)
 {
-    for(auto i=board_->getMapBegin(); i!=board_->getMapEnd(); ++i)
-    {
-        if(i->second->getId()==tokenId)
-            if(i->second->getColor() == color)
-                return i->second;
-    }
-    return nullptr;
+    Token* t = board_->getToken(pos);
+    return t;
 }

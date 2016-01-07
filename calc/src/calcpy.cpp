@@ -97,12 +97,6 @@ public:
 	{
 		return Game::getInstance().throwToken(tokenId, color);	
 	}
-
-    boost::python::dict getTokenInfo(int tokenId, Color color)
-    {
-        Token* token = Game::getInstance().getToken(tokenId, color);
-        return tokenDict(token);
-    }
 	
 	boost::python::dict getNextPlayer()
 	{
@@ -141,9 +135,16 @@ public:
 		return Game::getInstance().actionTokenPush(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
 	}
 
-    std::string getTokenName(int tokenId, Color color)
+    boost::python::dict getTokenHand(int tokenId, Color color)
     {
-        return Game::getInstance().getTokenName(tokenId, color);
+        Token* token = Game::getInstance().getTokenHand(tokenId, color);
+        return tokenDict(token);
+    }
+
+    boost::python::dict getTokenBoard(int q, int r)
+    {
+        Token* token = Game::getInstance().getTokenBoard(Hex(q, r));
+        return tokenDict(token);
     }
 	
 private:
@@ -183,10 +184,18 @@ private:
             {
                 token["life"]=tp->getLife();
                 token["angle"]=tp->getAngle();
+                token["type"]="putable";
             }
-            /*if(dynamic_cast<TokenHQ*>(t))
-                token["type"]="hq";*/
-
+            else if(TokenAction* ta = dynamic_cast<TokenAction*>(t))
+            {
+                token["type"]="action";
+                if(ta->getType() == ActionType::BATTLE)
+                    token["action"]="battle";
+                else if(ta->getType() == ActionType::MOVE)
+                    token["action"]="move";
+                else if(ta->getType() == ActionType::PUSH)
+                    token["action"]="push";
+            }
         }
         return token;
     }
@@ -230,8 +239,8 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenBattle", &CommandManagerPy::actionTokenBattle)
 		.def( "actionTokenMove", &CommandManagerPy::actionTokenMove)
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
-        .def( "getTokenName", &CommandManagerPy::getTokenName)
-        .def( "getTokenInfo", &CommandManagerPy::getTokenInfo)
+        .def( "getTokenHand", &CommandManagerPy::getTokenHand)
+        .def( "getTokenBoard", &CommandManagerPy::getTokenBoard)
 		;
 		
 	boost::python::enum_<Color>("Color")
