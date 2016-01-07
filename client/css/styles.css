@@ -195,3 +195,14 @@ svg {
     stroke: #33E842;
     stroke-width: 8;    
 }
+
+#cover{
+    position:fixed;
+    top:0;
+    left:0;
+    background:rgba(94,106,110,0.8);
+    z-index:5;
+    width:100%;
+    height:100%;
+    display: none;
+}
