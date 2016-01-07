@@ -136,7 +136,8 @@ angular.module('operationBoardController', [])
 				d3.select($boardItem)
 					.attr("class", defaultCssClass);
 
-				selectedToken = null;
+				$selectedToken = null;
+				$boardItem = null;
 			};
 
 			var hexSize = $scope.hexSize;
