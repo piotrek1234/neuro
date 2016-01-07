@@ -78,36 +78,43 @@ angular.module('operationBoardController', [])
 				$leftArrow.addEventListener("click", clickLeftArrowHandler.bind(this));
 			};
 
-			function clickRightArrowHandler () {
+			function clickRightArrowHandler (event) {
+				event.stopPropagation();
+
 				rotateRight($selectedToken);
 				rotateRight($boardItem);
 			};
 
-			function rotateRight ($element) {
-				var hexLibrary = new hexLibraryConstructor();
-				var corners = d3.select($element).attr("points");
-				var center = hexLibrary.getHexCenter(corners);
+			function clickLeftArrowHandler (event) {
+				event.stopPropagation();
 
-				d3.select($element)
-					.transition()
-					.attr("transform", "rotate(-60 " + center.x + " " + center.y + ")")
-					.duration(1000);
-			};
-
-			function clickLeftArrowHandler () {
 				rotateLeft($selectedToken);
 				rotateLeft($boardItem);
 			};
 
+			function rotateRight ($element) {
+				rotate($element, -60);
+			};
+
 			function rotateLeft ($element) {
+				rotate($element, 60);
+			};
+
+			function rotate($element, angle) {
 				var hexLibrary = new hexLibraryConstructor();
 				var corners = d3.select($element).attr("points");
 				var center = hexLibrary.getHexCenter(corners);
 
+				var svgOperations = new svgOperationsLibraryConstructor();
+				var angleCurrent = svgOperations.getRotateAngle($element);
+
+				angle += angleCurrent;
+
 				d3.select($element)
 					.transition()
-					.attr("transform", "rotate(60 " + center.x + " " + center.y + ")")
-					.duration(1000);
+					.attr("transform", "rotate(" + angle + " " + center.x + " " + center.y + ")")
+				.duration(1000);
+				
 			};
 
 			function selectTokenHandler (event, data) {

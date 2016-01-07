@@ -62,11 +62,11 @@ function hexLibraryConstructor () {
         var center = null;
 
         var pointsArray = this.convertCornersStringToArray(cornersString);
-
+        
         var firstCorner = pointsArray[0];
         var fourthCorner = pointsArray[3];
-        debugger;
-        center = new Point(firstCorner.x - fourthCorner.x, parseInt(firstCorner.y));
+        
+        center = new Point((firstCorner.x + fourthCorner.x)/2, (firstCorner.y + fourthCorner.y)/2);
         
         return center;
     };
@@ -76,11 +76,14 @@ function hexLibraryConstructor () {
         var cornersStringArray = cornersString.split('\n');
 
         removeWhitespacesFromStringArray(cornersStringArray);
-
+        
         cornersStringArray.forEach(function (element) {
-            var stringCoordinates = element.split(',');
-            pointsArray.push(Point(stringCoordinates[0], stringCoordinates[1]));
-        });
+            var elementArray = element.split(',');
+            pointsArray.push({
+                x: parseInt(elementArray[0]),
+                y: parseInt(elementArray[1])
+            });
+         });
 
         return pointsArray;
     };
