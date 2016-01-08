@@ -13,9 +13,6 @@ var on_connected = function()
 	socket.send({'action': 'getPlayers'});
 }
 
-// todo:
-// połączyć wszystkie funkcje typu *Error
-
 var on_received = function(data)
 {
 	if(data.action)
@@ -37,11 +34,8 @@ var on_received = function(data)
 					console.log('All ready. Game state: '+data.state);
 				}
 				break;
-			case 'error':
-				console.log('Error. '+data.error);
-				break;
 			case 'hello':
-				console.log('Connected.');
+				console.log('Connected. Game state: '+data.gameState);
 				break;
 			case 'joinState':
 				if(data.joined == true)
@@ -73,22 +67,59 @@ var on_received = function(data)
 				//odblokować interfejs
 				break;
 			case 'tokenMoved':
-				//log o przesunięciu
+				//komunikat odbierany po pomyślnym przesunięciu lub pchnięciu
+				console.log('Token have been moved: color('+data.color+'), id('+data.id+'), name('+data.name+
+					'), from('+data.src_q+','+data.src_r+'), to('+data.dst_q+','+data.dst_r+').');
 				//przesunąć
 				//odblokować interfejs
-			case 'tokenAddError':
-				console.log('Failed to add token.');
-				//cofnąć dodanie tokenu, odblokować interfejs
 				break;
-			case 'tokenMoveError':
-				console.log('Failed to move token.');
-				//cofnąć przesunięcie tokenu, odblokować interfejs
+			case 'afterBattle':
+				console.log('Battle.');
+				console.log(data.board);
+				console.log(data.players);
+				//w data.board siedzi aktualny stan planszy
+				// -> wywalic wszystkie zetony z planszy i powstawiac nowe
+				//w data.players siedzi aktualny stan graczy
+				// -> graczom z zerowym zyciem wyszarzyc tokeny czy cos w tym stylu 
 				break;
-			case 'tokenPushError':
-				console.log('Failed to push token.');
-				//cofnąć pchnięcie tokenu, odblokować interfejs
+			case 'gameEnd':
+				console.log('Game has ended. Winner: '+data.winner);
+				//wyswietlic popup z wynikiem
+				break;
+			case 'board':
+				console.log('Board contents:');
+				console.log(data.board);
+				break;
+			case 'error':
+				handleError(data.errCont);
 				break;
 		}
+	}
+}
+
+var handleError = function(errorType)
+{
+	switch(errorType){
+		case 'addFailed':
+			console.log('Failed to add token.');
+			//cofnąć dodanie tokenu, odblokować interfejs
+			break;
+		case 'moveFailed':
+			console.log('Failed to move token.');
+			//cofnąć przesunięcie tokenu, odblokować interfejs
+			break;
+		case 'pushFailed':
+			console.log('Failed to push token.');
+			//cofnąć pchnięcie tokenu, odblokować interfejs
+			break;
+		case 'notYourTurn':
+			console.log('Wait for your turn.');
+			break;
+		case 'throwFailed':
+			console.log('Failed to throw token (HQ or not your token).');
+			break;
+		default:
+			console.log('Error. Code: '+errorType);
 	}
 }
 
@@ -98,19 +129,32 @@ var endTurn = function()
 	//zablokować interfejs
 }
 
-var moveToken = function(src_q, src_r, dst_q, dst_r)
+var moveToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
 {
-	socket.send({'action': 'move', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+	socket.send({'action': 'move', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+		'dst_q': dst_q, 'dst_r': dst_r});
 }
 
-var pushToken = function(src_q, src_r, dst_q, dst_r)
+var pushToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
 {
-	socket.send({'action': 'push', 'src_q': src_q, 'src_r': src_r, 'dst_q': dst_q, 'dst_r': dst_r});
+	socket.send({'action': 'push', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+		'dst_q': dst_q, 'dst_r': dst_r});
 }
 
-var battle = function()
+var battle = function(tokenActionId)
 {
-	socket.send({'action': 'battle'});
+	socket.send({'action': 'battle', 'token': tokenActionId});
+	// zablokuj interfejs, tura gracza sie zakonczyla
+}
+
+var getBoard = function()
+{
+	socket.send({'action': 'getBoard'});
+}
+
+var throwToken = function(tokenId)
+{
+	socket.send({'action': 'throw', 'id': tokenId});
 }
 
 //byc moze nie potrzebne

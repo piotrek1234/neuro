@@ -75,8 +75,10 @@ public:
 			{
 				Hex pos = i->first;
 				//out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
-                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = \
-                        boost::python::make_tuple(i->second->getId(), i->second->getColor());
+                //out[boost::python::make_tuple(pos.getQ(), pos.getR())] = tokenDict(i->second);
+                        //boost::python::make_tuple(i->second->getId(), i->second->getColor());
+
+                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = tokenDict(i->second);
 			}
 		}
 		return out;
@@ -119,6 +121,11 @@ public:
 	{
 		Game::getInstance().addTokenConfigPath(color, path);
 	}
+
+    void performBattle()
+    {
+        Game::getInstance().performBattle();
+    }
 
 	bool actionTokenBattle(int tokenId, Color color)
 	{
@@ -241,6 +248,7 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
         .def( "getTokenHand", &CommandManagerPy::getTokenHand)
         .def( "getTokenBoard", &CommandManagerPy::getTokenBoard)
+        .def( "performBattle", &CommandManagerPy::performBattle)
 		;
 		
 	boost::python::enum_<Color>("Color")

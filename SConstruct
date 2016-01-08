@@ -7,11 +7,11 @@ MYAPP_VER_COMPILATION = '0'
 MYAPP_VER_INSTALL = '1'
 
 #odczytuje wersje kompilacji z wersji repozytorium
-ver_repository = subprocess.Popen('hg sum', shell=True, stdout=subprocess.PIPE).communicate()[0]
-try:
-    MYAPP_VER_COMPILATION = re.search('(?<=parent: )\d+', ver_repository).group()
-except BaseException:
-    pass
+# ver_repository = subprocess.Popen('hg sum', shell=True, stdout=subprocess.PIPE).communicate()[0]
+# try:
+#     MYAPP_VER_COMPILATION = re.search('(?<=parent: )\d+', ver_repository).group()
+# except BaseException:
+#     pass
 
 MYAPP_VER_STRING = str(MYAPP_VER_MAJOR) + '.' + str(MYAPP_VER_MINOR) + '.' + MYAPP_VER_COMPILATION
 

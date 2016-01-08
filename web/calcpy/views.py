@@ -32,7 +32,7 @@ def getBoard():
 
 def restartGame():
     """restart game command"""
-    cmdgr.restartGame()
+    cmdmgr.restartGame()
 
 def addToken(tokenId, color, q, r , angle):
     """add token on board command"""
@@ -77,3 +77,7 @@ def getTokenHand(tokenId, color):
 def getTokenBoard(q, r):
     """get details for given token from board"""
     return cmdmgr.getTokenBoard(q, r)
+
+def performBattle():
+    """perform battle without token action"""
+    cmdmgr.performBattle()
