@@ -77,3 +77,7 @@ def getTokenHand(tokenId, color):
 def getTokenBoard(q, r):
     """get details for given token from board"""
     return cmdmgr.getTokenBoard(q, r)
+
+def performBattle():
+    """perform battle without token action"""
+    cmdmgr.performBattle()

@@ -1,4 +1,4 @@
-﻿<tokens><!-- nazwa, ile sztuk -->
+﻿<tokens>
   <token><!-- hq -->
     <id>1</id>
     <type>hq</type>
@@ -7,7 +7,7 @@
     <directions></directions>
   </token>
 <!-- creatures --> 
-  <token><!-- gr_cre_01, 3 -->
+  <token><!-- gr_cre_01, 1 -->
     <id>2</id>
     <type>creature</type>
     <name>gr_cre_01</name>
@@ -20,8 +20,34 @@
       <value>1</value>
     </attack>
   </token>
-  <token><!-- gr_cre_02, 1 -->
+  <token><!-- gr_cre_01, 2 -->
     <id>3</id>
+    <type>creature</type>
+    <name>gr_cre_01</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- gr_cre_01, 3 -->
+    <id>4</id>
+    <type>creature</type>
+    <name>gr_cre_01</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- gr_cre_02, 1 -->
+    <id>5</id>
     <type>creature</type>
     <name>gr_cre_02</name>
     <life>1</life>
@@ -33,8 +59,60 @@
       <value>1</value>
     </attack>
   </token>
+  <token><!-- gr_cre_03, 1 -->
+    <id>6</id>
+    <type>creature</type>
+    <name>gr_cre_03</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- gr_cre_03, 2 -->
+    <id>7</id>
+    <type>creature</type>
+    <name>gr_cre_03</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- gr_cre_03, 3 -->
+    <id>8</id>
+    <type>creature</type>
+    <name>gr_cre_03</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
+  <token><!-- gr_cre_03, 4 -->
+    <id>9</id>
+    <type>creature</type>
+    <name>gr_cre_03</name>
+    <life>1</life>
+    <priority>3</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>1</value>
+    </attack>
+  </token>
   <token><!-- gr_cre_03, 5 -->
-    <id>4</id>
+    <id>10</id>
     <type>creature</type>
     <name>gr_cre_03</name>
     <life>1</life>
@@ -47,7 +125,7 @@
     </attack>
   </token>
   <token><!-- gr_cre_04, 1 -->
-    <id>5</id>
+    <id>11</id>
     <type>creature</type>
     <name>gr_cre_04</name>
     <life>1</life>
@@ -59,8 +137,21 @@
       <value>2</value>
     </attack>
   </token>
+  <token><!-- gr_cre_05, 1 -->
+    <id>12</id>
+    <type>creature</type>
+    <name>gr_cre_05</name>
+    <life>1</life>
+    <priority>2</priority>
+    <additional_action>0</additional_action>
+    <movable>0</movable>
+    <attack>
+      <dir_id>0</dir_id>
+      <value>2</value>
+    </attack>
+  </token>
   <token><!-- gr_cre_05, 2 -->
-    <id>6</id>
+    <id>13</id>
     <type>creature</type>
     <name>gr_cre_05</name>
     <life>1</life>
@@ -73,7 +164,7 @@
     </attack>
   </token>
   <token><!-- gr_cre_06, 1 -->
-    <id>7</id>
+    <id>14</id>
     <type>creature</type>
     <name>gr_cre_06</name>
     <life>1</life>
@@ -90,8 +181,8 @@
     </attack>
   </token>
 <!-- modules -->
- <token><!-- gr_mod_life, 2 -->
-  <id>8</id>
+ <token><!-- gr_mod_life, 1 -->
+  <id>15</id>
   <type>module</type>
   <name>gr_mod_life</name>
   <module_type>life</module_type>
@@ -101,8 +192,19 @@
    <dir_id>5</dir_id>
   </directions>
  </token>
- <token><!-- gr_mod_attack, 2 -->
-  <id>9</id>
+ <token><!-- gr_mod_life, 2 -->
+  <id>16</id>
+  <type>module</type>
+  <name>gr_mod_life</name>
+  <module_type>life</module_type>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+   <dir_id>5</dir_id>
+  </directions>
+ </token>
+ <token><!-- gr_mod_attack, 1 -->
+  <id>17</id>
   <type>module</type>
   <name>gr_mod_attack</name>
   <module_type>attack</module_type>
@@ -116,8 +218,45 @@
    <dir_id>5</dir_id>
   </directions>
  </token>
+ <token><!-- gr_mod_attack, 2 -->
+  <id>18</id>
+  <type>module</type>
+  <name>gr_mod_attack</name>
+  <module_type>attack</module_type>
+  <value>1</value>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>1</dir_id>
+   <dir_id>2</dir_id>
+   <dir_id>3</dir_id>
+   <dir_id>4</dir_id>
+   <dir_id>5</dir_id>
+  </directions>
+ </token>
+ <token><!-- gr_mod_priority, 1 -->
+  <id>19</id>
+  <type>module</type>
+  <name>gr_mod_priority</name>
+  <module_type>priority</module_type>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>2</dir_id>
+   <dir_id>4</dir_id>
+  </directions>
+ </token>
+ <token><!-- gr_mod_priority, 2 -->
+  <id>20</id>
+  <type>module</type>
+  <name>gr_mod_priority</name>
+  <module_type>priority</module_type>
+  <directions>
+   <dir_id>0</dir_id>
+   <dir_id>2</dir_id>
+   <dir_id>4</dir_id>
+  </directions>
+ </token>
  <token><!-- gr_mod_priority, 3 -->
-  <id>10</id>
+  <id>21</id>
   <type>module</type>
   <name>gr_mod_priority</name>
   <module_type>priority</module_type>
@@ -128,14 +267,68 @@
   </directions>
  </token>
 <!-- actions -->
- <token><!-- gr_act_battle, 6 -->
-  <id>11</id> 
+ <token><!-- gr_act_battle, 1 -->
+  <id>22</id> 
   <type>action</type>
   <name>gr_act_battle</name>
   <action_type>battle</action_type>
  </token>
- <token><!-- gr_act_move, 8 -->
-  <id>12</id> 
+ <token><!-- gr_act_battle, 2 -->
+  <id>23</id> 
+  <type>action</type>
+  <name>gr_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- gr_act_battle, 3 -->
+  <id>24</id> 
+  <type>action</type>
+  <name>gr_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- gr_act_battle, 4 -->
+  <id>25</id> 
+  <type>action</type>
+  <name>gr_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- gr_act_battle, 5 -->
+  <id>26</id> 
+  <type>action</type>
+  <name>gr_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- gr_act_battle, 6 -->
+  <id>27</id> 
+  <type>action</type>
+  <name>gr_act_battle</name>
+  <action_type>battle</action_type>
+ </token>
+ <token><!-- gr_act_move, 1 -->
+  <id>28</id> 
+  <type>action</type>
+  <name>gr_act_move</name>
+  <action_type>move</action_type>
+ </token>
+ <token><!-- gr_act_move, 2 -->
+  <id>29</id> 
+  <type>action</type>
+  <name>gr_act_move</name>
+  <action_type>move</action_type>
+ </token>
+ <token><!-- gr_act_move, 3 -->
+  <id>30</id> 
+  <type>action</type>
+  <name>gr_act_move</name>
+  <action_type>move</action_type>
+ </token>
+ <token><!-- gr_act_move, 4 -->
+  <id>31</id> 
+  <type>action</type>
+  <name>gr_act_move</name>
+  <action_type>move</action_type>
+ </token>
+ <token><!-- gr_act_move, 5 -->
+  <id>32</id> 
   <type>action</type>
   <name>gr_act_move</name>
   <action_type>move</action_type>

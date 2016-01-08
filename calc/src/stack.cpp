@@ -1,9 +1,11 @@
 #include "stack.h"
 #include <iostream>
+#include <random>
 
 Stack::Stack()
 {
     hq=true;
+    generator = std::default_random_engine(rd());
 }
 
 Stack::~Stack()
@@ -70,8 +72,13 @@ std::vector<int> Stack::getNextTokensIds()
     {
         while((currentTokens.size()!=3) && (tokens.size()>0))
         {
-            currentTokens.push_back(tokens.front());///todo: niech będzie losowe zamiast front
-            tokens.erase(tokens.begin());
+            distribution =  std::uniform_int_distribution<int>(0,tokens.size()-1);
+            size_t i = distribution(generator);
+
+            currentTokens.push_back(tokens.at(i));
+            tokens.erase(tokens.begin()+i);
+            /*currentTokens.push_back(tokens.front());
+            tokens.erase(tokens.begin());*/
         }
     }
     return getCurrentTokensIds();

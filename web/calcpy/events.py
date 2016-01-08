@@ -1,3 +1,6 @@
+## @file calcpy/events.py
+#  @brief websockets events handler
+
 from django_socketio.events import on_connect, on_message, on_disconnect
 from django_socketio import broadcast
 from calc import Color
@@ -19,19 +22,24 @@ game = {'state': 0,
 
 @on_connect
 def playerConnected(request, socket, context):
+	'''handles new connections from players'''
 	print '>>>> connected'
 	socket.send({'action':'hello', 'gameState': game['state']})
 
 @on_disconnect
 def playerDisconnected(request, socket, context):
+	'''handles player disconnect event'''
 	global game
 	tmp_k = ''
 	for k, v in game['players'].iteritems():
 		if v['socket'] == socket.session.session_id:
 			print '>>>> ', k, ' disconnected'
+			if game['state'] == 1:
+				cv.killPlayer(Color.values[v['color']])
+				if game['current_player'] == v['name']:
+					nextTurn()
 			tmp_k = k
-	# usunac gracza z c++
-	# cv.removePlayer(message['name'])
+
 	if not tmp_k:
 		del game['players'][tmp_k]
 	if game['players'].__len__() == 0:
@@ -41,6 +49,7 @@ def playerDisconnected(request, socket, context):
 
 @on_message
 def messageFromPlayer(request, socket, context, message):
+	'''handles messages from players'''
 	global game
 	print '>>>> ', message
 	act = message['action']
@@ -58,7 +67,7 @@ def messageFromPlayer(request, socket, context, message):
 			socket.send({'action': 'joinState', 'joined': False, 'reason': 'nameNotAvailable'})
 		else:
 			game['players'][message['name']]= \
-				{'ready': False, 'socket': socket.session.session_id, 'color': Color.NONE.real}
+				{'ready': False, 'socket': socket.session.session_id, 'color': Color.NONE.real, 'life': 20}
 			socket.send({'action':'joinState', 'joined': True, 'playerName': message['name']})
 			sendPlayersList()
 	elif act == 'getColor':
@@ -94,18 +103,7 @@ def messageFromPlayer(request, socket, context, message):
 	# wlasciwa rozgrywka
 	elif act == 'nextTurn':
 		if getNameBySocket(socket) == game['current_player']:
-			player = cv.getNextPlayer()
-			game['current_player'] = player['name']
-			tokens = {}
-			for i in player['tokens']:
-				tokens[i] = cv.getTokenHand(i, player['color'])
-				tokens[i]['color'] = tokens[i]['color'].real
-			if tokens.__len__() == 0:
-				game['state'] = 2
-				performBattle()
-				#
-			else:
-				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+			nextTurn()
 		else:
 			sendError(socket, 'notYourTurn')
 	elif act == 'putToken':
@@ -120,14 +118,19 @@ def messageFromPlayer(request, socket, context, message):
 				sendError(socket, 'addFailed')
 		else:
 			sendError(socket, 'notYourTurn')
+	elif act == 'throw':
+		if getNameBySocket(socket) == game['current_player']:
+			thrown = cv.throwToken(message['id'], \
+				Color.values[game['players'][getNameBySocket(socket)]['color']])
+			if thrown:
+				currentTurn()
+			else:
+				sendError(socket, 'throwFailed')
+		else:
+			sendError(socket, 'notYourTurn')
 	# byc moze nie potrzebne
 	elif act == 'currentPlayer':
-		player = cv.getCurrentPlayer()
-		tokens = {}
-		for i in player['tokens']:
-			tokens[i] = cv.getTokenHand(i, player['color'])
-			tokens[i]['color'] = tokens[i]['color'].real
-		socket.send({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+		currentTurn()
 	elif act == 'move':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
@@ -173,9 +176,6 @@ def messageFromPlayer(request, socket, context, message):
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
 			performBattle(message['token'], player['color'])
-			#broadcast({'action': 'battle', 'newBoard': board})
-			#broadcast o smierci graczy
-			#ewentualny broadcast o koncu gry
 		else:
 			sendError(socket, 'notYourTurn')
 	elif act == 'getBoard':
@@ -183,32 +183,106 @@ def messageFromPlayer(request, socket, context, message):
 		print cv.getBoard()
 
 def sendPlayersList():
+	'''broadcasts updated list of players'''
 	global game
 	broadcast({'action':'playersList', 'list': game['players']})
 
 def getNameBySocket(socket):
+	'''finds name of player based on given socket'''
 	for k, v in game['players'].iteritems():
-			if v['socket'] == socket.session.session_id:
-				return k
+		if v['socket'] == socket.session.session_id:
+			return k
 
-def performBattle(tokenActionId, color):
-	#cv.battle
-	#przeslac plansze
-	#ustawic zycie graczom
-	#przeslac aktualna liste graczy
-	#przeslac plansze po bitwie
-	if game['state'] == 1:
-		#next turn
-		pass
-	else:
-		#koniec gry
+def getNameByColor(color):
+	'''finds name of player based on given color'''
+	for k, v in game['players'].iteritems():
+		if v['color'] == color:
+			return k
+
+def nextTurn():
+	'''changes turn for next player'''
+	player = cv.getNextPlayer()
+	game['current_player'] = player['name']
+	tokens = {}
+	for i in player['tokens']:
+		tokens[i] = cv.getTokenHand(i, player['color'])
+		tokens[i]['color'] = tokens[i]['color'].real
+	if tokens.__len__() == 0:
+		# bitwa koncowa
 		game['state'] = 2
-		#oglosic wyniki
+		performBattle()
+	elif isBoardFull():
+		performBattle()
+	elif game['players'][player['name']]['life'] < 1:
+		nextTurn()
+	else:
+		broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+
+def isBoardFull():
+	'''tells if board has no empty hexes'''
+	if cv.getBoard().__len__ == 19:
+		return True
+	else:
+		return False
+
+def currentTurn():
+	'''broadcasts information about current player and his tokens on hand'''
+	player = cv.getCurrentPlayer()
+	tokens = {}
+	for i in player['tokens']:
+		tokens[i] = cv.getTokenHand(i, player['color'])
+		tokens[i]['color'] = tokens[i]['color'].real
+	broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+
+def performBattle(tokenActionId=-1, color=Color.NONE):
+	'''handles battle and its effects'''
+	if tokenActionId == -1:
+		cv.performBattle()
+	else:
+		cv.actionTokenBattle(tokenActionId, color)
+	#ustawic zycie graczom
+	life = {}
+	for col in Color.values:
+		life[col.real] = 0
+
+	board = getBoard()
+
+	# znalezienie hq i przypisanie ich zycia odpowiedniemu kolorowi
+	for tok in board.itervalues():
+		if 'hq' in tok['name']:
+			life[tok['color']] = tok['life']
+
+	# przypisanie kazdemu graczowi zycia na podstawie zycia hq
+	for col, l in life.iteritems():
+		game['players'][getNameByColor(col)]['life'] = l
+
+	# sprawdzenie czy zyje tylko 1 gracz
+	alive = 0
+	best = 0
+	for p in game['players']:
+		if p['life'] > 0:
+			alive = alive + 1
+		if p['life'] > best:
+			winner = p['name']
+
+	if alive == 1:
+		game['state'] = 3
+
+	broadcast({'action': 'afterBatle', 'board': board, 'players': game['players']})
+
+	if game['state'] == 1:
+		nextTurn()
+	else:	# 2 lub 3
+		#koniec gry
+		game['state'] = 3
+		broadcast({'action': 'gameEnd', 'winner': winner})
 
 def sendError(socket, error):
+	'''builds and sends error message'''
 	socket.send({'action': 'error', 'errCont': error})
 
 def getBoard():
+	'''returns tokens on board in form readable by javascript'''
 	board = cv.getBoard()
 	retbrd = {}
 	i=0

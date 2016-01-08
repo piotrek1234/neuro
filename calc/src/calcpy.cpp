@@ -122,6 +122,11 @@ public:
 		Game::getInstance().addTokenConfigPath(color, path);
 	}
 
+    void performBattle()
+    {
+        Game::getInstance().performBattle();
+    }
+
 	bool actionTokenBattle(int tokenId, Color color)
 	{
 		return Game::getInstance().actionTokenBattle(tokenId, color);
@@ -243,6 +248,7 @@ BOOST_PYTHON_MODULE( calc )
 		.def( "actionTokenPush", &CommandManagerPy::actionTokenPush)
         .def( "getTokenHand", &CommandManagerPy::getTokenHand)
         .def( "getTokenBoard", &CommandManagerPy::getTokenBoard)
+        .def( "performBattle", &CommandManagerPy::performBattle)
 		;
 		
 	boost::python::enum_<Color>("Color")

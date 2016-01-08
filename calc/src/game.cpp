@@ -228,3 +228,9 @@ Token* Game::getTokenBoard(Hex pos)
     Token* t = board_->getToken(pos);
     return t;
 }
+
+
+void Game::performBattle()
+{
+    BattleHandler::getInstance().handleBattle();
+}

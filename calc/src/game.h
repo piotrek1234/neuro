@@ -45,6 +45,7 @@ public:
     void addTokenConfigPath(Color color, string path);
     Token* getTokenBoard(Hex pos);
     Token* getTokenHand(int tokenId, Color color);
+    void performBattle();
     
 private:
     Game();
