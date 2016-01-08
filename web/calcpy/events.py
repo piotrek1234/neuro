@@ -40,7 +40,7 @@ def playerDisconnected(request, socket, context):
 					nextTurn()
 			tmp_k = k
 
-	if not tmp_k:
+	if tmp_k != '':
 		del game['players'][tmp_k]
 	if game['players'].__len__() == 0:
 		cv.restartGame()
@@ -268,7 +268,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 	if alive == 1:
 		game['state'] = 3
 
-	broadcast({'action': 'afterBatle', 'board': board, 'players': game['players']})
+	broadcast({'action': 'afterBattle', 'board': board, 'players': game['players']})
 
 	if game['state'] == 1:
 		nextTurn()

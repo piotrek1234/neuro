@@ -20,12 +20,20 @@ var on_received = function(data)
 		switch(data.action){
 			case 'playersList':
 				console.log(data.list);
+
+				playerListEvents.forEach(function (callback) {
+					callback(data.list);
+				});
+
 				//zaktualizować listę graczy: imię, stan
 				break;
 			case 'setColor':
 				console.log('My color: '+data.color);
 				sessionStorage.setItem('playerColor', data.color);
 				//przydzielić gdzieś graczowi kolor
+				setColorEvents.forEach(function (callback) {
+					callback(data.color);
+				});
 				break;
 			case 'gameState':
 				if(data.state == 1)
@@ -33,9 +41,15 @@ var on_received = function(data)
 					socket.send({'action': 'getColor'});
 					console.log('All ready. Game state: '+data.state);
 				}
+				gameStateEvents.forEach(function (callback) {
+					callback(data.state);
+				});
 				break;
 			case 'hello':
 				console.log('Connected. Game state: '+data.gameState);
+				gameStateEvents.forEach(function (callback) {
+					callback(data.gameState);
+				});
 				break;
 			case 'joinState':
 				if(data.joined == true)
@@ -53,6 +67,9 @@ var on_received = function(data)
 			case 'turn':
 				console.log('Turn for player '+data.player);
 				console.log(data.tokens);
+				turnEvents.forEach(function (callback) {
+					callback(data.player, data.tokens);
+				});
 				sessionStorage.setItem('currentTurn', data.player);
 				// zaktualizować konkretnemu graczowi tokeny i je wyświetlić
 				if(data.turn == sessionStorage.playerName)
@@ -186,4 +203,23 @@ socket.connect();
 socket.on('connect', on_connected);
 socket.on('message', on_received);
 }
+
+var playerListEvents = [];
+var setColorEvents = [];
+var gameStateEvents = [];
+var turnEvents = [];
+
+function setOnPlayerListEventsCallback (callback) {
+	playerListEvents.push(callback);
+};
+function setOnSetColorEventsCallback (callback) {
+	setColorEvents.push(callback);
+};
+function setOnGameStateEventsCallback (callback) {
+	gameStateEvents.push(callback);
+};
+function setOnTurnEventsCallback (callback) {
+	turnEvents.push(callback);
+};
+
 window.onload = sockets_start;
