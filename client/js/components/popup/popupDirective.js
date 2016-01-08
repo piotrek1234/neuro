@@ -3,10 +3,8 @@ angular.module('popupDirective', [])
 		return {
 			restrict: 'E',
 			scope: {
-				centerX: "=cx",
-				centerY: "=cy"
+			
 			},
-			templateNamespace: 'svg',
 			templateUrl: 'js/components/popup/popup.html',
 			replace: true,
 			controller: function ($scope) {
