@@ -25,13 +25,15 @@ def playerConnected(request, socket, context):
 @on_disconnect
 def playerDisconnected(request, socket, context):
 	global game
+	tmp_k = ''
 	for k, v in game['players'].iteritems():
 		if v['socket'] == socket.session.session_id:
 			print '>>>> ', k, ' disconnected'
 			tmp_k = k
 	# usunac gracza z c++
 	# cv.removePlayer(message['name'])
-	del game['players'][tmp_k]
+	if not tmp_k:
+		del game['players'][tmp_k]
 	if game['players'].__len__() == 0:
 		cv.restartGame()
 		game['state'] = 0
@@ -105,7 +107,7 @@ def messageFromPlayer(request, socket, context, message):
 			else:
 				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
 		else:
-			socket.send({'action': 'error', 'error': 'notYourTurn'})
+			sendError(socket, 'notYourTurn')
 	elif act == 'putToken':
 		if getNameBySocket(socket) == game['current_player']:
 			color = Color.values[game['players'][getNameBySocket(socket)]['color']]
@@ -115,9 +117,9 @@ def messageFromPlayer(request, socket, context, message):
 				broadcast({'action': 'tokenAdded', 'color': color.real, 'id': message['id'],\
 					'name': token['name'],'q': message['q'], 'r': message['r'], 'angle': message['angle']})
 			else:
-				socket.send({'action': 'tokenAddError'})
+				sendError(socket, 'addFailed')
 		else:
-			socket.send({'action': 'error', 'error': 'notYourTurn'})
+			sendError(socket, 'notYourTurn')
 	# byc moze nie potrzebne
 	elif act == 'currentPlayer':
 		player = cv.getCurrentPlayer()
@@ -130,6 +132,9 @@ def messageFromPlayer(request, socket, context, message):
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
 			token = cv.getTokenBoard(message['src_q'], message['src_r'])
+			if token.__len__() == 0:
+				sendError(socket, 'moveFailed')
+				return
 			moved = cv.actionTokenMove(message['token'], player['color'], message['src_q'], message['src_r'], \
 				message['dst_q'], message['dst_r'])
 			if moved:
@@ -138,14 +143,20 @@ def messageFromPlayer(request, socket, context, message):
 					'src_q': message['src_q'], 'src_r': message['src_r'], 'dst_q': message['dst_q'], \
 					'dst_r': message['dst_r'], 'name': token['name']})
 			else:
-				socket.send({'action': 'tokenMoveError'})
+				sendError(socket, 'moveFailed')
 		else:
-			socket.send({'action': 'error', 'error': 'notYourTurn'})
+			sendError(socket, 'notYourTurn')
 	elif act == 'push':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
 			token = cv.getTokenBoard(message['src_q'], message['src_r'])
+			if token.__len__() == 0:
+				sendError(socket, 'pushFailed')
+				return
 			pushed = cv.getTokenBoard(message['dst_q'], message['dst_r'])
+			if pushed.__len__() == 0:
+				sendError(socket, 'pushFailed')
+				return
 			moved = cv.actionTokenPush(message['token'], player['color'], message['src_q'], message['src_r'], \
 				message['dst_q'], message['dst_r'])
 			if moved:
@@ -153,11 +164,11 @@ def messageFromPlayer(request, socket, context, message):
 				pushed_r = 2*message['dst_r']-message['src_r']
 				broadcast({'action': 'tokenMoved', 'id': pushed['id'], 'color': pushed['color'].real, \
 					'src_q': message['dst_q'], 'src_r': message['dst_r'], 'dst_q': pushed_q, \
-					'dst_r': pushed_r})
+					'dst_r': pushed_r, 'name': pushed['name']})
 			else:
-				socket.send({'action': 'tokenPushError'})
+				sendError(socket, 'pushFailed')
 		else:
-			socket.send({'action': 'error', 'error': 'notYourTurn'})
+			sendError(socket, 'notYourTurn')
 	elif act == 'battle':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
@@ -166,10 +177,9 @@ def messageFromPlayer(request, socket, context, message):
 			#broadcast o smierci graczy
 			#ewentualny broadcast o koncu gry
 		else:
-			socket.send({'action': 'error', 'error': 'notYourTurn'})
-	#debug
+			sendError(socket, 'notYourTurn')
 	elif act == 'getBoard':
-		socket.send({'action': 'board', 'board': cv.getBoard()})
+		socket.send({'action': 'board', 'board': getBoard()})
 		print cv.getBoard()
 
 def sendPlayersList():
@@ -194,3 +204,16 @@ def performBattle(tokenActionId, color):
 		#koniec gry
 		game['state'] = 2
 		#oglosic wyniki
+
+def sendError(socket, error):
+	socket.send({'action': 'error', 'errCont': error})
+
+def getBoard():
+	board = cv.getBoard()
+	retbrd = {}
+	i=0
+	for k, v in board.iteritems():
+		v['color'] = v['color'].real
+		retbrd[i] = {'q': k[0], 'r': k[1], 'token': v}
+		i=i+1
+	return retbrd

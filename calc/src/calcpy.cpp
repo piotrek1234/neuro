@@ -75,8 +75,10 @@ public:
 			{
 				Hex pos = i->first;
 				//out[i->second->getId()] = boost::python::make_tuple(pos.getQ(), pos.getR(), pos.getS());
-                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = tokenDict(i->second);
+                //out[boost::python::make_tuple(pos.getQ(), pos.getR())] = tokenDict(i->second);
                         //boost::python::make_tuple(i->second->getId(), i->second->getColor());
+
+                out[boost::python::make_tuple(pos.getQ(), pos.getR())] = tokenDict(i->second);
 			}
 		}
 		return out;

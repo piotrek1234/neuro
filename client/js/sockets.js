@@ -37,9 +37,6 @@ var on_received = function(data)
 					console.log('All ready. Game state: '+data.state);
 				}
 				break;
-			case 'error':
-				console.log('Error. '+data.error);
-				break;
 			case 'hello':
 				console.log('Connected. Game state: '+data.gameState);
 				break;
@@ -73,22 +70,36 @@ var on_received = function(data)
 				//odblokować interfejs
 				break;
 			case 'tokenMoved':
-				console.log('Token have been moved: color('+data.color+'), id('+data.id+')+, name('+data.name+
+				//komunikat odbierany po pomyślnym przesunięciu lub pchnięciu
+				console.log('Token have been moved: color('+data.color+'), id('+data.id+'), name('+data.name+
 					'), from('+data.src_q+','+data.src_r+'), to('+data.dst_q+','+data.dst_r+').');
 				//przesunąć
 				//odblokować interfejs
 				break;
-			case 'tokenAddError':
-				console.log('Failed to add token.');
-				//cofnąć dodanie tokenu, odblokować interfejs
+			case 'board':
+				console.log('Board contents:');
+				console.log(data.board);
 				break;
-			case 'tokenMoveError':
-				console.log('Failed to move token.');
-				//cofnąć przesunięcie tokenu, odblokować interfejs
-				break;
-			case 'tokenPushError':
-				console.log('Failed to push token.');
-				//cofnąć pchnięcie tokenu, odblokować interfejs
+			case 'error':
+				switch(data.errCont){
+					case 'addFailed':
+						console.log('Failed to add token.');
+						//cofnąć dodanie tokenu, odblokować interfejs
+						break;
+					case 'moveFailed':
+						console.log('Failed to move token.');
+						//cofnąć przesunięcie tokenu, odblokować interfejs
+						break;
+					case 'pushFailed':
+						console.log('Failed to push token.');
+						//cofnąć pchnięcie tokenu, odblokować interfejs
+						break;
+					case 'notYourTurn':
+						console.log('Wait for your turn.');
+						break;
+					default:
+						console.log('Error. Code: '+data.errCont);
+				}
 				break;
 		}
 	}

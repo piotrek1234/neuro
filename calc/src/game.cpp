@@ -137,9 +137,10 @@ Player* Game::getCurrentPlayer()
 
 bool Game::actionTokenBattle(int tokenId, Color color)
 {
-    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId, true));
     if(token->getType() == ActionType::BATTLE)
     {
+        players[getPlayerId(color)]->getToken(tokenId);
         BattleHandler::getInstance().handleBattle();
         return true;
     }
@@ -156,10 +157,15 @@ bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
         {
             if(playerId!=-1)
             {
-                TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId));
+                TokenAction* token=dynamic_cast<TokenAction*>(players[playerId]->getToken(tokenId, true));
                 if(token->getType() == ActionType::MOVE)
                 {
-                        return board_->moveToken(from, to);
+                        bool success = board_->moveToken(from, to);
+                        if(success)
+                        {
+                            players[playerId]->getToken(tokenId);   //faktyczne usunięcie z ręki
+                            return true;
+                        }
                 }
             }
         }
@@ -168,14 +174,21 @@ bool Game::actionTokenMove(int tokenId, Color color, Hex from, Hex to)
 
 bool Game::actionTokenPush(int tokenId, Color color, Hex from, Hex to)
 {
-    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId));
+    TokenAction* token=dynamic_cast<TokenAction*>(players[getPlayerId(color)]->getToken(tokenId, true));
+
     if(token->getType() == ActionType::PUSH)
     {
-        TokenPutable* tokenToMove = board_->getToken(from);
-        if (color!=tokenToMove->getColor())
-        {
-            return board_->pushToken(from, to);
-        }
+        TokenPutable* tokenToMove = board_->getToken(to);
+        if(token != nullptr)
+            if (color!=tokenToMove->getColor())
+            {
+                bool success = board_->pushToken(from, to);
+                if(success)
+                {
+                    players[getPlayerId(color)]->getToken(tokenId);
+                    return true;
+                }
+            }
     }
     return false;
 }
