@@ -11,8 +11,13 @@ angular.module('popupDirective', [])
 				
 			},
 			link: function ($scope, element, attr) {
-				element.on('click', clickHandler);
-				var validationBox = "totot";
+				$scope.$popup = element[0];
+
+				element.on("click", clickHandler);
+				$scope.$on("popup:close", closePopupHandler);
+				//$scope.$on("");
+
+				var validationBox = null;
 
 				function clickHandler (event) {
 					var $srcElement = event.target;
@@ -94,18 +99,24 @@ angular.module('popupDirective', [])
 					
 					return result;
 				};
-				
-				$scope.$on("popup:close", closePopupHandler);
 
 				function closePopupHandler (event, data) {
-					debugger;
+					var $popup = $scope.$popup;
+					var $overlay = document.querySelector(".overlay");
+
+					$popup.parentElement.removeChild($popup);
+					$overlay.style.visibility = "hidden";
 				};
-				//TODO event zamknięcia popup'u
+				
+
+				function setPalyerDisabled () {
+
+				};
 				//TODO event wyszarzenia gracza (być może two way binding atrybutów wystarczy)
 				//TODO event nieudanego przyporzadkowania gracz (zły login, pełna gra)
 				//TODO disablowanie inputu login
 				
-				$scope.$emit("popup:rendered", {});
+				$scope.$emit("popup:rendered");
 			}
 		};
 	});

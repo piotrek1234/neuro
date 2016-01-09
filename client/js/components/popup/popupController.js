@@ -7,6 +7,8 @@ angular.module('popupController', [])
 
 		 	function startHandler (event) {
 		 		console.log("popupController#startHandler");
+
+		 		closePopupEvent();
 		 	};
 
 		 	function selectPlayerHandler (event, data) {
@@ -14,5 +16,7 @@ angular.module('popupController', [])
 		 			+ " login: " + data.login + " color: " + data.color);
 		 	};
 
-
+		 	function closePopupEvent () {
+		 		$scope.$broadcast("popup:close");
+		 	};
 		 }]);
