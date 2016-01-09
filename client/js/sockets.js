@@ -186,7 +186,7 @@ var putToken = function(id, q, r, angle)
 	//zawieś interfejs aż do uzyskania odpowiedzi - action:tokenAdded
 }
 
-var join = function(data)
+var joinPlayer = function(data)
 {
 	socket.send({'action': 'join', 'name': data});
 }
@@ -209,16 +209,16 @@ var setColorEvents = [];
 var gameStateEvents = [];
 var turnEvents = [];
 
-function setOnPlayerListEventsCallback (callback) {
+function subscribeOnPlayerList (callback) {
 	playerListEvents.push(callback);
 };
-function setOnSetColorEventsCallback (callback) {
+function subscribeOnSetColor (callback) {
 	setColorEvents.push(callback);
 };
-function setOnGameStateEventsCallback (callback) {
+function subscribeOnGameState (callback) {
 	gameStateEvents.push(callback);
 };
-function setOnTurnEventsCallback (callback) {
+function subscribeOnTurn (callback) {
 	turnEvents.push(callback);
 };
 
