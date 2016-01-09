@@ -3,7 +3,7 @@
 
 angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices', 
                             'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective',
-                            'mainController', 'operationBoardController'] )
+                            'mainController', 'operationBoardController', 'popupController'] )
     .config(['$routeProvider', '$translateProvider',
              function($routeProvider, $translateProvider) {
                  $routeProvider.when('/main', {

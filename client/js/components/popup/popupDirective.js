@@ -90,10 +90,22 @@ angular.module('popupDirective', [])
 						$validationBox.style.visibility = "visible";
 
 						result = false;
-					}
+					0}
 					
 					return result;
 				};
+				
+				$scope.$on("popup:close", closePopupHandler);
+
+				function closePopupHandler (event, data) {
+					debugger;
+				};
+				//TODO event zamknięcia popup'u
+				//TODO event wyszarzenia gracza (być może two way binding atrybutów wystarczy)
+				//TODO event nieudanego przyporzadkowania gracz (zły login, pełna gra)
+				//TODO disablowanie inputu login
+				
+				$scope.$emit("popup:rendered", {});
 			}
 		};
 	});
