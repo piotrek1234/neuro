@@ -225,7 +225,7 @@ def nextTurn():
 
 def isBoardFull():
 	'''tells if board has no empty hexes'''
-	if cv.getBoard().__len__ == 19:
+	if cv.getBoard().__len__() == 19:
 		return True
 	else:
 		return False
@@ -254,7 +254,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 
 	# znalezienie hq i przypisanie ich zycia odpowiedniemu kolorowi
 	for tok in board.itervalues():
-		print tok['token']
+		#print tok['token']
 		if 'hq' in tok['token']['name']:
 			life[tok['token']['color']] = tok['token']['life']
 
@@ -269,6 +269,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 		if p['life'] > 0:
 			alive = alive + 1
 		if p['life'] > best:
+			best = p['life']
 			winner = name
 
 	if alive == 1:

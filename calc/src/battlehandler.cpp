@@ -56,7 +56,8 @@ void BattleHandler::handleBattle()
                 currentCreatures.push_back(*it);
             }
         }
-        std::cout << "> priority: " << maxPriority << std::endl;
+        int priority = maxPriority>0?maxPriority:0;
+        std::cout << "> priority: " << priority << std::endl;
 
         //teraz w currentCreatures siedzą TokenCreature dla aktualnej inicjatywy,
         //żetony z currentCreatures atakują wrogich sąsiadów
@@ -90,7 +91,7 @@ void BattleHandler::handleBattle()
                 //zaatakuj w każdym kierunku z siłą 1
                 for(int dir=0; dir<6; ++dir)
                 {
-                    TokenPutable* neighbor = Game::getInstance().getBoard()->\
+                    TokenPutable* neighbor = tmpBoard->\
                             getNeighbourToken(((TokenPutable*)(*it))->getPosition(), dir);  //sąsiad
                     if(neighbor != nullptr)
                         //jeśli sąsiad jest wrogiem i nie ma tarczy to go zaatakuj
