@@ -71,10 +71,10 @@ var on_received = function(data)
 				}
 				break;
 			case 'turn':
-				console.log('Turn for player '+data.player);
+				console.log('Turn for player '+data.player+' (remaining tokens: '+data.stackSize+')');
 				console.log(data.tokens);
 				turnEvents.forEach(function (callback) {
-					callback(data.player, data.tokens);
+					callback(data.player, data.tokens, data.stackSize);
 				});
 				sessionStorage.setItem('currentTurn', data.player);
 				// zaktualizować konkretnemu graczowi tokeny i je wyświetlić

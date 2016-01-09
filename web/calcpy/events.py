@@ -103,7 +103,8 @@ def messageFromPlayer(request, socket, context, message):
 				for i in player['tokens']:
 					tokens[i] = cv.getTokenHand(i, player['color'])
 					tokens[i]['color'] = tokens[i]['color'].real
-				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens, \
+					'stackSize': player['stack_size']})
 
 	# wlasciwa rozgrywka
 	elif act == 'nextTurn':
@@ -221,7 +222,8 @@ def nextTurn():
 	elif game['players'][player['name']]['life'] < 1:
 		nextTurn()
 	else:
-		broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+		broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens, \
+			'stackSize': player['stack_size']})
 
 def isBoardFull():
 	'''tells if board has no empty hexes'''
@@ -237,7 +239,8 @@ def currentTurn():
 	for i in player['tokens']:
 		tokens[i] = cv.getTokenHand(i, player['color'])
 		tokens[i]['color'] = tokens[i]['color'].real
-	broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens})
+	broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens, \
+			'stackSize': player['stack_size']})
 
 def performBattle(tokenActionId=-1, color=Color.NONE):
 	'''handles battle and its effects'''
