@@ -57,11 +57,17 @@ var on_received = function(data)
 					console.log('Joined game as '+data.playerName+'.');
 					sessionStorage.setItem('playerName', data.playerName);
 					//ukryć pole do wpisywania imienia
+					joinStateEvents.forEach(function (callback) {
+						callback(data.gameState, data.playerName);
+					});
 				}	
 				else
 				{
 					console.log('Failed to join. Reason: '+data.reason);
 					//nie ukrywać pola, ewentualnie wyświetlić komunikat czemu się nie udało
+					joinStateEvents.forEach(function (callback) {
+						callback(data.gameState, data.reason);
+					});
 				}
 				break;
 			case 'turn':
@@ -82,6 +88,9 @@ var on_received = function(data)
 					'), pos('+data.q+', '+data.r+'), angle('+data.angle+').');
 				//wstawić na planszę żeton
 				//odblokować interfejs
+				tokenAddEvents.forEach(function (callback) {
+					callback(data);
+				});
 				break;
 			case 'tokenMoved':
 				//komunikat odbierany po pomyślnym przesunięciu lub pchnięciu
@@ -89,6 +98,9 @@ var on_received = function(data)
 					'), from('+data.src_q+','+data.src_r+'), to('+data.dst_q+','+data.dst_r+').');
 				//przesunąć
 				//odblokować interfejs
+				tokenMovedEvents.forEach(function (callback) {
+					callback(data);
+				});
 				break;
 			case 'afterBattle':
 				console.log('Battle.');
@@ -98,10 +110,16 @@ var on_received = function(data)
 				// -> wywalic wszystkie zetony z planszy i powstawiac nowe
 				//w data.players siedzi aktualny stan graczy
 				// -> graczom z zerowym zyciem wyszarzyc tokeny czy cos w tym stylu 
+				afterBattleEvents.forEach(function (callback) {
+					callback(data.board, data.players);
+				});
 				break;
 			case 'gameEnd':
 				console.log('Game has ended. Winner: '+data.winner);
 				//wyswietlic popup z wynikiem
+				gameEndEvents.forEach(function (callback) {
+					callback(data.winner);
+				});
 				break;
 			case 'board':
 				console.log('Board contents:');
@@ -109,6 +127,9 @@ var on_received = function(data)
 				break;
 			case 'error':
 				handleError(data.errCont);
+				errorEvents.forEach(function (callback) {
+					callback(data.errorType);
+				});
 				break;
 		}
 	}
@@ -183,7 +204,6 @@ var whoseTurn = function()
 var putToken = function(id, q, r, angle)
 {
 	socket.send({'action': 'putToken', 'id': id, 'q': q, 'r': r, 'angle': angle});
-	//zawieś interfejs aż do uzyskania odpowiedzi - action:tokenAdded
 }
 
 var joinPlayer = function(data)
@@ -208,6 +228,12 @@ var playerListEvents = [];
 var setColorEvents = [];
 var gameStateEvents = [];
 var turnEvents = [];
+var joinStateEvents = [];
+var tokenAddEvents = [];
+var tokenMovedEvents = [];
+var afterBattleEvents = [];
+var gameEndEvents = [];
+var errorEvents = [];
 
 function subscribeOnPlayerList (callback) {
 	playerListEvents.push(callback);
@@ -220,6 +246,24 @@ function subscribeOnGameState (callback) {
 };
 function subscribeOnTurn (callback) {
 	turnEvents.push(callback);
+};
+function subscribeOnJoinState (callback) {
+	joinStateEvents.push(callback);
+};
+function subscribeOnTokenAdd (callback) {
+	tokenAddEvents.push(callback);
+};
+function subscribeOnTokenMove (callback) {
+	tokenMovedEvents.push(callback);
+};
+function subscribeOnAfterBattle (callback) {
+	afterBattleEvents.push(callback);
+};
+function subscribeOnGameEnd (callback) {
+	gameEndEvents.push(callback);
+};
+function subscribeOnError (callback) {
+	errorEvents.push(callback);
 };
 
 window.onload = sockets_start;
