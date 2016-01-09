@@ -5,7 +5,6 @@
 Stack::Stack()
 {
     hq=true;
-    generator = std::default_random_engine(rd());
 }
 
 Stack::~Stack()
@@ -72,7 +71,9 @@ std::vector<int> Stack::getNextTokensIds()
     {
         while((currentTokens.size()!=3) && (tokens.size()>0))
         {
-            distribution =  std::uniform_int_distribution<int>(0,tokens.size()-1);
+            std::random_device rd;
+            std::default_random_engine generator(rd());
+            std::uniform_int_distribution<> distribution(0,tokens.size()-1);
             size_t i = distribution(generator);
 
             currentTokens.push_back(tokens.at(i));

@@ -28,9 +28,6 @@ private:
     std::vector<Token*> currentTokens;
     Color color_;
     std::vector<Token*>::iterator findInCurrent(int id);
-    std::random_device rd;
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution;
 };
 
 
