@@ -23,9 +23,9 @@ Game& Game::getInstance() {
 
 Board *Game::getBoard()
 {
-    std::cout<<"game dest"<<std::endl;
+    //std::cout<<"game dest"<<std::endl;
     return board_;
-    std::cout<<"game dest end"<<std::endl;
+    //std::cout<<"game dest end"<<std::endl;
 }
 
 bool Game::addPlayer(std::string name)

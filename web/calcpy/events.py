@@ -36,12 +36,17 @@ def playerDisconnected(request, socket, context):
 			print '>>>> ', k, ' disconnected'
 			if game['state'] == 1:
 				cv.killPlayer(Color.values[v['color']])
-				if game['current_player'] == v['name']:
+				if game['current_player'] == k:
 					nextTurn()
 			tmp_k = k
 
 	if tmp_k != '':
 		del game['players'][tmp_k]
+		if (game['players'].__len__() == 1 and game['state'] == 1):
+			game['state'] = 3
+			for i in game['players'].iterkeys():
+				winner = i
+			broadcast({'action': 'gameEnd', 'winner': winner})
 	if game['players'].__len__() == 0:
 		cv.restartGame()
 		game['state'] = 0
@@ -242,28 +247,29 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 		cv.actionTokenBattle(tokenActionId, color)
 	#ustawic zycie graczom
 	life = {}
-	for col in Color.values:
-		life[col.real] = 0
+	for col in (1,2,3,4):
+		life[col] = 0
 
 	board = getBoard()
 
 	# znalezienie hq i przypisanie ich zycia odpowiedniemu kolorowi
 	for tok in board.itervalues():
-		if 'hq' in tok['name']:
-			life[tok['color']] = tok['life']
+		print tok['token']
+		if 'hq' in tok['token']['name']:
+			life[tok['token']['color']] = tok['token']['life']
 
 	# przypisanie kazdemu graczowi zycia na podstawie zycia hq
-	for col, l in life.iteritems():
-		game['players'][getNameByColor(col)]['life'] = l
+	for player in game['players'].itervalues():
+		player['life'] = life[player['color']]
 
 	# sprawdzenie czy zyje tylko 1 gracz
 	alive = 0
 	best = 0
-	for p in game['players']:
+	for name, p in game['players'].iteritems():
 		if p['life'] > 0:
 			alive = alive + 1
 		if p['life'] > best:
-			winner = p['name']
+			winner = name
 
 	if alive == 1:
 		game['state'] = 3

@@ -2,9 +2,10 @@
 
 void BattleHandler::handleBattle()
 {
+    std::cout << "> handleBattle() start" << std::endl;
     int lastPriority = 100;
 
-    while(lastPriority)
+    while(lastPriority > 0)
     {
         int maxPriority = -1;
         Board* tmpBoard = Game::getInstance().getBoard()->clone();  //tymczasowa kopia planszy
@@ -55,6 +56,7 @@ void BattleHandler::handleBattle()
                 currentCreatures.push_back(*it);
             }
         }
+        std::cout << "> priority: " << maxPriority << std::endl;
 
         //teraz w currentCreatures siedzą TokenCreature dla aktualnej inicjatywy,
         //żetony z currentCreatures atakują wrogich sąsiadów
@@ -82,6 +84,7 @@ void BattleHandler::handleBattle()
 
         //jeśli trwa inicjatywa 0, to TokenHQ też atakują
         if(maxPriority < 1)
+        {
             for(auto it = creatureFinder.getHqBegin(); it != creatureFinder.getHqEnd(); ++it)
             {
                 //zaatakuj w każdym kierunku z siłą 1
@@ -102,6 +105,10 @@ void BattleHandler::handleBattle()
                             }
                 }
             }
+            lastPriority = 0;
+        }
+        else
+            lastPriority = maxPriority;
 
         //obecna inicjatywa zakończyła się, sprawdzić czy któreś HQ nie zmarło
         for(auto it=creatureFinder.getHqBegin(); it!=creatureFinder.getHqEnd(); ++it)
@@ -121,6 +128,7 @@ void BattleHandler::handleBattle()
             }
         }
 
+        std::cout << "> deleting killed tokens" << std::endl;
         //usunięcie zabitych żetonów z *oryginalnej* planszy
         for(auto it=tmpBoard->getMapBegin(); it!=tmpBoard->getMapEnd(); ++it)
         {
@@ -129,9 +137,10 @@ void BattleHandler::handleBattle()
         }
 
         //jeśli skończyła się inicjatywa nr 0 to bitwa kończy się
-        lastPriority = maxPriority;
+
         delete tmpBoard;
     }
+    std::cout << "> end of battle" << std::endl;
     //bitwa zakończona
     //po bitwie warto sprwadzić czy został tylko 1 gracz, wtedy jest koniec gry
     //jeśli to była bitwa uruchomiona przez wyczerpanie stosu któregoś gracza,

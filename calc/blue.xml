@@ -366,7 +366,7 @@
  <token><!-- bl_mod_priority, 1 -->
   <id>23</id>
   <type>module</type>
-  <name>bl_mod_lpriority</name>
+  <name>bl_mod_priority</name>
   <module_type>priority</module_type>
   <directions>
    <dir_id>0</dir_id>
@@ -377,7 +377,7 @@
  <token><!-- bl_mod_priority, 2 -->
   <id>24</id>
   <type>module</type>
-  <name>bl_mod_lpriority</name>
+  <name>bl_mod_priority</name>
   <module_type>priority</module_type>
   <directions>
    <dir_id>0</dir_id>
@@ -386,25 +386,25 @@
   </directions>
  </token>
 <!-- actions -->
- <token><!-- bl_act_battle, 6 -->
+ <token><!-- bl_act_battle, 1 -->
   <id>25</id> 
   <type>action</type>
   <name>bl_act_battle</name>
   <action_type>battle</action_type>
  </token>
- <token><!-- bl_act_battle, 1 -->
+ <token><!-- bl_act_battle, 2 -->
   <id>26</id> 
   <type>action</type>
   <name>bl_act_battle</name>
   <action_type>battle</action_type>
  </token>
- <token><!-- bl_act_battle, 2 -->
+ <token><!-- bl_act_battle, 3 -->
   <id>27</id> 
   <type>action</type>
   <name>bl_act_battle</name>
   <action_type>battle</action_type>
  </token>
- <token><!-- bl_act_battle, 3 -->
+ <token><!-- bl_act_battle, 4 -->
   <id>28</id> 
   <type>action</type>
   <name>bl_act_battle</name>
