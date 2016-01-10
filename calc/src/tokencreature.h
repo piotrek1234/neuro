@@ -15,7 +15,7 @@
 class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
-    TokenCreature() : priority_(0), additionalAction_(false), movable_(false) {}
+    TokenCreature() : priority_(0), additionalAction_(false) {}
     TokenCreature(Color color) : TokenCreature() { setColor(color); }
     virtual ~TokenCreature();
     virtual void accept(Visitor& v);
@@ -26,9 +26,6 @@ public:
 
     int getPriority() const;
     void setPriority(int value);
-
-    //bool getMovable() const;
-    //void setMovable(bool value);
 
     void addAttack(int dirId, int value);
     int getAttack(int dirId) const;
@@ -42,12 +39,10 @@ public:
     static std::string typeName() {return /*typeName_*/"creature";}
 
 private:
-    //TokenCreature(const TokenCreature&) = default;
     std::map<int, int> attack_;
     std::map<int, bool> shield_;
     int priority_;
     bool additionalAction_;
-    //bool movable_;
     //static std::string typeName_;
 };
 

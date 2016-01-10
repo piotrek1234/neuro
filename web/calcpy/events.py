@@ -98,11 +98,11 @@ def messageFromPlayer(request, socket, context, message):
 				game['state']=1
 				broadcast({'action': 'gameState', 'state': 1})
 				player = cv.getCurrentPlayer()
-				tokens = {}
+				tokens = []
 				game['current_player'] = player['name']
 				for i in player['tokens']:
-					tokens[i] = cv.getTokenHand(i, player['color'])
-					tokens[i]['color'] = tokens[i]['color'].real
+					tokens.append(cv.getTokenHand(i, player['color']))
+					tokens[-1]['color'] = tokens[-1]['color'].real
 				broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens, \
 					'stackSize': player['stack_size']})
 
@@ -209,10 +209,10 @@ def nextTurn():
 	'''changes turn for next player'''
 	player = cv.getNextPlayer()
 	game['current_player'] = player['name']
-	tokens = {}
+	tokens = []
 	for i in player['tokens']:
-		tokens[i] = cv.getTokenHand(i, player['color'])
-		tokens[i]['color'] = tokens[i]['color'].real
+		tokens.append(cv.getTokenHand(i, player['color']))
+		tokens[-1]['color'] = tokens[-1]['color'].real
 	if tokens.__len__() == 0:
 		# bitwa koncowa
 		game['state'] = 2
@@ -235,10 +235,10 @@ def isBoardFull():
 def currentTurn():
 	'''broadcasts information about current player and his tokens on hand'''
 	player = cv.getCurrentPlayer()
-	tokens = {}
+	tokens = []
 	for i in player['tokens']:
-		tokens[i] = cv.getTokenHand(i, player['color'])
-		tokens[i]['color'] = tokens[i]['color'].real
+		tokens.append(cv.getTokenHand(i, player['color']))
+		tokens[-1]['color'] = tokens[-1]['color'].real
 	broadcast({'action': 'turn', 'player': player['name'] ,'tokens': tokens, \
 			'stackSize': player['stack_size']})
 

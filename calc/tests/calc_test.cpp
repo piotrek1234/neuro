@@ -143,11 +143,6 @@ BOOST_AUTO_TEST_CASE( TokenCreatureTest )
     BOOST_CHECK_EQUAL(tc->getAngle(), 3);
 
     //TokenCreature
-    //set/get movable
-    BOOST_CHECK_EQUAL(tc->getMovable(), false);
-    tc->setMovable(true);
-    BOOST_CHECK_EQUAL(tc->getMovable(), true);
-
     //set/get AdditionalAction
     BOOST_CHECK_EQUAL(tc->getAdditionalAction(), false);
     tc->setAdditionalAction(true);

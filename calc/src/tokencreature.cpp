@@ -35,16 +35,6 @@ void TokenCreature::setPriority(int value)
     priority_ = value;
 }
 
-/*bool TokenCreature::getMovable() const
-{
-    return movable_;
-}
-
-void TokenCreature::setMovable(bool value)
-{
-    movable_ = value;
-}*/
-
 void TokenCreature::addAttack(int dirId, int value)
 {
     if(attack_.find(dirId) == attack_.end())    //nie ma jeszcze ataku w tym kierunku
