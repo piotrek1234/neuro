@@ -10,6 +10,9 @@
 #include "color.h"
 #include <string>
 
+/**
+ * @brief The Token class is an interface for tokens
+ */
 class CALC_DLL()Token
 {
 public:

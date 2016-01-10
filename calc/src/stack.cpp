@@ -15,7 +15,7 @@ Stack::~Stack()
     }
     for(unsigned int i=0; i<tokens.size(); ++i)
     {
-        std::cout<<i<<std::endl;
+        //std::cout<<i<<std::endl;
         delete tokens[i];
     }
 }

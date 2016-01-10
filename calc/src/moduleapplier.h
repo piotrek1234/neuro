@@ -9,6 +9,9 @@
 
 using namespace std;
 
+/**
+ * @brief The ModuleApplier class is used to apply mod from token mods and hqs to given token creature
+ */
 class CALC_DLL()ModuleApplier : public Visitor
 {
 public:

@@ -7,6 +7,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 
+/**
+ * @brief The ModAdditionalAction class is used to apply additional action for token creatures
+ */
 class CALC_DLL()ModAdditionalAction : public Mod
 {
 public:

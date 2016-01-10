@@ -142,19 +142,19 @@ svg {
 }
 
 .token-red {
-    fill: #EB1717;
+    /*fill: #EB1717;*/
 }
 
 .token-green {
-    fill: #00B52A;
+    /*fill: #00B52A;*/
 }
 
 .token-blue {
-    fill: #1069E6;
+    /*fill: #1069E6;*/
 }
 
 .token-yellow {
-    fill: #EBD809;
+   /* fill: #EBD809;*/
 }
 
 .token-selected {

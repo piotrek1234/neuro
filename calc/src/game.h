@@ -24,6 +24,9 @@
 #include <iostream>
 #include "battlehandler.h"
 
+/**
+ * @brief The Game class in a main class with interface for handling game
+ */
 class CALC_DLL()Game {
 public:
     ~Game();
@@ -65,9 +68,9 @@ private:
     {
         template<typename T> void operator()(T)
         {
-            std::cout<<"register fig"<<std::endl;
+            //std::cout<<"register fig"<<std::endl;
             F::getInstance().registerFun(T::typeName(), T::create);
-            std::cout<<"register fig ended"<<std::endl;
+            //std::cout<<"register fig ended"<<std::endl;
         }
     };
 

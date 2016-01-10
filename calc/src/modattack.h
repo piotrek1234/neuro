@@ -7,6 +7,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 
+/**
+ * @brief The ModAttack class is used to apply attack boost for token creatures
+ */
 class CALC_DLL()ModAttack : public Mod
 {
 public:

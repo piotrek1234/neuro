@@ -6,6 +6,9 @@
 #include "creaturefinder.h"
 #include "moduleapplier.h"
 
+/**
+ * @brief The BattleHandler class (singleton) is used to perform battle
+ */
 class CALC_DLL()BattleHandler {
 public:
     BattleHandler() {}

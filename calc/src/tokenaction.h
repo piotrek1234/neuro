@@ -8,6 +8,9 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+/**
+ * @brief The TokenAction class is a token which can be used as action (battle, move, push)
+ */
 class CALC_DLL()TokenAction : public Token
 {
 public:

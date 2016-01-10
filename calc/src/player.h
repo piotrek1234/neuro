@@ -1,18 +1,14 @@
-/**
- * \file player.hpp
- * \class decribing player
- */
-
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
 #include "stack.h"
 #include <string>
-//#include "board.h"
 #include <vector>
 #include "color.h"
 
+/**
+ * @brief The Player class represents player and his stack of tokens
+ */
 class CALC_DLL()Player {
 public:
 	Player(std::string name_);

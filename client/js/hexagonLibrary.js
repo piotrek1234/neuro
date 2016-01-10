@@ -95,7 +95,7 @@ function hexLibraryConstructor () {
     };
 
     this.layout_flat = this.Orientation(3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0), 2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0, 0.0);
-    this.flat = this.Layout(this.layout_flat, Point(70, 70), Point(280, 300));
+    this.flat = this.Layout(this.layout_flat, Point(75, 75), Point(280, 300));
 };
 
 

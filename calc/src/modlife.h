@@ -7,6 +7,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 
+/**
+ * @brief The ModLife class is used to apply additional life for token creatures
+ */
 class CALC_DLL()ModLife : public Mod
 {
 public:

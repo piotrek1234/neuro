@@ -9,6 +9,9 @@
 #include <map>
 #include <string>
 
+/**
+ * @brief The TokenCreature class is a token with ability to accept mods and perform attacks
+ */
 class CALC_DLL()TokenCreature : public TokenPutable
 {
 public:
