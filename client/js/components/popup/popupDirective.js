@@ -13,12 +13,26 @@ angular.module('popupDirective', [])
 			link: function ($scope, element, attr) {
 				$scope.$popup = element[0];
 				$scope.$buttons = $scope.$popup.querySelectorAll(".button");
+				$scope.$validation = document.querySelector(".validation");
 
 				element.on("click", clickHandler);
 				$scope.$on("popup:close", closePopupHandler);
 				$scope.$on("popup:playerList", setPlayerList);
 
-				var validationBox = null;
+				$scope.$on("popup:joinedSucess", joinedSucessHandler);
+				$scope.$on("popup:joinedError", joinedErrorHandler);
+
+				function joinedSucessHandler (event, data) {
+					var $login = $scope.$popup.querySelector('input');
+
+					$login.disabled = true;
+				};
+
+				function joinedErrorHandler (event, data) {
+					var $validation = $scope.$validation;
+
+					$validation.textContent = data.reason;
+				};
 
 				function clickHandler (event) {
 					var $srcElement = event.target;
@@ -30,17 +44,17 @@ angular.module('popupDirective', [])
 							return;
 						}
 
-						if (checkIsReady($srcElement)) {
+						if (checkIsReadyFromButton($srcElement)) {
 							sendSetPlayerReady($srcElement);
 						} else {
-							sendSetPlayerEvent($srcElement);
-							setPopupDisabled();
+							sendSetPlayer($srcElement);
 						}
 					}
 				};
 
-				function checkIsReady ($element) {
-					return !!$element.getAttribute("play");
+				function checkIsReadyFromButton ($element) {
+					return d3.select($element)
+								.classed("button player-button-red");
 				};
 
 				function checkIsButton ($element) {
@@ -50,46 +64,23 @@ angular.module('popupDirective', [])
 
 				function checkIsEnable ($element) {
 					return !d3.select($element)
-								.classed("player-button-disabled");
+								.classed("player-button-disabled") 
+							&& !d3.select($element)
+								.classed("player-button-yellow")
+							&& !d3.select($element)
+								.classed("player-button-green");
 				};
 
-				function sendSetPlayerEvent ($element) {
-					var color = getPlayerColor($element);
+				function sendSetPlayer ($element) {
 					var login = getPlayerLogin();
 
-					$scope.$emit('popup:selectPlayer', {login: login, color: color});
+					$scope.$emit('popup:selectPlayer', {login: login});
 				};
 
 				function sendSetPlayerReady ($element) {
-					var color = getPlayerColor($element);
 					var login = getPlayerLogin();
 
-					$scope.$emit('popup:playerReady', {login: login, color: color});
-				};
-
-				function getPlayerColor ($element) {
-					var result = null;
-					var buttonClass = $element.classList[1];
-					
-					switch (buttonClass) {
-						case "player-button-red":
-						result = "red";
-						break;
-
-						case "player-button-green":
-						result = "green";
-						break;
-
-						case "player-button-yellow":
-						result = "yellow";
-						break;
-
-						case "player-button-blue":
-						result = "blue";
-						break;
-					}
-
-					return result;
+					$scope.$emit('popup:playerReady', {login: login});
 				};
 
 				function getPlayerLogin () {
@@ -101,15 +92,15 @@ angular.module('popupDirective', [])
 				function validateInputName () {
 					var result = null;
 
-					var $validationBox = document.querySelector(".validation");
+					var $validationBox = $scope.$validation;
 					var login = getPlayerLogin();
 
 					if (login != null && login != "") {
-						$validationBox.style.visibility = "hidden";
+						$validationBox.textContent = "";
 
 						result = true;
 					} else {
-						$validationBox.style.visibility = "visible";
+						$validationBox.textContent = "Niepoprawny login";
 
 						result = false;
 					}
@@ -138,89 +129,64 @@ angular.module('popupDirective', [])
 				};
 
 				function setPlayerList (event, players) {
-					var actualPlayer = getActualPlayer(players);
+					var isCurrentPlayer = false;
+
+					players.forEach(function (element) {
+						if (element.isCurrentPlayer) 
+							isCurrentPlayer = true;
+					});
 					
-					if (!actualPlayer) {
-						setButtonsNoActual(players);
-					} else if (actualPlayer.isReady) {
-						setButtonsActualReady(players);
-					} else {
-						setButtonsActual(players);
+					for (var i=players.length; i<4; i++) {
+						players.push({noPlayer: true, hasCurrent: isCurrentPlayer});
 					}
+
+					players.forEach(setSinglePlayerButton);
 				};
 
-				function setButtonsActualReady (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
+				function setSinglePlayerButton (player, index) {
+					var $button = $scope.$buttons[index];
+					
+					switch (true) {
+						case checkIsNoPlayer(player) && !checkHasCurrentPlayer(player):
+						$button.setAttribute('class', 'button player-button-blue');
+						$button.text = "wolny";
+						break;
 
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
+						case checkIsNoPlayer(player):
+						$button.setAttribute('class', 'button player-button-yellow');
+						$button.text = "wolny";
+						break;
 
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-						
-						colors.splice(colorIndex, 1);
-					});
+						case checkIsCurrentPlayer(player) && !checkIsReady(player):
+						$button.setAttribute('class', 'button player-button-red');
+						$button.text = player.login;
+						break;
+
+						case !checkIsReady(player):
+						$button.setAttribute('class', 'button player-button-yellow');
+						$button.text = player.login;
+						break;
+
+						default:
+						$button.setAttribute('class', 'button player-button-green');
+						$button.text = player.login;
+					}
+				} 
+
+				function checkIsReady (player) {
+					return player.isReady;
 				};
 
-				function setButtonsActual (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
-
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
-						
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else if (player.isActual) {
-							$button.setAttribute('class', 'button player-button-' + player.color);
-							$button.text = 'GRAJ!';
-							$button.setAttribute("play", "true");
-							colorIndex = colors.indexOf(player.color);
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + ' - ' + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-
-						colors.splice(colorIndex, 1);
-					});
+				function checkIsCurrentPlayer (player) {
+					return player.isCurrentPlayer;
 				};
 
-				function setButtonsNoActual (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
+				function checkHasCurrentPlayer (player) {
+					return !!player.hasCurrent;
+				};
 
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
-
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-
-						colors.splice(colorIndex, 1);
-					});
+				function checkIsNoPlayer (player) {
+					return !!player.noPlayer;
 				};
 
 				function getActualPlayer (players) {
