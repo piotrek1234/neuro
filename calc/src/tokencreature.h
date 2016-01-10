@@ -27,8 +27,8 @@ public:
     int getPriority() const;
     void setPriority(int value);
 
-    bool getMovable() const;
-    void setMovable(bool value);
+    //bool getMovable() const;
+    //void setMovable(bool value);
 
     void addAttack(int dirId, int value);
     int getAttack(int dirId) const;
@@ -47,7 +47,7 @@ private:
     std::map<int, bool> shield_;
     int priority_;
     bool additionalAction_;
-    bool movable_;
+    //bool movable_;
     //static std::string typeName_;
 };
 

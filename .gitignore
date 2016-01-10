@@ -3,9 +3,12 @@ lighttpd.develop
 *.dll
 *.so
 *.os
+Doxyfile
 .sconsign.dblite
 calc/calc_test
 calc/tests/calc_test.o
+client/pict/tokens/
+doc/
 
 #################
 ## Eclipse

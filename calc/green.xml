@@ -14,7 +14,6 @@
     <life>1</life>
     <priority>2</priority>
     <additional_action>0</additional_action>
-    <movable>0</movable>
     <attack>
       <dir_id>0</dir_id>
       <value>1</value>
@@ -170,7 +169,6 @@
     <life>1</life>
     <priority>3</priority>
     <additional_action>1</additional_action>
-    <movable>1</movable>
     <attack>
       <dir_id>0</dir_id>
       <value>2</value>

@@ -35,7 +35,7 @@ void TokenCreature::setPriority(int value)
     priority_ = value;
 }
 
-bool TokenCreature::getMovable() const
+/*bool TokenCreature::getMovable() const
 {
     return movable_;
 }
@@ -43,7 +43,7 @@ bool TokenCreature::getMovable() const
 void TokenCreature::setMovable(bool value)
 {
     movable_ = value;
-}
+}*/
 
 void TokenCreature::addAttack(int dirId, int value)
 {
@@ -109,11 +109,11 @@ Token* TokenCreature::create(ptree xmlnode, Color color)
             token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
             //break;
         }
-        if(label ==  "movable")
+        /*if(label ==  "movable")
         {
             token->setMovable(xmlnode.get<unsigned int>("movable"));
             //break;
-        }
+        }*/
         if(label == "life")
         {
             token->setLife(xmlnode.get<unsigned int>("life"));
