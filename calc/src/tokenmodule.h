@@ -10,6 +10,9 @@
 
 class Mod;
 
+/**
+ * @brief The TokenModule class is a token with ability to modify token creatures
+ */
 class CALC_DLL()TokenModule : public TokenModHq
 {
 public:

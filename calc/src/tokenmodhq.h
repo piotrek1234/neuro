@@ -10,8 +10,9 @@
 #include "tokenputable.h"
 #include "mod.h"
 
-//class Mod;
-
+/**
+ * @brief The TokenModHq class is a common interface for token modules and token hqs
+ */
 class CALC_DLL()TokenModHq : public TokenPutable
 {
 public:

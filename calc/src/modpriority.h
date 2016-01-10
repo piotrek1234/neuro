@@ -7,6 +7,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/foreach.hpp>
 
+/**
+ * @brief The ModPriority class is used to apply higher priority for token creatures
+ */
 class CALC_DLL()ModPriority : public Mod
 {
 public:

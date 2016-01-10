@@ -6,7 +6,9 @@
 #include <unordered_map>
 
 using namespace std;
-
+/**
+ * @brief The Board class contains board and its tokens
+ */
 class CALC_DLL()Board {
 public:
     Board();

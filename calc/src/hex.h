@@ -14,6 +14,9 @@
 #include <cmath>
 #include <ostream>
 
+/**
+ * @brief The Hex class is a pair of numbers used to define position of token on board
+ */
 class CALC_DLL()Hex
 {
 public:
@@ -42,7 +45,11 @@ private:
 };
 
 namespace std {
-    template <> struct hash<Hex> {
+    template <>
+    /**
+     * @brief The hash<Hex> struct is used to calculate hash for Hex objects (used in unordered_map)
+     */
+    struct hash<Hex> {
         size_t operator()(const Hex& h) const {
             hash<int> int_hash;
             size_t hq = int_hash(h.getQ());

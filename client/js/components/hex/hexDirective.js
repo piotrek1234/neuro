@@ -115,7 +115,10 @@ angular.module('hexDirective', [])
 					var canvas = d3.select($svg);
 					
 					_selectedElement = canvas
+						.append("g")
+						.attr("fill", $srcElement.getAttribute("fill"))
 						.append("polygon")
+						.attr("transform", $srcElement.getAttribute("transform"))
 						.attr("id", "dragged-item")
 						.attr("class", srcClass)
 					 	.attr("points", getCornersString(corners));

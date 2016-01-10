@@ -1,8 +1,3 @@
-/*
- * creaturefinder.h
- * Wizytator CreatureFinder odsiewa wrzucane do niego TokenPutable*. Do creatures_
- * wrzuca TokenCreature*, do hq_ wrzuca TokenHQ*
- */
 #ifndef CREATUREFINDER_H
 #define CREATUREFINDER_H
 
@@ -13,6 +8,9 @@
 
 using namespace std;
 
+/**
+ * @brief The CreatureFinder class is a visitor used to collect token creatures and token HQs into separate containers
+ */
 class CALC_DLL()CreatureFinder : public Visitor
 {
 public:

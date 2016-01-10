@@ -7,14 +7,18 @@
 #define CALC_DLL(X) X
 #endif
 
+#include <vector>
 #include "visitor.h"
 #include "tokencreature.h"
 
 class TokenCreature;
 class TokenModule;
 
-#include <vector>
-
+/**
+ * @brief The Mod class is an interface for detailed mods.
+ * Vector directions tells who should it modify.
+ * Affects only token creatures.
+ */
 class CALC_DLL()Mod
 {
 public:

@@ -7,6 +7,10 @@
 
 class Mod;
 
+/**
+ * @brief The TokenHQ class is a main token, without ability to accept mods but with ability to perform attacks.
+ * Hq contains its own mod and modifies token creatures.
+ */
 class CALC_DLL()TokenHQ: public TokenModHq
 {
 public:

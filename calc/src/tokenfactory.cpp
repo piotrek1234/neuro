@@ -33,7 +33,7 @@ Token* TokenFactory::create(boost::property_tree::ptree::value_type const& xmlno
 
 std::vector<Token*> TokenFactory::createTokensFromFile(std::string filename, Color color)
 {
-    std::cout<<creators.size()<<std::endl;
+    //std::cout<<creators.size()<<std::endl;
     //std::ifstream configFile (filename, std::ifstream::out);
     //using boost::property_tree::ptree;
     boost::property_tree::ptree pt;

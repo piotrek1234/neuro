@@ -1,10 +1,6 @@
 #ifndef VISITOR_H
 #define VISITOR_H
 
-/*#include "tokencreature.h"
-#include "tokenmodule.h"
-#include "tokenhq.h"*/
-
 #ifdef CALC_EXPORTS
 #define CALC_DLL(X) __declspec(dllexport)X
 #else
@@ -15,6 +11,9 @@ class TokenCreature;
 class TokenModule;
 class TokenHQ;
 
+/**
+ * @brief The Visitor class is an interface for abstract visitor
+ */
 class CALC_DLL()Visitor
 {
 public:

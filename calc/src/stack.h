@@ -9,6 +9,9 @@
 #include "tokenfactory.h"
 #include <string>
 
+/**
+ * @brief The Stack class contains tokens of certain player
+ */
 class CALC_DLL()Stack {
 public:
     Stack();

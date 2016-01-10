@@ -5,6 +5,9 @@
 #include "token.h"
 #include "hex.h"
 
+/**
+ * @brief The TokenPutable class is an interface for tokens which can be put on board
+ */
 class CALC_DLL()TokenPutable : public Token
 {
 public:
