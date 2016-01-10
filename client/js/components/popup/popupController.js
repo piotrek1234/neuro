@@ -3,25 +3,32 @@ angular.module('popupController', [])
 		['$scope',
 		 function ($scope) {
 		 	$scope.$on("popup:rendered", startHandler);
-		 	$scope.$on("popup:selectPlayer", selectPlayerHandler);
+		 	$scope.$on("popup:selectPlayer", joinPlayerHandler);
 		 	$scope.$on("popup:playerReady", playerReadyHandler);
 
 		 	subscribeOnPlayerList(getPlayerList);
+		 	subscribeOnJoinState(getJoinState);
+		 	subscribeOnGameState(getGameState);
 
 		 	function startHandler (event) {
-		 		console.log("popupController#startHandler");
 		 		sendPlayerListToPopup([]);
 		 		socketServer.getPlayers();
 		 	};
 
-		 	function selectPlayerHandler (event, data) {
-		 		console.log("popupController#selectPlayerHandler "
-		 			+ " login: " + data.login + " color: " + data.color);
+		 	function joinPlayerHandler (event, data) {
+		 		socketServer.join(data.login);
+		 	};
+
+		 	function getJoinState (joined, reason) {
+		 		if (joined) {
+		 			$scope.$broadcast("popup:joinedSucess", { reason: reason });
+		 		} else {
+		 			$scope.$broadcast("popup:joinedError",  { reason: reason });
+		 		}
 		 	};
 
 		 	function playerReadyHandler (event, data) {
-		 		console.log("popupController#playerReadyHandler "
-		 			+ " login: " + data.login + " color: " + data.color);
+		 		socketServer.setReady(true);
 		 	};
 
 		 	function closePopupEvent () {
@@ -32,7 +39,7 @@ angular.module('popupController', [])
 		 		$scope.$broadcast("popup:playerList", playerList);	
 		 	};
 
-		 	function getPlayerList (data) {
+		 	function getPlayerList (data, reason) {
 		 		var playerList = parsePlayerList(data);
 
 		 		sendPlayerListToPopup(playerList);
@@ -61,4 +68,16 @@ angular.module('popupController', [])
 
 		 		return result;
 		 	};
+
+		 	function getGameState (state) {
+		 		if (checkIfGameStarted(state)) {
+
+		 			closePopupEvent();
+		 		}
+		 	};
+
+		 	function checkIfGameStarted (state) {
+		 		return (state === 1);
+		 	};
+
 		 }]);

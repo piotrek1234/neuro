@@ -58,7 +58,7 @@ var on_received = function(data)
 					sessionStorage.setItem('playerName', data.playerName);
 					//ukryć pole do wpisywania imienia
 					joinStateEvents.forEach(function (callback) {
-						callback(data.gameState, data.playerName);
+						callback(data.joined, data.playerName);
 					});
 				}	
 				else
@@ -66,7 +66,7 @@ var on_received = function(data)
 					console.log('Failed to join. Reason: '+data.reason);
 					//nie ukrywać pola, ewentualnie wyświetlić komunikat czemu się nie udało
 					joinStateEvents.forEach(function (callback) {
-						callback(data.gameState, data.reason);
+						callback(data.joined, data.reason);
 					});
 				}
 				break;
