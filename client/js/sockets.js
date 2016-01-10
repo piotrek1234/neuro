@@ -161,68 +161,58 @@ var handleError = function(errorType)
 	}
 }
 
-var endTurn = function()
-{
-	socket.send({'action': 'nextTurn'});
-	//zablokować interfejs
-}
-
-var moveToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
-{
-	socket.send({'action': 'move', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
-		'dst_q': dst_q, 'dst_r': dst_r});
-}
-
-var pushToken = function(tokenActionId, src_q, src_r, dst_q, dst_r)
-{
-	socket.send({'action': 'push', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
-		'dst_q': dst_q, 'dst_r': dst_r});
-}
-
-var battle = function(tokenActionId)
-{
-	socket.send({'action': 'battle', 'token': tokenActionId});
-	// zablokuj interfejs, tura gracza sie zakonczyla
-}
-
-var getBoard = function()
-{
-	socket.send({'action': 'getBoard'});
-}
-
-var throwToken = function(tokenId)
-{
-	socket.send({'action': 'throw', 'id': tokenId});
-}
-
-//byc moze nie potrzebne
-var whoseTurn = function()
-{
-	socket.send({'action': 'currentPlayer'});
-}
-
-var putToken = function(id, q, r, angle)
-{
-	socket.send({'action': 'putToken', 'id': id, 'q': q, 'r': r, 'angle': angle});
-}
-
-var joinPlayer = function(data)
-{
-	socket.send({'action': 'join', 'name': data});
-}
-
-var setReady = function(is_ready)
-{
-	socket.send({'action': 'ready', 'is_ready': is_ready})
-}
-
 function sockets_start()
 {
-socket = new io.Socket();
-socket.connect();
-socket.on('connect', on_connected);
-socket.on('message', on_received);
+	socket = new io.Socket();
+	socket.connect();
+	socket.on('connect', on_connected);
+	socket.on('message', on_received);
 }
+
+window.onload = sockets_start;
+
+var socketServer = {
+	getPlayers: function () {
+		socket.send({'action': 'getPlayers'});
+	},
+	endTurn: function () {
+		socket.send({'action': 'nextTurn'});
+		//zablokować interfejs
+	},
+	moveToken: function (tokenActionId, src_q, src_r, dst_q, dst_r) {
+		socket.send({'action': 'move', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+			'dst_q': dst_q, 'dst_r': dst_r});
+	},
+	pushToken: function (tokenActionId, src_q, src_r, dst_q, dst_r) {
+		socket.send({'action': 'push', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
+			'dst_q': dst_q, 'dst_r': dst_r});
+	},
+	battle: function (tokenActionId) {
+		socket.send({'action': 'battle', 'token': tokenActionId});
+		// zablokuj interfejs, tura gracza sie zakonczyla
+	},
+	getBoard: function () {
+		socket.send({'action': 'getBoard'});
+	},
+	throwToken: function (tokenId) {
+		socket.send({'action': 'throw', 'id': tokenId});
+	},
+	//byc moze nie potrzebne
+	whoseTurn: function () {
+		socket.send({'action': 'currentPlayer'});
+	},
+	putToken: function (id, q, r, angle) {
+		socket.send({'action': 'putToken', 'id': id, 'q': q, 'r': r, 'angle': angle});
+	},
+	join: function (data) {
+		socket.send({'action': 'join', 'name': data});
+	},
+	setReady: function (is_ready) {
+		socket.send({'action': 'ready', 'is_ready': is_ready})
+	}
+};
+
+
 
 var playerListEvents = [];
 var setColorEvents = [];
@@ -266,4 +256,3 @@ function subscribeOnError (callback) {
 	errorEvents.push(callback);
 };
 
-window.onload = sockets_start;

@@ -138,89 +138,49 @@ angular.module('popupDirective', [])
 				};
 
 				function setPlayerList (event, players) {
-					var actualPlayer = getActualPlayer(players);
-					
-					if (!actualPlayer) {
-						setButtonsNoActual(players);
-					} else if (actualPlayer.isReady) {
-						setButtonsActualReady(players);
-					} else {
-						setButtonsActual(players);
+					for (var i=players.length; i<4; i++) {
+						players.push({});
 					}
+
+
+					players.forEach(setSinglePlayerButton);
 				};
 
-				function setButtonsActualReady (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
+				function setSinglePlayerButton (player, index) {
+					var $button = $scope.$buttons[index];
+					
+					switch (true) {
+						case checkIsPlayer(player):
+						$button.setAttribute('class', 'button player-button-blue');
+						$button.text = "wolny";
+						break;
 
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
+						case checkIsCurrentPlayer(player) && !checkIsReady(player):
+						$button.setAttribute('class', 'button player-button-red');
+						$button.text = player.login;
+						break;
 
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-						
-						colors.splice(colorIndex, 1);
-					});
+						case !checkIsReady(player):
+						$button.setAttribute('class', 'button player-button-yellow');
+						$button.text = player.login;
+						break;
+
+						default:
+						$button.setAttribute('class', 'button player-button-green');
+						$button.text = player.login;
+					}
+				} 
+
+				function checkIsReady (player) {
+					return player.isReady;
 				};
 
-				function setButtonsActual (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
-
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
-						
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else if (player.isActual) {
-							$button.setAttribute('class', 'button player-button-' + player.color);
-							$button.text = 'GRAJ!';
-							$button.setAttribute("play", "true");
-							colorIndex = colors.indexOf(player.color);
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + ' - ' + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-
-						colors.splice(colorIndex, 1);
-					});
+				function checkIsCurrentPlayer (player) {
+					return player.isCurrentPlayer;
 				};
 
-				function setButtonsNoActual (players) {
-					var colors = ["red", "green", "blue", "yellow"];
-					var $buttons = $scope.$buttons;
-
-					[].forEach.call($buttons, function ($button, index) {
-						var player = players[index];
-						var colorIndex = null;
-
-						if (!player) {
-							$button.setAttribute('class', 'button player-button-disabled');
-							colorIndex = 0;
-							$button.text = 'wolny - ' + colors[colorIndex];
-						} else {
-							var text = player.isReady ? ' (r) ' : '';
-							$button.setAttribute('class', 'button player-button-disabled');
-							$button.text = player.login + text + player.color;
-							colorIndex = colors.indexOf(player.color);
-						}
-
-						colors.splice(colorIndex, 1);
-					});
+				function checkIsPlayer (player) {
+					return Object.keys(player).length === 0;
 				};
 
 				function getActualPlayer (players) {

@@ -6,26 +6,12 @@ angular.module('popupController', [])
 		 	$scope.$on("popup:selectPlayer", selectPlayerHandler);
 		 	$scope.$on("popup:playerReady", playerReadyHandler);
 
+		 	subscribeOnPlayerList(getPlayerList);
+
 		 	function startHandler (event) {
 		 		console.log("popupController#startHandler");
-
-		 		//closePopupEvent();
-		 		var playerList = [];
-		 		playerList.push({
-		 			login: 'Gracz1',
-		 			color: 'green',
-		 			isActual: true,
-		 			isReady: false
-		 		});
-
-		 		playerList.push({
-		 			login: 'Gracz2',
-		 			color: 'red',
-		 			isActual: false,
-		 			isReady: true
-		 		});
-
-		 		sendPlayerList(playerList);
+		 		sendPlayerListToPopup([]);
+		 		socketServer.getPlayers();
 		 	};
 
 		 	function selectPlayerHandler (event, data) {
@@ -42,7 +28,37 @@ angular.module('popupController', [])
 		 		$scope.$broadcast("popup:close");
 		 	};
 
-		 	function sendPlayerList (playerList) {
+		 	function sendPlayerListToPopup (playerList) {
 		 		$scope.$broadcast("popup:playerList", playerList);	
+		 	};
+
+		 	function getPlayerList (data) {
+		 		var playerList = parsePlayerList(data);
+
+		 		sendPlayerListToPopup(playerList);
+		 	};
+
+		 	function parsePlayerList (input) {
+		 		var result = [];
+
+		 		for (element in input) {
+
+		 			var player = {
+		 				login: "",
+		 				isCurrentPlayer: false,
+		 				isReady: false
+		 			};
+
+		 			player.login = element;
+		 			player.isReady = input[element].ready;
+
+		 			if (player.login === sessionStorage.playerName) {
+		 				player.isCurrentPlayer = true;
+		 			}
+
+		 			result.push(player);
+		 		}
+
+		 		return result;
 		 	};
 		 }]);
