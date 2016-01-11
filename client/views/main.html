@@ -1,30 +1,3 @@
-<!--
-	@file about.html
-    @brief the AngularJS partial 'about'
--->
-
-<!-- <div class="popup" ng-controller="welcomePopup">
-  <div><h1>Witamy!</h1></div>
-  <div><label>Podaj imie</label></div>
-  <div><input type=text id="playerName"></div>
-  <div><input type=submit value="Potwierdź" ng-click="sendName()" id="sendName"></div>
-</div>
-
-<div class="hidden popup">
-  <div><h1>Obecny stan gry</h1></div>
-  <div id="playersInfo"><label>Ilość graczy:</label><label id="playersNum"></label></div>
-  <div id="stateInfo"><label>Stan gry:</label><label id="state"></label></div>
-  <div id="timeInfo"><label>Czas trwania gry:</label><label id="time"></label></div>
-  <div><input type=submit value="Dołącz" onclick="joinGame();" id="joinGameButton"></div>
-</div>
-
-<div class="hidden popup" id="endPopup">
-  <div><h1>Koniec gry</h1></div>
-  <div><label>Wygrał</label></div>
-  <div><label id="winner"></label></div>
-  <div><input type=submit value="Zagraj ponownie" onclick="newGame();"></div>
-</div> -->
-
 <div class="main" ng-controller="mainController">
     <svg id="grid-axial" class="middle"
     ng-attr-width="{{hexSize*18}}" 
@@ -230,20 +203,9 @@
       </pattern>
     </defs>
 
-       <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
-        <g ng-attr-transform="translate({{hexSize*9}})">
-          <rect class="main-board" ng-attr-width="{{hexSize*9}}" ng-attr-height="{{hexSize*15}}" fill=url(#main-board-img)>
-          </rect>
+        <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
 
-          <user-board x="hexSize/2" y="hexSize/2" size-base="hexSize" color="'green'" login="'Gracz 1'"/>
-
-          <user-board x="hexSize/2" y="hexSize/2*6" size-base="hexSize" color="'yellow'" login="'Gracz 2'"/>
-
-          <user-board x="hexSize/2" y="hexSize/2*11" size-base="hexSize" color="'blue'" login="'Gracz 3'"/>
-
-          <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"  color="'red'" login="'Gracz 4'" draggable="'true'" click="'true'"/>
-
-        </g>
+        <table-hex hex-size="hexSize"></table-hex> 
 
         <g ng-attr-transform="translate(0, {{hexSize*9}})" ng-controller="operationBoardController">
         
@@ -271,17 +233,3 @@
 </div>
 <div class="overlay">
 </div>
-
-<!-- <div class="middle" ng-controller="hexagonController">
-  <svg width="500" height="500" class="hex-map" style="background-color: #2F3233; opacity: 0.6;">
-    <defs>
-      <marker id="arrow" markerWidth="10" markerHeight="10" refx="0" refy="3" orient="auto" markerUnits="strokeWidth">
-        <path d="M0,0 L0,6 L9,3 z" fill="#f00" />
-      </marker>
-    </defs>
-
-
-    
-    <hex-token cx="70" cy="70"><hex-token>
-  </svg>
-</div> -->

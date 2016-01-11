@@ -391,3 +391,7 @@ svg {
     color: red;
     margin-left: 45px;
 }
+
+.button-end-turn {
+    fill: purple;
+}
