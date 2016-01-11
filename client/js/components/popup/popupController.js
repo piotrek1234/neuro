@@ -71,7 +71,6 @@ angular.module('popupController', [])
 
 		 	function getGameState (state) {
 		 		if (checkIfGameStarted(state)) {
-
 		 			closePopupEvent();
 		 		}
 		 	};
@@ -79,5 +78,4 @@ angular.module('popupController', [])
 		 	function checkIfGameStarted (state) {
 		 		return (state === 1);
 		 	};
-
 		 }]);

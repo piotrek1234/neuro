@@ -95,6 +95,9 @@ angular.module('userBoardDirective', [])
 				function emitUnselectClickHandler () {
 					$scope.$emit('token:unselect', {});
 				};
+
+				//TODO inicjalizacjia pustej ręki
+				//TODO event zmainy tokenów
 			}
 		};
 	});
