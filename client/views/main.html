@@ -205,8 +205,9 @@
 
         <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
 
-        <table-hex hex-size="hexSize"></table-hex> 
-
+        <g ng-controller="tableHexController">
+          <table-hex hex-size="hexSize"></table-hex> 
+        </g>
         <g ng-attr-transform="translate(0, {{hexSize*9}})" ng-controller="operationBoardController">
         
            <rect class="main-board" ng-attr-width="{{mainBoard.width}}" ng-attr-height="{{mainBoard.height}}" fill=url(#user-board-img) />

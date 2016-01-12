@@ -35,11 +35,11 @@ angular.module('hexDirective', [])
 				};
 
 				function setColorTokenClass (colorClass) {
-					$scope.className += 'token token-' + colorClass;
+					$scope.className += 'hex token token-' + colorClass;
 				};
 
 				function setDefaultHexClass () {
-					$scope.className += 'hex-empty';
+					$scope.className += 'hex hex-empty';
 				};
 
 				function setDraggableAttribute (draggable) {

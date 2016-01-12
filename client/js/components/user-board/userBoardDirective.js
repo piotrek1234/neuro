@@ -9,7 +9,7 @@ angular.module('userBoardDirective', [])
 				sizeBase: "=",
 				login: "=",
 				draggable: "=",
-				dopable: "=",
+				dropable: "=",
 
 				click: "="
 			},
@@ -19,6 +19,9 @@ angular.module('userBoardDirective', [])
 			controller: function ($scope) {
 				var hexLibrary = new hexLibraryConstructor();
 				var sizeBase = $scope.sizeBase;
+
+				$scope.player = {};
+				$scope.player.name = "Tomek"
 
 				hexLibrary.setLayoutSize(Point(sizeBase, sizeBase));
 				
@@ -32,6 +35,8 @@ angular.module('userBoardDirective', [])
 				$scope.className = "board board-" + $scope.color;
 			},
 			link: function ($scope, element, attr) {
+				$scope.$userBoard = element[0];
+
 				if (!!$scope.click) {
 					element.on('click', clickHandler);
 				}
@@ -96,7 +101,17 @@ angular.module('userBoardDirective', [])
 					$scope.$emit('token:unselect', {});
 				};
 
-				//TODO inicjalizacjia pustej ręki
+				function setPlayerToken (tokens) {
+					var $hexPlace = $scope.$userBoard.querySelector(".hex");
+
+					
+				};
+				
+				$scope.$watch("login.name", function (newLogin, oldlogin) {
+					console.log(newLogin);
+					$scope.player.name = newLogin;
+				});
+
 				//TODO event zmainy tokenów
 			}
 		};
