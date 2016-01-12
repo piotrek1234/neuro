@@ -29,7 +29,8 @@ angular.module('userBoardDirective', [])
 				
 				$scope.cornersSet = cornersSet;
 
-				$scope.className = "board";
+				$scope.loginClassName = "board";
+				$scope.boardClassName = "board-empty";
 			},
 			link: function ($scope, element, attr) {
 				$scope.$userBoard = element[0];
@@ -98,17 +99,18 @@ angular.module('userBoardDirective', [])
 					$scope.$emit('token:unselect', {});
 				};
 
-				function setPlayerToken (tokens) {
-					var $hexPlace = $scope.$userBoard.querySelector(".hex");
-
-					
-				};
-
-
 				$scope.$watch("player.color", function (newColor, oldColor) {
-					console.log(newColor);
-					$scope.className = "board board-" + newColor;
+					$scope.loginClassName = "board board-" + newColor;
 				});
+
+				$scope.$watch("player.turn", function (newTurn, oldTurn) {
+					if (newTurn) {
+						$scope.boardClassName = "board-active";
+					} else {
+						$scope.boardClassName = "board-empty";
+					}
+				});
+
 				//TODO event zmainy tokenów
 			}
 		};

@@ -4,42 +4,43 @@ angular.module('tableHexController', [])
 		 function ($scope) {
 		 	$scope.isGameStarted = false;
 
+		 	$scope.players = [];
+
 		 	subscribeOnPlayerList(playerListChangeHandler);
+		 	subscribeOnTurn(playerTurnChangeHandler);
 
 		 	function playerListChangeHandler (players) {
 		 		getPlayersList(players);
 		 	};
 
 		 	function getPlayersList (players) {
-		 		var array = [];
-		 		var currentPlayer = {
-		 			name: sessionStorage.playerName,
-		 			color: null
-		 		};
+		 		playersSetDefaultValue();
 
+		 		var currentPlayerName = sessionStorage.playerName;
+		 		var index = 0;
+		 		
 		 		for (singlePlayer in players) {
-		 			if (currentPlayer.name !== singlePlayer) {
-		 				array.push({ 
-		 					name: singlePlayer,
-		 					color: decodeColor(players[singlePlayer].color)
-		 				});
+		 			if (currentPlayerName !== singlePlayer) {
+		 				$scope.players[index].name = singlePlayer;
+		 				$scope.players[index].color = decodeColor(players[singlePlayer].color);
+		 				index++;
 		 			} else {
-		 				currentPlayer.color = decodeColor(players[singlePlayer].color);
+		 				//ostatni element to gracz aktualny
+		 				$scope.players[$scope.players.length-1].name = singlePlayer;
+		 				$scope.players[$scope.players.length-1].color = decodeColor(players[singlePlayer].color);
 		 			}
-		 		}
+		 		}		 		
 
-		 		// uzupełnianie pustych stanowisk
-		 		for (var i=array.length; i<3; i++) {
-		 			array.push({
-		 				name: "",
-		 				color: ""
-		 			})
-		 		}
+		 		$scope.$broadcast('tableHex:players', $scope.players);
+		 	};
 
-		 		// aby gracz z sesji był ostatni w tablicy
-		 		array.push(currentPlayer);
-
-		 		$scope.$broadcast('tableHex:players', array);
+		 	function playersSetDefaultValue () {
+				$scope.players = [
+			 		{ name: "", color: "", turn: false },
+			 		{ name: "", color: "", turn: false },
+			 		{ name: "", color: "", turn: false },
+			 		{ name: "", color: "", turn: false }
+			 	];
 		 	};
 
 		 	function decodeColor (colorId) {
@@ -65,5 +66,19 @@ angular.module('tableHexController', [])
 
 		 		return result;
 		 	};
+
+		 	function playerTurnChangeHandler (login) {
+		 		$scope.players.forEach(function (player) {
+		 			if (player.name === login) {
+		 				player.turn = true;
+		 			} else {
+		 				player.turn = false;
+		 			}
+		 		});
+
+		 		$scope.$broadcast('tableHex:players', $scope.players);
+		 	};
+
+		 	playersSetDefaultValue();
 
 		 }]);
