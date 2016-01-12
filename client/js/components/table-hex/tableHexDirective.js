@@ -10,23 +10,20 @@ angular.module('tableHexDirective', [])
 			replace: true,
 			controller: function ($scope) {
 				$scope.players = [
-					{ name: "" },
-					{ name: "" },
-					{ name: "" },
-					{ name: "" }
+					{ name: "", color: "" },
+					{ name: "", color: "" },
+					{ name: "", color: "" },
+					{ name: "", color: "" }
 				];
 
 				$scope.$on('tableHex:players', setPlayers);
-				$scope.$on('tableHex:currentPlayer', setCurrentPlayer);
 
 				function setPlayers (event, players) {
-					$scope.players = players;
-					$scope.$apply();
-				};
+					players.forEach(function (singlePlayer, index) {
+						$scope.players[index].name = singlePlayer.name;
+						$scope.players[index].color = singlePlayer.color;
+					});
 
-				function setCurrentPlayer (event, currentPlayer) {
-					debugger;
-					$scope.currentPlayer = currentPlayer;
 					$scope.$apply();
 				};
 			},

@@ -7,7 +7,7 @@ angular.module('userBoardDirective', [])
 				y: "=",
 				color: "=",
 				sizeBase: "=",
-				login: "=",
+				player: "=",
 				draggable: "=",
 				dropable: "=",
 
@@ -20,9 +20,6 @@ angular.module('userBoardDirective', [])
 				var hexLibrary = new hexLibraryConstructor();
 				var sizeBase = $scope.sizeBase;
 
-				$scope.player = {};
-				$scope.player.name = "Tomek"
-
 				hexLibrary.setLayoutSize(Point(sizeBase, sizeBase));
 				
 				var cornersSet = [];
@@ -32,7 +29,7 @@ angular.module('userBoardDirective', [])
 				
 				$scope.cornersSet = cornersSet;
 
-				$scope.className = "board board-" + $scope.color;
+				$scope.className = "board";
 			},
 			link: function ($scope, element, attr) {
 				$scope.$userBoard = element[0];
@@ -106,12 +103,12 @@ angular.module('userBoardDirective', [])
 
 					
 				};
-				
-				$scope.$watch("login.name", function (newLogin, oldlogin) {
-					console.log(newLogin);
-					$scope.player.name = newLogin;
-				});
 
+
+				$scope.$watch("player.color", function (newColor, oldColor) {
+					console.log(newColor);
+					$scope.className = "board board-" + newColor;
+				});
 				//TODO event zmainy tokenów
 			}
 		};

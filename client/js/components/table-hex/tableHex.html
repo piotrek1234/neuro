@@ -2,14 +2,14 @@
   <rect class="main-board" ng-attr-width="{{hexSize*9}}" ng-attr-height="{{hexSize*15}}" fill=url(#main-board-img)>
   </rect>
 
-  <user-board x="hexSize/2" y="hexSize/2" size-base="hexSize" color="'green'" login="players[0]"/>
+  <user-board x="hexSize/2" y="hexSize/2" size-base="hexSize" player="players[0]"/>
 
-  <user-board x="hexSize/2" y="hexSize/2*6" size-base="hexSize" color="'yellow'" login="players[1]"/>
+  <user-board x="hexSize/2" y="hexSize/2*6" size-base="hexSize" player="players[1]"/>
 
-  <user-board x="hexSize/2" y="hexSize/2*11" size-base="hexSize" color="'blue'" login="players[2]"/>
+  <user-board x="hexSize/2" y="hexSize/2*11" size-base="hexSize" player="players[2]"/>
   <g id="end-button">
     <rect ng-attr-x="{{hexSize*3.5}}" ng-attr-y="{{hexSize/2*16.5}}" ng-attr-width="{{hexSize*2}}" ng-attr-height="{{hexSize}}" class="button-end-turn"></rect>
     <text ng-attr-x="{{hexSize*3.7}}" ng-attr-y="{{hexSize/2*17.7}}" font-family="Verdana" font-size="35" fill="black"> Zakończ </text>
   </g>
-  <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"  color="'red'" login="currentPlayer" draggable="'true'" click="'true'"/>
+  <user-board x="hexSize/2" y="hexSize/2*19" size-base="hexSize"  player="players[3]" draggable="'true'" click="'true'"/>
 </g>
