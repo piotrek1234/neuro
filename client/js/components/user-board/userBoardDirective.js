@@ -7,9 +7,9 @@ angular.module('userBoardDirective', [])
 				y: "=",
 				color: "=",
 				sizeBase: "=",
-				login: "=",
+				player: "=",
 				draggable: "=",
-				dopable: "=",
+				dropable: "=",
 
 				click: "="
 			},
@@ -29,9 +29,12 @@ angular.module('userBoardDirective', [])
 				
 				$scope.cornersSet = cornersSet;
 
-				$scope.className = "board board-" + $scope.color;
+				$scope.loginClassName = "board";
+				$scope.boardClassName = "board-empty";
 			},
 			link: function ($scope, element, attr) {
+				$scope.$userBoard = element[0];
+
 				if (!!$scope.click) {
 					element.on('click', clickHandler);
 				}
@@ -96,7 +99,18 @@ angular.module('userBoardDirective', [])
 					$scope.$emit('token:unselect', {});
 				};
 
-				//TODO inicjalizacjia pustej ręki
+				$scope.$watch("player.color", function (newColor, oldColor) {
+					$scope.loginClassName = "board board-" + newColor;
+				});
+
+				$scope.$watch("player.turn", function (newTurn, oldTurn) {
+					if (newTurn) {
+						$scope.boardClassName = "board-active";
+					} else {
+						$scope.boardClassName = "board-empty";
+					}
+				});
+
 				//TODO event zmainy tokenów
 			}
 		};

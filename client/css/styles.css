@@ -216,6 +216,15 @@ svg {
     background: radial-gradient(#E0C6A2, #BD8E4B); /* Standard syntax */
 }
 
+.board-active {
+    fill-opacity: 0.4;
+    fill: #1EE642;
+}
+
+.board-empty {
+    fill-opacity: 0.4;
+}
+
 .button {
     height:30px; 
     width:150px; 
