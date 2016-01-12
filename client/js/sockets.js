@@ -10,6 +10,7 @@
  */
 var on_connected = function()
 {
+	sessionStorage.clear();
 	socket.send({'action': 'getPlayers'});
 }
 
