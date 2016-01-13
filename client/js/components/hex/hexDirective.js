@@ -114,11 +114,16 @@ angular.module('hexDirective', [])
 					startPoint = new Point(event.pageX+correctionX, event.pageY+correctionY);
 					var canvas = d3.select($svg);
 					
+					/*var transform = $srcElement.getAttribute("transform");
+					var svgOperations = new svgOperationsLibraryConstructor();
+					var transformParms = svgOperations.getTransformParameters(transform);
+					var rotateCenter = hexLibrary.getHexCenter(corners);*/
+
 					_selectedElement = canvas
 						.append("g")
 						.attr("fill", $srcElement.getAttribute("fill"))
 						.append("polygon")
-						.attr("transform", $srcElement.getAttribute("transform"))
+						.attr("transform", "")
 						.attr("id", "dragged-item")
 						.attr("class", srcClass)
 					 	.attr("points", getCornersString(corners));
@@ -154,12 +159,28 @@ angular.module('hexDirective', [])
 						return;
 					}
 
+					var rotate = getRotateParm(center, _src);
+
 					_selectedElement
-						.attr("points", getCornersString(corners));
+						.attr("points", getCornersString(corners))
+						.attr("transform", rotate);
 
 					if (event.pageX !== 0 && event.pageY !== 0) {
 						endPoint = center;
 					}
+				};
+
+				function getRotateParm (center, _src) {
+					var rotate = "";
+					var svgOperations = new svgOperationsLibraryConstructor();
+					var transform = _src.attr("transform");
+
+					var currentRotate = svgOperations.getTransformParameters(transform).rotate;
+					var rotatePrams = svgOperations.getRotateParmaters(currentRotate);
+
+					rotate = "rotate(" + rotatePrams.angle + ", " + center.x + ", " + center.y + ")";
+
+					return rotate;
 				};
 
 				function dragendHandler (event) {
@@ -183,7 +204,8 @@ angular.module('hexDirective', [])
 					var corners = hexLibrary.setHexCorners(endPoint);
 					
 					_selectedElement
-						.attr("points", getCornersString(corners));
+						.attr("points", getCornersString(corners))
+						.attr("transform", "");
 
 					corners = hexLibrary.setHexCorners(startPoint);
 					

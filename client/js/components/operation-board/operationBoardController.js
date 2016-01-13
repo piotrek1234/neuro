@@ -114,7 +114,6 @@ angular.module('operationBoardController', [])
 					.transition()
 					.attr("transform", "rotate(" + angle + " " + center.x + " " + center.y + ")")
 				.duration(1000);
-				
 			};
 
 			function selectTokenHandler (event, data) {
@@ -124,17 +123,22 @@ angular.module('operationBoardController', [])
 				var cssTokenClass = d3.select($selectedToken)
 					.attr("class");
 
+				var fillAtribute = d3.select($selectedToken)
+					.attr("fill");
+
 				defaultCssClass = d3.select($boardItem)
 					.attr("class");
 
 				d3.select($boardItem)
 					.attr("class", cssTokenClass)
+					.attr("fill", fillAtribute)
 					.classed("token-selected", false);
 			};
 
 			function unselectTokenHandler (event, data) {
 				d3.select($boardItem)
-					.attr("class", defaultCssClass);
+					.attr("class", defaultCssClass)
+					.attr("fill", null);
 
 				$selectedToken = null;
 				$boardItem = null;
