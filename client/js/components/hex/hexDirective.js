@@ -124,8 +124,10 @@ angular.module('hexDirective', [])
 					 	.attr("points", getCornersString(corners));
 
 					var tokenClass = getTokenClass(srcClass);
-					
+					var tokenFill = $srcElement.getAttribute("fill");
+
 					event.dataTransfer.setData('tokenClass', tokenClass);
+					event.dataTransfer.setData('tokenFill', tokenFill);
 					event.dataTransfer.setData('dragItemId', "dragged-item");
 				};
 

@@ -56,6 +56,7 @@ angular.module('hexMapDirective', [])
 				function dropHandler (event) {
 					var srcElement = d3.select(event.target);
 					var tokenClass = event.dataTransfer.getData("tokenClass");
+					var tokenFill = event.dataTransfer.getData("tokenFill");
 
 					if (!srcElement.classed("hex-active") || tokenClass == null) {
 						return;
@@ -71,8 +72,11 @@ angular.module('hexMapDirective', [])
 					srcElement
 						.classed("hex-empty", false)
 						.classed(tokenClass, true)
-						.classed("hex-occupied", true);
+						.classed("hex-occupied", true)
 
+					srcElement
+						.attr("fill", tokenFill);
+					console.log(tokenFill);
 					setDraggedItemFlag(dragItemId);
 				};
 

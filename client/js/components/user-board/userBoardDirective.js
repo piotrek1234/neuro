@@ -117,11 +117,13 @@ angular.module('userBoardDirective', [])
 					[].forEach.call($tokens, function ($singleToken, index) {
 						if (newTokens[index]) {
 							d3.select($singleToken)
-								.classed("hex-empty", false);
+								.classed("hex-empty", false)
+								.classed("token", true);
 							$singleToken.setAttribute("fill", "url(#" + newTokens[index].name + ")");
 						} else {
 							d3.select($singleToken)
-								.classed("hex-empty", true);
+								.classed("hex-empty", true)
+								.classed("token", false);
 							$singleToken.removeAttribute("fill");
 						}
 					});
