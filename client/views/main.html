@@ -10,11 +10,11 @@
       <pattern id="user-board-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" >
         <image xlink:href="/pict/cracked-wood.jpg" x="0" y="0" ng-attr-width="{{hexSize*8}}" ng-attr-height="{{hexSize*4}}" />
       </pattern>
-      <pattern id="right-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="56.3">
-        <image xlink:href="/pict/right-arrow.gif" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
+      <pattern id="right-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="25">
+        <image xlink:href="/pict/rotateRight.png" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
       </pattern>
-      <pattern id="left-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="56.3">
-        <image xlink:href="/pict/left-arrow.gif" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
+      <pattern id="left-arrow-img" patternUnits="userSpaceOnUse" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" x="75" y="-25">
+        <image xlink:href="/pict/rotateLeft.png" x="0" y="0" ng-attr-width="{{hexSize*1.5}}" ng-attr-height="{{hexSize*1.5}}" />
       </pattern>
       <!-- token images -->
       <!-- blue -->
@@ -218,11 +218,11 @@
 
             <rect class="board-background-button" ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" />
 
-            <rect id="left-arrow" class="board-button" ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" fill=url(#left-arrow-img) />
+            <rect id="left-arrow" class="board-button" ng-attr-x="{{leftArrow.x}}" ng-attr-y="{{leftArrow.y}}" ng-attr-width="{{leftArrow.width}}" ng-attr-height="{{leftArrow.height}}" fill=url(#right-arrow-img) />
 
             <rect class="board-background-button" ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" />
 
-            <rect id="right-arrow" class="board-button" ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" fill=url(#right-arrow-img) />
+            <rect id="right-arrow" class="board-button" ng-attr-x="{{rightArrow.x}}" ng-attr-y="{{rightArrow.y}}" ng-attr-width="{{rightArrow.width}}" ng-attr-height="{{rightArrow.height}}" fill=url(#left-arrow-img) />
         </g>
 
     </svg>
