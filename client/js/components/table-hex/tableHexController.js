@@ -36,10 +36,10 @@ angular.module('tableHexController', [])
 
 		 	function playersSetDefaultValue () {
 				$scope.players = [
-			 		{ name: "", color: "", turn: false },
-			 		{ name: "", color: "", turn: false },
-			 		{ name: "", color: "", turn: false },
-			 		{ name: "", color: "", turn: false }
+			 		{ name: "", color: "", turn: false, tokens: [] },
+			 		{ name: "", color: "", turn: false, tokens: [] },
+			 		{ name: "", color: "", turn: false, tokens: [] },
+			 		{ name: "", color: "", turn: false, tokens: [] }
 			 	];
 		 	};
 
@@ -67,10 +67,11 @@ angular.module('tableHexController', [])
 		 		return result;
 		 	};
 
-		 	function playerTurnChangeHandler (login) {
+		 	function playerTurnChangeHandler (login, tokens, tokensCount) {
 		 		$scope.players.forEach(function (player) {
 		 			if (player.name === login) {
 		 				player.turn = true;
+		 				player.tokens = tokens;
 		 			} else {
 		 				player.turn = false;
 		 			}

@@ -99,11 +99,11 @@ angular.module('userBoardDirective', [])
 					$scope.$emit('token:unselect', {});
 				};
 
-				$scope.$watch("player.color", function (newColor, oldColor) {
+				$scope.$watch("player.color", function (newColor) {
 					$scope.loginClassName = "board board-" + newColor;
 				});
 
-				$scope.$watch("player.turn", function (newTurn, oldTurn) {
+				$scope.$watch("player.turn", function (newTurn) {
 					if (newTurn) {
 						$scope.boardClassName = "board-active";
 					} else {
@@ -111,7 +111,21 @@ angular.module('userBoardDirective', [])
 					}
 				});
 
-				//TODO event zmainy tokenów
+				$scope.$watch("player.tokens", function (newTokens) {
+					var $tokens = $scope.$userBoard.querySelectorAll("polygon");
+
+					[].forEach.call($tokens, function ($singleToken, index) {
+						if (newTokens[index]) {
+							d3.select($singleToken)
+								.classed("hex-empty", false);
+							$singleToken.setAttribute("fill", "url(#" + newTokens[index].name + ")");
+						} else {
+							d3.select($singleToken)
+								.classed("hex-empty", true);
+							$singleToken.removeAttribute("fill");
+						}
+					});
+				});
 			}
 		};
 	});
