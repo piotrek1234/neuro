@@ -114,7 +114,7 @@ angular.module('hexDirective', [])
 					startPoint = new Point(event.pageX+correctionX, event.pageY+correctionY);
 					var canvas = d3.select($svg);
 					
-					/*var transform = $srcElement.getAttribute("transform");
+					/*;
 					var svgOperations = new svgOperationsLibraryConstructor();
 					var transformParms = svgOperations.getTransformParameters(transform);
 					var rotateCenter = hexLibrary.getHexCenter(corners);*/
@@ -130,9 +130,11 @@ angular.module('hexDirective', [])
 
 					var tokenClass = getTokenClass(srcClass);
 					var tokenFill = $srcElement.getAttribute("fill");
+					var transform = $srcElement.getAttribute("transform")
 
 					event.dataTransfer.setData('tokenClass', tokenClass);
 					event.dataTransfer.setData('tokenFill', tokenFill);
+					event.dataTransfer.setData('tokenTransform', transform);
 					event.dataTransfer.setData('dragItemId', "dragged-item");
 				};
 
@@ -191,6 +193,9 @@ angular.module('hexDirective', [])
 					} else {
 						removeSelectedElement();	
 					}
+
+					_selectedElement
+						.attr("transform", "rotate(0)");
 				};
 
 				function removeSelectedElement () {

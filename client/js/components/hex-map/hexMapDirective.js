@@ -57,6 +57,7 @@ angular.module('hexMapDirective', [])
 					var srcElement = d3.select(event.target);
 					var tokenClass = event.dataTransfer.getData("tokenClass");
 					var tokenFill = event.dataTransfer.getData("tokenFill");
+					var tokenTransform = event.dataTransfer.getData("tokenTransform");
 
 					if (!srcElement.classed("hex-active") || tokenClass == null) {
 						return;
@@ -69,15 +70,30 @@ angular.module('hexMapDirective', [])
 						return;
 					}
 
+					var transform = getTransferDataFromSrc(tokenTransform, srcElement);
+
 					srcElement
 						.classed("hex-empty", false)
 						.classed(tokenClass, true)
 						.classed("hex-occupied", true)
 
 					srcElement
-						.attr("fill", tokenFill);
-					console.log(tokenFill);
+						.attr("fill", tokenFill)
+						.attr("transform", transform);
+					
 					setDraggedItemFlag(dragItemId);
+				};
+
+				function getTransferDataFromSrc (transformIn, _hex) {
+					var hexLibrary = new hexLibraryConstructor();
+					var svgOperations = new svgOperationsLibraryConstructor();
+					
+					var center = hexLibrary.getHexCenter(_hex.attr("points"));
+					var rotate = svgOperations.getTransformParameters(transformIn).rotate;
+					var rotateAngle = svgOperations.getRotateParmaters(rotate).angle;
+
+					var result = "rotate(" + rotateAngle + ", " + center.x + ", " + center.y + ")";
+					return result;
 				};
 
 				function dragleaveHandler (event) {
