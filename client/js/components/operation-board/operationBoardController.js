@@ -14,6 +14,8 @@ angular.module('operationBoardController', [])
 				setBoardParameters();
 				setLeftArrowParameters();
 				setRightArrowParameters();
+				setActionButtonParameters();
+				setDropButtonParameters();
 		 	};
 
 		 	function setMainBoardParameters () {
@@ -63,6 +65,28 @@ angular.module('operationBoardController', [])
 				};
 
 				$scope.rightArrow = rightArrow;
+			};
+
+			function setActionButtonParameters () {
+				var actionButton = {
+					x: hexSize*5.5,
+					y: hexSize*0.75,
+					width: 112,
+					height: 50
+				};
+
+				$scope.actionButton = actionButton;
+			};
+
+			function setDropButtonParameters () {
+				var dropButton = {
+					x: hexSize*5.5,
+					y: hexSize*1.6,
+					width: 112,
+					height: 50
+				};
+
+				$scope.dropButton = dropButton;
 			};
 
 			function setupDOMElements () {

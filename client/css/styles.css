@@ -179,7 +179,7 @@ svg {
 
 .board-button {
     stroke: black;
-    stroke-width: 8;
+    stroke-width: 2;
 }
 
 .board-button-active {
@@ -403,4 +403,5 @@ svg {
 
 .button-end-turn {
     fill: purple;
+    opacity: 0.6;
 }

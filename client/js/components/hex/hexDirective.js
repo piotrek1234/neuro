@@ -193,6 +193,9 @@ angular.module('hexDirective', [])
 					} else {
 						removeSelectedElement();	
 					}
+
+					_selectedElement
+						.attr("transform", "rotate(0)");
 				};
 
 				function removeSelectedElement () {
