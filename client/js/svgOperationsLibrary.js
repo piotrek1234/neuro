@@ -11,6 +11,20 @@ function svgOperationsLibraryConstructor () {
 		return angle;
 	};
 
+    this.getRotateCount = function ($element) {
+        var angle = parseFloat(this.getRotateAngle($element));
+        var count = Math.round(angle/60);
+
+        return count;
+    };
+
+    this.getFillUrlId = function ($element) {
+        var fill = $element.getAttribute("fill");
+        var id = fill.slice(5, fill.length-1);
+
+        return id;
+    };
+
 	this.getTransformParameters = function (parametersString) {
         var parameters = null;
 

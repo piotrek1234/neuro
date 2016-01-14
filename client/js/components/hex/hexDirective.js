@@ -116,9 +116,9 @@ angular.module('hexDirective', [])
 					startPoint = new Point(event.pageX+correctionX, event.pageY+correctionY);
 					var canvas = d3.select($svg);
 					
-					/*;
+					
 					var svgOperations = new svgOperationsLibraryConstructor();
-					var transformParms = svgOperations.getTransformParameters(transform);
+					/*var transformParms = svgOperations.getTransformParameters(transform);
 					var rotateCenter = hexLibrary.getHexCenter(corners);*/
 
 					_selectedElement = canvas
@@ -134,9 +134,19 @@ angular.module('hexDirective', [])
 					var tokenFill = $srcElement.getAttribute("fill");
 					var transform = $srcElement.getAttribute("transform")
 
+					var rotateCount = svgOperations.getRotateCount($srcElement);
+					console.log(rotateCount);
+
 					event.dataTransfer.setData('tokenClass', tokenClass);
 					event.dataTransfer.setData('tokenFill', tokenFill);
 					event.dataTransfer.setData('tokenTransform', transform);
+					event.dataTransfer.setData('dragItemId', "dragged-item");
+
+					var rotateCount = svgOperations.getRotateCount($srcElement);
+					var tokenId = svgOperations.getFillUrlId($srcElement);
+
+					event.dataTransfer.setData('tokenId', tokenId);
+					event.dataTransfer.setData('rotateCount', rotateCount);
 					event.dataTransfer.setData('dragItemId', "dragged-item");
 				};
 
@@ -191,16 +201,10 @@ angular.module('hexDirective', [])
 					if (_selectedElement == null) {
 						return;
 					} else if (!(_selectedElement.attr("drag-success") === "true" || _selectedElement.attr("drag-success") === true)) {
-						_selectedElement
-							.attr("transform", "rotate(0)");
 						returnToStartingPosition(_selectedElement);
-					} else {
-						_selectedElement
-							.attr("transform", "rotate(0)");
+					} else {	
 						removeSelectedElement();	
 					}
-
-					
 				};
 
 				function removeSelectedElement () {
@@ -210,6 +214,9 @@ angular.module('hexDirective', [])
 				};
 
 				function returnToStartingPosition ($element) {
+					_selectedElement
+							.attr("transform", "rotate(0)");
+
 					var $srcElement = event.target;
 					var corners = hexLibrary.setHexCorners(endPoint);
 					

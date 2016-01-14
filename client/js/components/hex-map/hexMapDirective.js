@@ -32,6 +32,8 @@ angular.module('hexMapDirective', [])
 			 	$scope.cornersSet = cornersSet;
 			},
 			link: function ($scope, element, attr) {
+				$scope.$hexMap = element[0];
+
 				element.on('dragover', dragoverHandler);
 				element.on('drop', dropHandler);
 				element.on('dragleave', dragleaveHandler);
@@ -57,12 +59,10 @@ angular.module('hexMapDirective', [])
 				};
 
 				function dropHandler (event) {
-					var srcElement = d3.select(event.target);
-					var tokenClass = event.dataTransfer.getData("tokenClass");
-					var tokenFill = event.dataTransfer.getData("tokenFill");
-					var tokenTransform = event.dataTransfer.getData("tokenTransform");
+					var _srcElement = d3.select(event.target);
+					var tokenClass = event.dataTransfer.getData("tokenClass");					
 
-					if (!srcElement.classed("hex-active") || tokenClass == null) {
+					if (!_srcElement.classed("hex-active") || tokenClass == null) {
 						return;
 					}
 
@@ -73,30 +73,47 @@ angular.module('hexMapDirective', [])
 						return;
 					}
 
-					var transform = getTransferDataFromSrc(tokenTransform, srcElement);
+					var tokenId = event.dataTransfer.getData("tokenId");
+					var rotateCount = event.dataTransfer.getData("rotateCount");
+					var transform = getTransferDataFromSrc(rotateCount, _srcElement);
+					
+					var coordinate = {
+						r: _srcElement.attr("r"),
+						q: _srcElement.attr("q")
+					};
 
-					srcElement
+					_srcElement
 						.classed("hex-empty", false)
 						.classed(tokenClass, true)
-						.classed("hex-occupied", true)
+						.classed("hex-occupied", true);
 
-					srcElement
-						.attr("fill", tokenFill)
+					_srcElement
+						.attr("fill", "url(#" + tokenId + ")")
 						.attr("transform", transform);
-					
+
 					setDraggedItemFlag(dragItemId);
+					sendPutToken(tokenId, coordinate, rotateCount);
 				};
 
-				function getTransferDataFromSrc (transformIn, _hex) {
-					var hexLibrary = new hexLibraryConstructor();
-					var svgOperations = new svgOperationsLibraryConstructor();
+				function sendPutToken (id, coordinate, rotateCount) {
+					var msg = {
+						id: id,
+						coordinate: coordinate,
+						rotateCount: rotateCount
+					};
 					
-					var center = hexLibrary.getHexCenter(_hex.attr("points"));
-					var rotate = svgOperations.getTransformParameters(transformIn).rotate;
-					var rotateAngle = svgOperations.getRotateParmaters(rotate).angle;
+					$scope.$emit("hexMap:putToken", msg);
+				};
 
-					var result = "rotate(" + rotateAngle + ", " + center.x + ", " + center.y + ")";
-					return result;
+				function getTransferDataFromSrc (rotateCount, _hex) {
+					var hexLibrary = new hexLibraryConstructor();					
+					var center = hexLibrary.getHexCenter(_hex.attr("points"));
+					var rotateAngle = rotateCount*60;
+					if (rotateAngle === 0) {
+						return "";
+					} else {
+						return "rotate(" + rotateAngle + ", " + center.x + ", " + center.y + ")";
+					}
 				};
 
 				function dragleaveHandler (event) {
