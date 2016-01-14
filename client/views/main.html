@@ -211,9 +211,9 @@
         <image xlink:href="/pict/tokens/yl_act_push.png" x="0" y="0" ng-attr-width="{{hexSize*2}}" ng-attr-height="{{hexSize*1.732051}}" />
       </pattern>
     </defs>
-
-        <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
-
+        <g ng-controller="hexMapController">
+          <hex-map class="hex-map" hex-count="mapSize" class="middle" size="hexSize"></hex-map> 
+        </g>
         <g ng-controller="tableHexController">
           <table-hex hex-size="hexSize"></table-hex> 
         </g>

@@ -4,6 +4,8 @@ angular.module('hexMapDirective', [])
 			restrict: 'E',
 			scope: {
 				hexCount: "=hexCount",
+				hexMap: "=",
+
 				size: "="
 			},
 			templateNamespace: 'svg',
@@ -15,6 +17,7 @@ angular.module('hexMapDirective', [])
 				hexLibrary.setLayoutSize(Point($scope.size, $scope.size));
 				
 				var hexMap = hexLibrary.generateMap($scope.hexCount);
+				$scope.hexMap = hexMap;
 
 				var coordinateMap = [];
 				hexMap.forEach(function (element) {

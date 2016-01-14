@@ -10,6 +10,8 @@ angular.module('hexDirective', [])
 				draggable: '=',
 				dropable: '=',
 
+				coordinates: '=',
+
 				centerX: '=',
 				centerY: '=',
 				size: '='
@@ -20,7 +22,7 @@ angular.module('hexDirective', [])
 			controller: function ($scope) {
 				$scope.className = '';
 				$scope.moving = !!$scope.moving || false;
-
+				console.log($scope.coordinates)
 				function setColorClass (className) {
 					switch (className) {
 						case 'green':
@@ -189,13 +191,16 @@ angular.module('hexDirective', [])
 					if (_selectedElement == null) {
 						return;
 					} else if (!(_selectedElement.attr("drag-success") === "true" || _selectedElement.attr("drag-success") === true)) {
+						_selectedElement
+							.attr("transform", "rotate(0)");
 						returnToStartingPosition(_selectedElement);
 					} else {
+						_selectedElement
+							.attr("transform", "rotate(0)");
 						removeSelectedElement();	
 					}
 
-					_selectedElement
-						.attr("transform", "rotate(0)");
+					
 				};
 
 				function removeSelectedElement () {
