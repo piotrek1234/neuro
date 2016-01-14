@@ -294,10 +294,10 @@ def sendError(socket, error):
 def getBoard():
 	'''returns tokens on board in form readable by javascript'''
 	board = cv.getBoard()
-	retbrd = {}
+	retbrd = []
 	i=0
 	for k, v in board.iteritems():
 		v['color'] = v['color'].real
-		retbrd[i] = {'q': k[0], 'r': k[1], 'token': v}
+		retbrd.append({'q': k[0], 'r': k[1], 'token': v})
 		i=i+1
 	return retbrd
