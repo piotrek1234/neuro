@@ -10,6 +10,7 @@ angular.module('hexDirective', [])
 				draggable: '=',
 				dropable: '=',
 
+				
 				coordinates: '=',
 
 				centerX: '=',
@@ -22,7 +23,7 @@ angular.module('hexDirective', [])
 			controller: function ($scope) {
 				$scope.className = '';
 				$scope.moving = !!$scope.moving || false;
-				console.log($scope.coordinates)
+				
 				function setColorClass (className) {
 					switch (className) {
 						case 'green':
@@ -135,19 +136,13 @@ angular.module('hexDirective', [])
 					var transform = $srcElement.getAttribute("transform")
 
 					var rotateCount = svgOperations.getRotateCount($srcElement);
-					console.log(rotateCount);
+					var tokenUrl = svgOperations.getFillUrlId($srcElement);
+					var tokenId = $srcElement.getAttribute("token-id");
 
-					event.dataTransfer.setData('tokenClass', tokenClass);
-					event.dataTransfer.setData('tokenFill', tokenFill);
-					event.dataTransfer.setData('tokenTransform', transform);
-					event.dataTransfer.setData('dragItemId', "dragged-item");
-
-					var rotateCount = svgOperations.getRotateCount($srcElement);
-					var tokenId = svgOperations.getFillUrlId($srcElement);
-
-					event.dataTransfer.setData('tokenId', tokenId);
+					event.dataTransfer.setData('tokenUrl', tokenUrl);
 					event.dataTransfer.setData('rotateCount', rotateCount);
 					event.dataTransfer.setData('dragItemId', "dragged-item");
+					event.dataTransfer.setData('tokenId', tokenId);
 				};
 
 				function getTokenClass (inputClass) {

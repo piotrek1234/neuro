@@ -202,8 +202,9 @@ var socketServer = {
 	whoseTurn: function () {
 		socket.send({'action': 'currentPlayer'});
 	},
-	putToken: function (id, q, r, angle) {
-		socket.send({'action': 'putToken', 'id': id, 'q': q, 'r': r, 'angle': angle});
+	putToken: function (msg) {
+		console.log(msg);
+		socket.send({'action': 'putToken', 'id': parseInt(msg.id), 'q': parseInt(msg.q), 'r': parseInt(msg.r), 'angle': parseInt(msg.angle)});
 	},
 	join: function (data) {
 		socket.send({'action': 'join', 'name': data});

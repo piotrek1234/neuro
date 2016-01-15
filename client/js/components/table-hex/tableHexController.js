@@ -77,6 +77,11 @@ angular.module('tableHexController', [])
 		 			}
 		 		});
 
+		 	/*	var tokenIds = [];
+		 		tokens.forEach(function (element) {
+		 			tokenIds.push(element.id);
+		 		});
+		 		sessionStorage.setItem(tokens);*/
 		 		$scope.$broadcast('tableHex:players', $scope.players);
 		 	};
 

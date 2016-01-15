@@ -49,6 +49,8 @@ angular.module('popupDirective', [])
 						} else {
 							sendSetPlayer($srcElement);
 						}
+
+						setPopupDisabled();
 					}
 				};
 
@@ -122,7 +124,7 @@ angular.module('popupDirective', [])
 					var $login = $popup.querySelector('input');
 
 					[].forEach.call($buttons, function ($item) {
-						$item.setAttribute('class', 'button player-button-disabled');
+						$item.setAttribute('class', 'button player-button-yellow');
 					});
  
 					$login.disabled = true;

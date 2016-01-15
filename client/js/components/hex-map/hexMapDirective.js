@@ -18,7 +18,7 @@ angular.module('hexMapDirective', [])
 				
 				var hexMap = hexLibrary.generateMap($scope.hexCount);
 				$scope.hexMap = hexMap;
-
+				
 				var coordinateMap = [];
 				hexMap.forEach(function (element) {
 					coordinateMap.push(hexLibrary.hexToCoordinate(hexLibrary.flat, element));
@@ -59,10 +59,9 @@ angular.module('hexMapDirective', [])
 				};
 
 				function dropHandler (event) {
-					var _srcElement = d3.select(event.target);
-					var tokenClass = event.dataTransfer.getData("tokenClass");					
+					var _srcElement = d3.select(event.target);			
 
-					if (!_srcElement.classed("hex-active") || tokenClass == null) {
+					if (!_srcElement.classed("hex-active")) {
 						return;
 					}
 
@@ -74,6 +73,7 @@ angular.module('hexMapDirective', [])
 					}
 
 					var tokenId = event.dataTransfer.getData("tokenId");
+					var tokenUrl = event.dataTransfer.getData("tokenUrl");
 					var rotateCount = event.dataTransfer.getData("rotateCount");
 					var transform = getTransferDataFromSrc(rotateCount, _srcElement);
 					
@@ -84,11 +84,11 @@ angular.module('hexMapDirective', [])
 
 					_srcElement
 						.classed("hex-empty", false)
-						.classed(tokenClass, true)
 						.classed("hex-occupied", true);
 
 					_srcElement
-						.attr("fill", "url(#" + tokenId + ")")
+						.attr("token-id", tokenId)
+						.attr("fill", "url(#" + tokenUrl + ")")
 						.attr("transform", transform);
 
 					setDraggedItemFlag(dragItemId);
@@ -98,8 +98,9 @@ angular.module('hexMapDirective', [])
 				function sendPutToken (id, coordinate, rotateCount) {
 					var msg = {
 						id: id,
-						coordinate: coordinate,
-						rotateCount: rotateCount
+						q: coordinate.q,
+						r: coordinate.r,
+						angle: rotateCount
 					};
 					
 					$scope.$emit("hexMap:putToken", msg);
