@@ -2,7 +2,7 @@
 /// @brief main client module, AngularJS application with routing
 
 angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices', 
-                            'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective',
+                            'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective', 'operationBoardDirective',
                             'mainController', 'operationBoardController', 'popupController', 'tableHexController', 'hexMapController'] )
     .config(['$routeProvider', '$translateProvider',
              function($routeProvider, $translateProvider) {
