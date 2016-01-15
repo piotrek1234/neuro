@@ -33,8 +33,8 @@ angular.module('hexMapDirective', [])
 			},
 			link: function ($scope, element, attr) {
 				$scope.$hexMap = element[0];
-				$scope.$on('hexMap:setSingleToken', setSingleTokens);
-
+				$scope.$on('hexMap:setSingleToken', setSingleToken);
+				$scope.$on('hexMap:setAllMap', setAllTokens);
 
 				element.on('dragover', dragoverHandler);
 				element.on('drop', dropHandler);
@@ -145,14 +145,14 @@ angular.module('hexMapDirective', [])
 						.classed("hex-empty", true);
 				};
 
-				function setAllTokens (event, data) {
-					// funkcja do wstawiania całej mapy
+				function setAllTokens (event, tokens) {
+					tokens.forEach(function (singleToken) {
+						setSingleToken(singleToken);
+					});
 				};
 
-				function setSingleTokens (event, token) {
-					var q = token.q;
-					var r = token.r;
-					var $token = $scope.$hexMap.querySelector("[q='" + q + "'][r='" + r + "']");
+				function setSingleToken (event, token) {
+					var $token = $scope.$hexMap.querySelector("[q='" + token.q + "'][r='" + token.r + "']");
 
 					var tokenParams = {
 						tokenId: token.id,

@@ -7,6 +7,8 @@ angular.module('hexMapController', [])
 			subscribeOnTokenAdd(addTokenHandler);
 			subscribeOnAddFailed(addTokenFaildHandler);
 
+			subscribeOnGetBoard(getBoardHandler);
+
 			function putTokenHandler (event, data) {
 				var msg = {
 					q: parseInt(data.q),
@@ -19,16 +21,32 @@ angular.module('hexMapController', [])
 			};
 
 			function addTokenHandler (data) {
-				console.log(data);
 				if (data.color !== sessionStorage.playerColor) {
 					$scope.$broadcast("hexMap:setSingleToken", data);
 				}	
 			};
 
 			function addTokenFaildHandler (event, data) {
-				console.log("addTokenFaildHandler");
-				// strzał po aktualny stan planszy
-				// odświerzenie starego stanu planszy
+				// miejsce na wyswietlenie popup'u niepowodzenia
+				socketServer.getBoard();
+			};
+
+			function getBoardHandler (tokens) {
+				var msg = [];
+
+				tokens.forEach(function (singleToken) {
+					var params = {
+						q: singleToken.q,
+						r: singleToken.r,
+						angle: singleToken.token.angle,
+						name: singleToken.token.name,
+						id: singleToken.token.id
+					};
+
+					msg.push(params);
+				});
+
+				$scope.$broadcast("hexMap:setAllMap");
 			};
 
 		 }]);

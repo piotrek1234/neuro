@@ -123,6 +123,9 @@ var on_received = function(data)
 				});
 				break;
 			case 'board':
+				getBoardEvents.forEach(function (callback) {
+					callback(data.board);
+				});
 				console.log('Board contents:');
 				console.log(data.board);
 				break;
@@ -228,8 +231,9 @@ var tokenAddEvents = [];
 var tokenMovedEvents = [];
 var afterBattleEvents = [];
 var gameEndEvents = [];
-var errorEvents = [];
+var getBoardEvents = [];
 
+var errorEvents = [];
 var addFailedEvents = [];
 
 function subscribeOnPlayerList (callback) {
@@ -259,10 +263,13 @@ function subscribeOnAfterBattle (callback) {
 function subscribeOnGameEnd (callback) {
 	gameEndEvents.push(callback);
 };
+function subscribeOnGetBoard (callback) {
+	getBoardEvents.push(callback);
+};
+
 function subscribeOnError (callback) {
 	errorEvents.push(callback);
 };
-
 function subscribeOnAddFailed (callback) {
 	addFailedEvents.push(callback);
 };
