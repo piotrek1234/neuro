@@ -5,6 +5,7 @@ angular.module('hexMapController', [])
 			$scope.$on("hexMap:putToken", putTokenHandler);
 
 			subscribeOnTokenAdd(addTokenHandler);
+			subscribeOnAddFailed(addTokenFaildHandler);
 
 			function putTokenHandler (event, data) {
 				var msg = {
@@ -14,12 +15,20 @@ angular.module('hexMapController', [])
 					angle: parseInt(data.angle)
 				}
 
-				socketServer.putToken(data);
-				// console.log(data);
+				socketServer.putToken(msg);
 			};
 
 			function addTokenHandler (data) {
-				// console.log(data);
+				console.log(data);
+				if (data.color !== sessionStorage.playerColor) {
+					$scope.$broadcast("hexMap:setSingleToken", data);
+				}	
+			};
+
+			function addTokenFaildHandler (event, data) {
+				console.log("addTokenFaildHandler");
+				// strzał po aktualny stan planszy
+				// odświerzenie starego stanu planszy
 			};
 
 		 }]);

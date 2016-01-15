@@ -33,6 +33,8 @@ angular.module('hexMapDirective', [])
 			},
 			link: function ($scope, element, attr) {
 				$scope.$hexMap = element[0];
+				$scope.$on('hexMap:setSingleToken', setSingleTokens);
+
 
 				element.on('dragover', dragoverHandler);
 				element.on('drop', dropHandler);
@@ -60,6 +62,7 @@ angular.module('hexMapDirective', [])
 
 				function dropHandler (event) {
 					var _srcElement = d3.select(event.target);			
+					var $srcElement = event.target;
 
 					if (!_srcElement.classed("hex-active")) {
 						return;
@@ -82,14 +85,13 @@ angular.module('hexMapDirective', [])
 						q: _srcElement.attr("q")
 					};
 
-					_srcElement
-						.classed("hex-empty", false)
-						.classed("hex-occupied", true);
+					var tokenParams = {
+						tokenId: tokenId,
+						tokenUrl: tokenUrl,
+						transform: transform
+					};
 
-					_srcElement
-						.attr("token-id", tokenId)
-						.attr("fill", "url(#" + tokenUrl + ")")
-						.attr("transform", transform);
+					setOccupateTokenAttr($srcElement, tokenParams);
 
 					setDraggedItemFlag(dragItemId);
 					sendPutToken(tokenId, coordinate, rotateCount);
@@ -141,6 +143,50 @@ angular.module('hexMapDirective', [])
 					d3.select(".hex-active")
 						.classed("hex-active", false)
 						.classed("hex-empty", true);
+				};
+
+				function setAllTokens (event, data) {
+					// funkcja do wstawiania całej mapy
+				};
+
+				function setSingleTokens (event, token) {
+					var q = token.q;
+					var r = token.r;
+					var $token = $scope.$hexMap.querySelector("[q='" + q + "'][r='" + r + "']");
+
+					var tokenParams = {
+						tokenId: token.id,
+						tokenUrl: token.name,
+						transform: getTransferDataFromSrc(token.angle, d3.select($token))
+					};
+					
+					setOccupateTokenAttr($token, tokenParams);
+				};
+
+				function setOccupateTokenAttr ($token, params) {
+					var _token = d3.select($token);
+
+					_token
+						.classed("hex-empty", false)
+						.classed("hex-occupied", true);
+
+					_token
+						.attr("token-id", params.tokenId)
+						.attr("fill", "url(#" + params.tokenUrl + ")")
+						.attr("transform", params.transform);
+				};
+
+				function setEmptyTokenAttr ($token, params) {
+					var _token = d3.select($token);
+
+					_token
+						.classed("hex-empty", true)
+						.classed("hex-occupied", false);
+
+					_token
+						.attr("token-id", params.tokenId)
+						.attr("fill", "url(#" + params.tokenUrl + ")")
+						.attr("transform", params.transform);
 				};
 			}
 		};

@@ -142,6 +142,9 @@ var handleError = function(errorType)
 		case 'addFailed':
 			console.log('Failed to add token.');
 			//cofnąć dodanie tokenu, odblokować interfejs
+			addFailedEvents.forEach(function (callback) {
+				callback(errorType);
+			});
 			break;
 		case 'moveFailed':
 			console.log('Failed to move token.');
@@ -203,8 +206,8 @@ var socketServer = {
 		socket.send({'action': 'currentPlayer'});
 	},
 	putToken: function (msg) {
-		console.log(msg);
-		socket.send({'action': 'putToken', 'id': parseInt(msg.id), 'q': parseInt(msg.q), 'r': parseInt(msg.r), 'angle': parseInt(msg.angle)});
+		console.log(msg)
+		socket.send({'action': 'putToken', 'id': msg.id, 'q': msg.q, 'r': msg.r, 'angle': msg.angle});
 	},
 	join: function (data) {
 		socket.send({'action': 'join', 'name': data});
@@ -226,6 +229,8 @@ var tokenMovedEvents = [];
 var afterBattleEvents = [];
 var gameEndEvents = [];
 var errorEvents = [];
+
+var addFailedEvents = [];
 
 function subscribeOnPlayerList (callback) {
 	playerListEvents.push(callback);
@@ -258,3 +263,6 @@ function subscribeOnError (callback) {
 	errorEvents.push(callback);
 };
 
+function subscribeOnAddFailed (callback) {
+	addFailedEvents.push(callback);
+};
