@@ -181,10 +181,22 @@ svg {
     opacity: 0.6;
 }
 
-.board-button {
+.board-button-background-disabled {
+    fill: #898C8C;
+    opacity: 0.9;
+}
 
+.board-button {
     stroke: black;
     stroke-width: 2;
+}
+
+.rotation-button {
+
+}
+
+.action-button {
+
 }
 
 .board-button {

@@ -98,6 +98,16 @@ angular.module('operationBoardDirective', [])
 				$scope.defaultCssClass = null;
 
 				$scope.$buttons = $scope.$board.querySelectorAll(".board-button");
+				$scope.$actionButton = null;
+				$scope.$removeTokenButton = null;
+				$scope.$rotationButtons = [];
+
+				//TODO przenieść do kontrolera
+				$scope.$on('main:selectToken', selectTokenHandler);
+				$scope.$on('main:unselectToken', unselectTokenHandler);
+
+				$scope.$on('operationBoard:actionButton', actitonButtonActivationHandler);
+				$scope.$on('operationBoard:rotationButtons', rotationButtonsActivationHandler);
 
 				function setupDOMElements () {
 					$scope.$leftArrow = document.getElementById("left-arrow");
@@ -105,9 +115,6 @@ angular.module('operationBoardDirective', [])
 				};
 
 				function setupEventHandlers () {
-					$scope.$on('main:selectToken', selectTokenHandler);
-					$scope.$on('main:unselectToken', unselectTokenHandler);
-
 					$scope.$rightArrow.addEventListener("click", clickRightArrowHandler.bind(this));
 					$scope.$leftArrow.addEventListener("click", clickLeftArrowHandler.bind(this));
 				};
@@ -178,13 +185,46 @@ angular.module('operationBoardDirective', [])
 					$scope.$boardItem = null;
 				};
 
-				function setButtonBackground (_button, isActive) {
-					var buttonId = _button.attr("id");
+				function setButtonBackground ($button, buttonClass) {
+					var buttonId = d3.select($button).attr("id");
 					var $buttonBackground = document.getElementById(buttonId + "-background");
 
-					var buttonClass = isActive ? "board-button-background-active" : "board-button-background";
-
 					$buttonBackground.setAttribute("class", buttonClass);
+				};
+
+				function checkButtonIsDisabled ($button) {
+					var buttonId = d3.select($button).attr("id");
+					var _buttonBackground = d3.select("#" + buttonId + "-background");
+
+					return _buttonBackground.classed("board-button-background-disabled");
+				};
+
+				function actitonButtonActivationHandler (event) {
+					$scope.$rotationButtons.forEach(function ($button) {
+						setButtonBackground($button, "board-button-background-disabled");
+					});
+
+					setButtonBackground($scope.$actionButton, "board-button-background");
+				};
+
+				function rotationButtonsActivationHandler (event) {
+					$scope.$rotationButtons.forEach(function ($button) {
+						setButtonBackground($button, "board-button-background");
+					});
+
+					setButtonBackground($scope.$actionButton, "board-button-background-disabled");
+				};
+
+				function activeRemoveTokenHandler (event) {
+					setButtonBackground($scope.$removeTokenButton, "board-button-background");
+				};
+
+				function deactiveAllButtons () {
+					$scope.$rotationButtons.forEach(function ($button) {
+						setButtonBackground($button, "board-button-background-disabled");
+					});
+
+					setButtonBackground($scope.$actionButton, "board-button-background-disabled");
 				};
 
 				setupDOMElements();
@@ -192,14 +232,33 @@ angular.module('operationBoardDirective', [])
 
 				[].forEach.call($scope.$buttons, function ($button) {
 					$button.addEventListener('mouseenter', function (event) {
-						var _srcElement = d3.select(event.target);
-						setButtonBackground(_srcElement, true);
+						var $srcElement = event.target;
+						if (checkButtonIsDisabled($srcElement)) 
+							return;
+
+						setButtonBackground($srcElement, "board-button-background-active");
 					});
 
 					$button.addEventListener('mouseleave', function (event) {
-						var _srcElement = d3.select(event.target);
-						setButtonBackground(_srcElement, false);
-					});					
+						var $srcElement = event.target;
+						if (checkButtonIsDisabled($srcElement))
+							return;
+
+						setButtonBackground($srcElement, "board-button-background");
+					});	
+
+					var _button = d3.select($button);
+
+					if (_button.classed('rotation-button')) {
+						$scope.$rotationButtons.push($button);
+						
+					} else if (_button.classed('action-button')) {
+						$scope.$actionButton = $button;
+					} else {
+						$scope.$removeTokenButton = $button;
+					}
+
+					setButtonBackground($button, "board-button-background-disabled");
 				});
 			}
 		};
