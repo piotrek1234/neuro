@@ -113,12 +113,14 @@ angular.module('userBoardDirective', [])
 
 				$scope.$watch("player.tokens", function (newTokens) {
 					var $tokens = $scope.$userBoard.querySelectorAll("polygon");
-					
+
 					[].forEach.call($tokens, function ($singleToken, index) {
 						if (newTokens[index]) {
 							d3.select($singleToken)
 								.classed("hex-empty", false)
 								.classed("token", true);
+
+							$singleToken.setAttribute("token-type", newTokens[index].type);
 							$singleToken.setAttribute("token-id", newTokens[index].id);
 							$singleToken.setAttribute("fill", "url(#" + newTokens[index].name + ")");
 						} else {

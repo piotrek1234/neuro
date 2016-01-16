@@ -102,9 +102,8 @@ angular.module('operationBoardDirective', [])
 				$scope.$removeTokenButton = null;
 				$scope.$rotationButtons = [];
 
-				//TODO przenieść do kontrolera
-				$scope.$on('main:selectToken', selectTokenHandler);
-				$scope.$on('main:unselectToken', unselectTokenHandler);
+				$scope.$on('operationBoard:selectToken', selectTokenHandler);
+				$scope.$on('operationBoard:unselectToken', unselectTokenHandler);
 
 				$scope.$on('operationBoard:actionButton', actitonButtonActivationHandler);
 				$scope.$on('operationBoard:rotationButtons', rotationButtonsActivationHandler);
@@ -122,12 +121,18 @@ angular.module('operationBoardDirective', [])
 				function clickRightArrowHandler (event) {
 					event.stopPropagation();
 
+					if (checkButtonIsDisabled(event.target))
+						return;
+
 					rotateRight($scope.$selectedToken);
 					rotateRight($scope.$boardItem);
 				};
 
 				function clickLeftArrowHandler (event) {
 					event.stopPropagation();
+
+					if (checkButtonIsDisabled(event.target))
+						return;
 
 					rotateLeft($scope.$selectedToken);
 					rotateLeft($scope.$boardItem);
@@ -150,11 +155,13 @@ angular.module('operationBoardDirective', [])
 					var angleCurrent = svgOperations.getRotateAngle($element);
 
 					angle += angleCurrent;
-
+					disableRotationButtons();
+					
 					d3.select($element)
 						.transition()
 						.attr("transform", "rotate(" + angle + " " + center.x + " " + center.y + ")")
-					.duration(1000);
+					.duration(1000)
+					.each("end", activeRotationButtons);
 				};
 
 				function selectTokenHandler (event, data) {
@@ -174,12 +181,22 @@ angular.module('operationBoardDirective', [])
 						.attr("class", cssTokenClass)
 						.attr("fill", fillAtribute)
 						.classed("token-selected", false);
+
+					if (data.isPutable) {
+						rotationButtonsActivationHandler();
+					} else {
+						actitonButtonActivationHandler();
+					}
+
+					setButtonBackground($scope.$removeTokenButton, "board-button-background");
 				};
 
 				function unselectTokenHandler (event, data) {
 					d3.select($scope.$boardItem)
 						.attr("class", $scope.defaultCssClass)
 						.attr("fill", null);
+
+					deactiveAllButtons();
 
 					$scope.$selectedToken = null;
 					$scope.$boardItem = null;
@@ -199,19 +216,13 @@ angular.module('operationBoardDirective', [])
 					return _buttonBackground.classed("board-button-background-disabled");
 				};
 
-				function actitonButtonActivationHandler (event) {
-					$scope.$rotationButtons.forEach(function ($button) {
-						setButtonBackground($button, "board-button-background-disabled");
-					});
-
+				function actitonButtonActivationHandler () {
+					disableRotationButtons();
 					setButtonBackground($scope.$actionButton, "board-button-background");
 				};
 
-				function rotationButtonsActivationHandler (event) {
-					$scope.$rotationButtons.forEach(function ($button) {
-						setButtonBackground($button, "board-button-background");
-					});
-
+				function rotationButtonsActivationHandler () {
+					activeRotationButtons();
 					setButtonBackground($scope.$actionButton, "board-button-background-disabled");
 				};
 
@@ -220,11 +231,21 @@ angular.module('operationBoardDirective', [])
 				};
 
 				function deactiveAllButtons () {
+					disableRotationButtons();
+					setButtonBackground($scope.$actionButton, "board-button-background-disabled");
+					setButtonBackground($scope.$removeTokenButton, "board-button-background-disabled");
+				};
+
+				function disableRotationButtons () {
 					$scope.$rotationButtons.forEach(function ($button) {
 						setButtonBackground($button, "board-button-background-disabled");
 					});
+				};
 
-					setButtonBackground($scope.$actionButton, "board-button-background-disabled");
+				function activeRotationButtons () {
+					$scope.$rotationButtons.forEach(function ($button) {
+						setButtonBackground($button, "board-button-background");
+					});
 				};
 
 				setupDOMElements();

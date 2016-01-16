@@ -95,7 +95,7 @@ angular.module('hexDirective', [])
 					var $srcElement = event.target;
 					var _src = d3.select($srcElement);
 
-					if (!_src.classed("token")) {
+					if (!_src.classed("token") || (_src.attr("token-type") !== "putable")) {
 						return;
 					}
 
