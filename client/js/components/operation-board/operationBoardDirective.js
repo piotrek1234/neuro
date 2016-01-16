@@ -94,7 +94,10 @@ angular.module('operationBoardDirective', [])
 				setupParameters();
 			},
 			link: function ($scope, element, attr) {
+				$scope.$board = element[0];
 				$scope.defaultCssClass = null;
+
+				$scope.$buttons = $scope.$board.querySelectorAll(".board-button");
 
 				function setupDOMElements () {
 					$scope.$leftArrow = document.getElementById("left-arrow");
@@ -150,7 +153,7 @@ angular.module('operationBoardDirective', [])
 				function selectTokenHandler (event, data) {
 					$scope.$selectedToken = data.$token;
 					$scope.$boardItem = document.querySelector("polygon[ng-moving=true]");
-					
+
 					var cssTokenClass = d3.select($scope.$selectedToken)
 						.attr("class");
 
@@ -175,8 +178,29 @@ angular.module('operationBoardDirective', [])
 					$scope.$boardItem = null;
 				};
 
+				function setButtonBackground (_button, isActive) {
+					var buttonId = _button.attr("id");
+					var $buttonBackground = document.getElementById(buttonId + "-background");
+
+					var buttonClass = isActive ? "board-button-background-active" : "board-button-background";
+
+					$buttonBackground.setAttribute("class", buttonClass);
+				};
+
 				setupDOMElements();
 				setupEventHandlers();
+
+				[].forEach.call($scope.$buttons, function ($button) {
+					$button.addEventListener('mouseenter', function (event) {
+						var _srcElement = d3.select(event.target);
+						setButtonBackground(_srcElement, true);
+					});
+
+					$button.addEventListener('mouseleave', function (event) {
+						var _srcElement = d3.select(event.target);
+						setButtonBackground(_srcElement, false);
+					});					
+				});
 			}
 		};
 	});

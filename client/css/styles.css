@@ -172,9 +172,19 @@ svg {
     opacity: 1;
 }
 
-.board-background-button {
-    fill: #8F4709;
+.board-button-background {
     opacity: 0.6;
+}
+
+.board-button-background-active {
+    fill: #00B52A;
+    opacity: 0.6;
+}
+
+.board-button {
+
+    stroke: black;
+    stroke-width: 2;
 }
 
 .board-button {
