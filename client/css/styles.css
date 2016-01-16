@@ -109,6 +109,11 @@ svg {
     -moz-transform: translate(80px,0px); /* Firefox */
 }
 
+.user-overlay {
+    fill: #BAC7CC;
+    opacity: 0.4;
+}
+
 .main-board {
     background: url('/pict/dark-wood.jpg')
 }

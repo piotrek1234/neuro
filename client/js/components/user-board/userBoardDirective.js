@@ -10,6 +10,7 @@ angular.module('userBoardDirective', [])
 				player: "=",
 				draggable: "=",
 				dropable: "=",
+				isUser: "=",
 
 				click: "="
 			},
@@ -34,6 +35,19 @@ angular.module('userBoardDirective', [])
 			},
 			link: function ($scope, element, attr) {
 				$scope.$userBoard = element[0];
+				$scope.$overlay = $scope.$userBoard.querySelector(".user-overlay");
+
+				if ($scope.isUser) {
+					$scope.$on("userBoard:disable", userBoardDisableHandler);
+				}	$scope.$on("userBoard:enable", userBoardEnableHandler);
+					
+				function userBoardDisableHandler () {
+					$scope.$overlay.style.display = "block";
+				};
+
+				function userBoardEnableHandler () {
+					$scope.$overlay.style.display = "none";
+				};
 
 				if (!!$scope.click) {
 					element.on('click', clickHandler);

@@ -78,6 +78,12 @@ angular.module('tableHexController', [])
 		 		});
 
 		 		$scope.$broadcast('tableHex:players', $scope.players);
+
+		 		if (login === sessionStorage.playerName) {
+		 			$scope.$broadcast('userBoard:enable');
+		 		} else {
+		 			$scope.$broadcast('userBoard:disable');
+		 		}
 		 	};
 
 		 	playersSetDefaultValue();
