@@ -31,7 +31,13 @@ angular.module('tableHexDirective', [])
 				};
 			},
 			link: function ($scope, element, attr) {
-				$scope.hexTable = element[0];
+				$scope.$hexTable = element[0];
+
+				$scope.$endTurnButton = $scope.$hexTable.querySelector(".button-end-turn");
+
+				$scope.$endTurnButton.addEventListener('click', function (event) {
+					$scope.$emit("tableHex:endTurn");
+				});
 			}
 		};
 	});

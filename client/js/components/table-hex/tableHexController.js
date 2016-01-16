@@ -6,6 +6,8 @@ angular.module('tableHexController', [])
 
 		 	$scope.players = [];
 
+		 	$scope.$on("tableHex:endTurn", endTurnHandler);
+
 		 	subscribeOnPlayerList(playerListChangeHandler);
 		 	subscribeOnTurn(playerTurnChangeHandler);
 
@@ -83,6 +85,12 @@ angular.module('tableHexController', [])
 		 			$scope.$broadcast('userBoard:enable');
 		 		} else {
 		 			$scope.$broadcast('userBoard:disable');
+		 		}
+		 	};
+
+		 	function endTurnHandler (event, data) {
+		 		if (sessionStorage.playerName === sessionStorage.currentTurn) {
+		 			socketServer.endTurn();
 		 		}
 		 	};
 
