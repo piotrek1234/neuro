@@ -6,6 +6,9 @@ angular.module('operationBoardController', [])
 				$scope.$on('main:selectToken', selectTokenHandler);
 				$scope.$on('main:unselectToken', unselectTokenHandler);
 
+				$scope.$on('operationBoard:removeToken', removeTokenHandler);
+				$scope.$on('operationBoard:deleteToken')
+
 				function selectTokenHandler (event, data) {
 					var tokenType = data.$token.getAttribute("token-type");
 					var isPutable = (tokenType === "putable");
@@ -18,5 +21,9 @@ angular.module('operationBoardController', [])
 
 				function unselectTokenHandler (event, data) {
 					$scope.$broadcast('operationBoard:unselectToken', data);
+				};
+
+				function removeTokenHandler (event, data) {
+					socketServer.throwToken(parseInt(data.tokenId));
 				};
 		 }]);

@@ -116,6 +116,8 @@ angular.module('operationBoardDirective', [])
 				function setupEventHandlers () {
 					$scope.$rightArrow.addEventListener("click", clickRightArrowHandler.bind(this));
 					$scope.$leftArrow.addEventListener("click", clickLeftArrowHandler.bind(this));
+
+					$scope.$removeTokenButton.addEventListener("click", clickRemoveTokenHandler.bind(this));
 				};
 
 				function clickRightArrowHandler (event) {
@@ -136,6 +138,24 @@ angular.module('operationBoardDirective', [])
 
 					rotateLeft($scope.$selectedToken);
 					rotateLeft($scope.$boardItem);
+				};
+
+				function clickRemoveTokenHandler (event) {
+					if (checkButtonIsDisabled(event.target)) {						
+						return;
+					}
+
+					removeToken($scope.$selectedToken);
+				};
+
+				function removeToken ($token) {
+					var _token = d3.select($token);
+					var tokenId = _token.attr("token-id");					
+
+				/*	_token.remove();
+					$token = null;*/
+
+					$scope.$emit('operationBoard:removeToken', { tokenId: tokenId });
 				};
 
 				function rotateRight ($element) {
@@ -248,9 +268,6 @@ angular.module('operationBoardDirective', [])
 					});
 				};
 
-				setupDOMElements();
-				setupEventHandlers();
-
 				[].forEach.call($scope.$buttons, function ($button) {
 					$button.addEventListener('mouseenter', function (event) {
 						var $srcElement = event.target;
@@ -281,6 +298,9 @@ angular.module('operationBoardDirective', [])
 
 					setButtonBackground($button, "board-button-background-disabled");
 				});
+				
+				setupDOMElements();
+				setupEventHandlers();
 			}
 		};
 	});
