@@ -209,6 +209,13 @@ svg {
     stroke-width: 2;
 }
 
+.end-turn-back {
+    fill: #523B24;
+    opacity: 0.6;
+    stroke: black;
+    stroke-width: 2;
+}
+
 .board-button-active {
     stroke: #33E842;
     stroke-width: 8;    
@@ -429,6 +436,6 @@ svg {
 }
 
 .button-end-turn {
-    fill: purple;
-    opacity: 0.6;
+    /*fill: purple;
+    opacity: 0.6;*/
 }
