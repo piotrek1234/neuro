@@ -151,6 +151,7 @@ def messageFromPlayer(request, socket, context, message):
 				broadcast({'action': 'tokenMoved', 'id': token['id'], 'color': token['color'].real, \
 					'src_q': message['src_q'], 'src_r': message['src_r'], 'dst_q': message['dst_q'], \
 					'dst_r': message['dst_r'], 'name': token['name']})
+				currentTurn()
 			else:
 				sendError(socket, 'moveFailed')
 		else:
@@ -174,6 +175,7 @@ def messageFromPlayer(request, socket, context, message):
 				broadcast({'action': 'tokenMoved', 'id': pushed['id'], 'color': pushed['color'].real, \
 					'src_q': message['dst_q'], 'src_r': message['dst_r'], 'dst_q': pushed_q, \
 					'dst_r': pushed_r, 'name': pushed['name']})
+				currentTurn()
 			else:
 				sendError(socket, 'pushFailed')
 		else:
@@ -248,6 +250,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 		cv.performBattle()
 	else:
 		cv.actionTokenBattle(tokenActionId, color)
+		# currentTurn()
 	#ustawic zycie graczom
 	life = {}
 	for col in (1,2,3,4):
