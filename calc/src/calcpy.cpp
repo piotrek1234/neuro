@@ -153,6 +153,24 @@ public:
         Token* token = Game::getInstance().getTokenBoard(Hex(q, r));
         return tokenDict(token);
     }
+
+    boost::python::list getMoves(int q, int r)
+    {
+        boost::python::list moves;
+        for(Hex hex : Game::getInstance().getMoves(Hex(q, r)))
+        {
+            boost::python::dict move;
+            move["q"] = hex.getQ();
+            move["r"] = hex.getR();
+            moves.append(move);
+        }
+        return moves;
+    }
+
+    boost::python::list getPushes(int q, int r)
+    {
+
+    }
 	
 private:
 	
@@ -212,20 +230,7 @@ private:
  * Python wrapper using Boost.Python
  */
 BOOST_PYTHON_MODULE( calc )
-{
-    //! exports getNumber to Python
-    //boost::python::def( "getNumber", getNumber );
-
-    /*boost::python::enum_<mt4cpp::CommandDesc::State>("CommandState")
-        .value("NONE",mt4cpp::CommandDesc::NONE)
-        .value("QUEUED",mt4cpp::CommandDesc::QUEUED)
-        .value("PENDING",mt4cpp::CommandDesc::PENDING)
-        .value("INTERRUPTED",mt4cpp::CommandDesc::INTERRUPTED)
-        .value("EXCEPTION",mt4cpp::CommandDesc::EXCEPTION)
-        .value("DONE",mt4cpp::CommandDesc::DONE)
-        .export_values()
-        ;*/
-		
+{		
 	class_<std::vector<std::string> >("vectorOfStrings")
 		.def(vector_indexing_suite<std::vector<std::string> >() )
 		;
@@ -249,6 +254,8 @@ BOOST_PYTHON_MODULE( calc )
         .def( "getTokenHand", &CommandManagerPy::getTokenHand)
         .def( "getTokenBoard", &CommandManagerPy::getTokenBoard)
         .def( "performBattle", &CommandManagerPy::performBattle)
+        .def( "getMoves", &CommandManagerPy::getMoves)
+        .def( "getPushes", &CommandManagerPy::getPushes)
 		;
 		
 	boost::python::enum_<Color>("Color")
@@ -259,6 +266,4 @@ BOOST_PYTHON_MODULE( calc )
 		.value("NONE", Color::NONE)
 		.export_values()
 		;
-
-	
 }

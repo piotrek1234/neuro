@@ -54,9 +54,12 @@ Hex Hex::direction(int dir_id)
 
 bool Hex::isValid() const
 {
-    if(std::abs(q_) < 3)
+    /*if(std::abs(q_) < 3)
         if(std::abs(r_) < 3)
             return true;
+    return false;*/
+    if((std::abs(q_)+std::abs(r_)+std::abs(s_))/2 < 3)
+        return true;
     return false;
 }
 

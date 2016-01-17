@@ -55,8 +55,11 @@ BOOST_AUTO_TEST_CASE( HexTest )
 
     //isValid
     Hex h2(4, 5);
-    BOOST_CHECK(h1.isValid());
+    BOOST_CHECK(!h1.isValid());
     BOOST_CHECK(!h2.isValid());
+    BOOST_CHECK(Hex(2,-2).isValid());
+    BOOST_CHECK(Hex(0,0).isValid());
+    BOOST_CHECK(!Hex(2,1).isValid());
 
     //operators
     Hex h3(1, 2);

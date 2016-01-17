@@ -81,3 +81,11 @@ def getTokenBoard(q, r):
 def performBattle():
     """perform battle without token action"""
     cmdmgr.performBattle()
+
+def getMoves(q, r):
+    """returns possible move targets for given position"""
+    return cmdmgr.getMoves(q, r)
+
+def getPushes(q, r):
+    """returns possible push targets for given position"""
+    return cmdmgr.getPushes(q, r)

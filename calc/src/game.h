@@ -49,7 +49,8 @@ public:
     Token* getTokenBoard(Hex pos);
     Token* getTokenHand(int tokenId, Color color);
     void performBattle();
-    
+    std::vector<Hex> getMoves(Hex src);
+    std::vector<Hex> getPushes(Hex src);
 private:
     Game();
     std::vector<Player*> players;
