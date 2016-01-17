@@ -47,7 +47,7 @@ angular.module('hexMapController', [])
 					msg.push(params);
 				});
 
-				$scope.$broadcast("hexMap:setAllMap");
+				$scope.$broadcast("hexMap:setAllMap", msg);
 			};
 
 			function getNewBoardHandler (event, data) {

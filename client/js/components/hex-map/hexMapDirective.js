@@ -147,7 +147,7 @@ angular.module('hexMapDirective', [])
 
 				function setAllTokens (event, tokens) {
 					tokens.forEach(function (singleToken) {
-						setSingleToken(singleToken);
+						setSingleToken(null, singleToken);
 					});
 				};
 
