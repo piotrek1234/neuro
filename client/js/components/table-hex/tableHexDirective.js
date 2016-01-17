@@ -24,6 +24,7 @@ angular.module('tableHexDirective', [])
 						$scope.players[index].color = singlePlayer.color;
 						$scope.players[index].turn = singlePlayer.turn;
 						$scope.players[index].life = singlePlayer.life;
+						$scope.players[index].tokensCount = singlePlayer.tokensCount;
 
 						$scope.players[index].tokens = singlePlayer.tokens;
 					});

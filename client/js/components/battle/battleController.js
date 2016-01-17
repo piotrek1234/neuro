@@ -17,6 +17,6 @@ angular.module('battleController', [])
 				$scope.$broadcast('battlePopup:open');
 				setTimeout(function ($scope) { 
 					$scope.$broadcast('battlePopup:close');
-				}, 10000, $scope);
+				}, 3000, $scope);
 			};
 		 }]);
