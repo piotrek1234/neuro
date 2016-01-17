@@ -146,8 +146,27 @@ angular.module('hexMapDirective', [])
 				};
 
 				function setAllTokens (event, tokens) {
+					removeAllToknes();
+
 					tokens.forEach(function (singleToken) {
 						setSingleToken(null, singleToken);
+					});
+				};
+
+				function removeAllToknes () {
+					var $toknes = $scope.$hexMap.querySelectorAll(".hex");
+
+					[].forEach.call($toknes, function ($singleToken) {
+						_singelToken = d3.select($singleToken);
+
+						_singelToken
+							.classed("hex-empty", true)
+							.classed("hex-occupied", false);
+
+						_singelToken
+							.attr("token-id", "")
+							.attr("fill", "")
+							.attr("transform", "");
 					});
 				};
 
