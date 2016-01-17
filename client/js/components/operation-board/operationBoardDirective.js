@@ -240,7 +240,8 @@ angular.module('operationBoardDirective', [])
 				function unselectTokenHandler (event, data) {
 					d3.select($scope.$boardItem)
 						.attr("class", $scope.defaultCssClass)
-						.attr("fill", null);
+						.attr("fill", null)
+						.attr("transform", "rotate(0)");
 
 					deactiveAllButtons();
 

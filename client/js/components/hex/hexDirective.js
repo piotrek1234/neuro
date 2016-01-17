@@ -198,8 +198,14 @@ angular.module('hexDirective', [])
 					} else if (!(_selectedElement.attr("drag-success") === "true" || _selectedElement.attr("drag-success") === true)) {
 						returnToStartingPosition(_selectedElement);
 					} else {	
+						setDefalutRotateValue(event.target);
 						removeSelectedElement();	
 					}
+				};
+
+				function setDefalutRotateValue ($hex) {
+					d3.select($hex)
+						.attr("transform", "rotate(0)");
 				};
 
 				function removeSelectedElement () {

@@ -439,3 +439,29 @@ svg {
     /*fill: purple;
     opacity: 0.6;*/
 }
+
+.battle-popup-active {
+    display: block;
+}
+
+.battle-popup-disabled {
+    display: none;
+}
+
+.battle-popup {
+    height: 80px;
+    width: 340px;
+    top: 50%;
+    left: 50%;
+    margin-left: -190px;
+    margin-top: -250px;
+    position: absolute;
+    z-index: 10;
+    border: 1px solid #AD7D15;
+    border-radius: 10px;
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-radial-gradient(#E0C6A2, #BD8E4B); /* Safari */
+    background: -o-radial-gradient(#E0C6A2, #BD8E4B); /* Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(#E0C6A2, #BD8E4B); /* Firefox 3.6 to 15 */
+    background: radial-gradient(#E0C6A2, #BD8E4B); /* Standard syntax */
+}

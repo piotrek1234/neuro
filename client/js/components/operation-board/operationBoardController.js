@@ -28,7 +28,6 @@ angular.module('operationBoardController', [])
 				};
 
 				function battleTokenHandler (event, data) {
-					// console.log("operationBoardController#battleTokenHandler: " + data.tokenId);
-					socketServer.battle(data.tokenId);
+					socketServer.battle(parseInt(data.tokenId));
 				};
 		 }]);

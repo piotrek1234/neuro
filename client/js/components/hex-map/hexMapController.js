@@ -3,6 +3,7 @@ angular.module('hexMapController', [])
 		['$scope',
 		 function ($scope) {
 			$scope.$on("hexMap:putToken", putTokenHandler);
+			$scope.$on("hexMap:newBoard" , getNewBoardHandler)
 
 			subscribeOnTokenAdd(addTokenHandler);
 			subscribeOnAddFailed(addTokenFaildHandler);
@@ -49,4 +50,7 @@ angular.module('hexMapController', [])
 				$scope.$broadcast("hexMap:setAllMap");
 			};
 
+			function getNewBoardHandler (event, data) {
+				getBoardHandler(data.board);
+			};
 		 }]);

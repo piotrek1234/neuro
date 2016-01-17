@@ -2,8 +2,8 @@
 /// @brief main client module, AngularJS application with routing
 
 angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices', 
-                            'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective', 'operationBoardDirective',
-                            'mainController', 'operationBoardController', 'popupController', 'tableHexController', 'hexMapController'] )
+                            'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective', 'operationBoardDirective', 'battleDirective',
+                            'mainController', 'operationBoardController', 'popupController', 'tableHexController', 'hexMapController', 'battleController'] )
     .config(['$routeProvider', '$translateProvider',
              function($routeProvider, $translateProvider) {
                  $routeProvider.when('/main', {
