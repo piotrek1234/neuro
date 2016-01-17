@@ -209,6 +209,9 @@ angular.module('operationBoardDirective', [])
 				};
 
 				function selectTokenHandler (event, data) {
+					var svgOperations = new svgOperationsLibraryConstructor();
+					var hexLibrary = new hexLibraryConstructor();
+
 					$scope.$selectedToken = data.$token;
 					$scope.$boardItem = document.querySelector("polygon[ng-moving=true]");
 
@@ -221,9 +224,13 @@ angular.module('operationBoardDirective', [])
 					$scope.defaultCssClass = d3.select($scope.$boardItem)
 						.attr("class");
 
+					var rotateAngle = svgOperations.getRotateAngle(data.$token);
+					var center = hexLibrary.getHexCenter($scope.$boardItem.getAttribute("points"));
+
 					d3.select($scope.$boardItem)
 						.attr("class", cssTokenClass)
 						.attr("fill", fillAtribute)
+						.attr("transform", "rotate(" + rotateAngle + ", " + center.x + ", " + center.y + ")")
 						.classed("token-selected", false);
 
 					if (data.isPutable) {
