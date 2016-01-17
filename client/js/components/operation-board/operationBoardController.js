@@ -7,7 +7,7 @@ angular.module('operationBoardController', [])
 				$scope.$on('main:unselectToken', unselectTokenHandler);
 
 				$scope.$on('operationBoard:removeToken', removeTokenHandler);
-				$scope.$on('operationBoard:deleteToken')
+				$scope.$on('operationBoard:battle', battleTokenHandler);
 
 				function selectTokenHandler (event, data) {
 					var tokenType = data.$token.getAttribute("token-type");
@@ -25,5 +25,10 @@ angular.module('operationBoardController', [])
 
 				function removeTokenHandler (event, data) {
 					socketServer.throwToken(parseInt(data.tokenId));
+				};
+
+				function battleTokenHandler (event, data) {
+					// console.log("operationBoardController#battleTokenHandler: " + data.tokenId);
+					socketServer.battle(data.tokenId);
 				};
 		 }]);

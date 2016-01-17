@@ -134,6 +134,7 @@ angular.module('userBoardDirective', [])
 								.classed("hex-empty", false)
 								.classed("token", true);
 
+							$singleToken.setAttribute("action", newTokens[index].action || "");
 							$singleToken.setAttribute("token-type", newTokens[index].type);
 							$singleToken.setAttribute("token-id", newTokens[index].id);
 							$singleToken.setAttribute("fill", "url(#" + newTokens[index].name + ")");

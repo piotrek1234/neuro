@@ -102,6 +102,8 @@ angular.module('operationBoardDirective', [])
 				$scope.$removeTokenButton = null;
 				$scope.$rotationButtons = [];
 
+				$scope.action = null;
+
 				$scope.$on('operationBoard:selectToken', selectTokenHandler);
 				$scope.$on('operationBoard:unselectToken', unselectTokenHandler);
 
@@ -118,6 +120,7 @@ angular.module('operationBoardDirective', [])
 					$scope.$leftArrow.addEventListener("click", clickLeftArrowHandler.bind(this));
 
 					$scope.$removeTokenButton.addEventListener("click", clickRemoveTokenHandler.bind(this));
+					$scope.$actionButton.addEventListener("click", clickActionButtonHandler.bind(this));
 				};
 
 				function clickRightArrowHandler (event) {
@@ -148,12 +151,33 @@ angular.module('operationBoardDirective', [])
 					removeToken($scope.$selectedToken);
 				};
 
+				function clickActionButtonHandler (event) {
+					if (checkButtonIsDisabled(event.target)) {						
+						return;
+					}
+
+					var tokenId = d3.select($scope.$selectedToken).attr("token-id");
+
+
+					switch ($scope.action) {
+						case "move":
+						console.log("clickActionButtonHandler#move");
+						break;
+
+
+						case "push":
+						console.log("clickActionButtonHandler#push");
+						break;
+
+						case "battle":
+						$scope.$emit('operationBoard:battle', { tokenId: tokenId });
+						break;
+					}
+				};
+
 				function removeToken ($token) {
 					var _token = d3.select($token);
 					var tokenId = _token.attr("token-id");					
-
-				/*	_token.remove();
-					$token = null;*/
 
 					$scope.$emit('operationBoard:removeToken', { tokenId: tokenId });
 				};
@@ -206,6 +230,8 @@ angular.module('operationBoardDirective', [])
 						rotationButtonsActivationHandler();
 					} else {
 						actitonButtonActivationHandler();
+						$scope.action = d3.select($scope.$selectedToken)
+											.attr("action");
 					}
 
 					setButtonBackground($scope.$removeTokenButton, "board-button-background");
@@ -220,6 +246,7 @@ angular.module('operationBoardDirective', [])
 
 					$scope.$selectedToken = null;
 					$scope.$boardItem = null;
+					$scope.action = null;
 				};
 
 				function setButtonBackground ($button, buttonClass) {
