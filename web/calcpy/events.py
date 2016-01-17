@@ -160,19 +160,19 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'push':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
-			token = cv.getTokenBoard(message['src_q'], message['src_r'])
+			token = cv.getTokenBoard(int(message['src_q']), int(message['src_r']))
 			if token.__len__() == 0:
 				sendError(socket, 'pushFailed')
 				return
-			pushed = cv.getTokenBoard(message['dst_q'], message['dst_r'])
+			pushed = cv.getTokenBoard(int(message['dst_q']), int(message['dst_r']))
 			if pushed.__len__() == 0:
 				sendError(socket, 'pushFailed')
 				return
-			moved = cv.actionTokenPush(message['token'], player['color'], message['src_q'], message['src_r'], \
-				message['dst_q'], message['dst_r'])
+			moved = cv.actionTokenPush(int(message['token']), player['color'], int(message['src_q']),\
+			 int(message['src_r']), int(message['dst_q']), int(message['dst_r']))
 			if moved:
-				pushed_q = 2*message['dst_q']-message['src_q']
-				pushed_r = 2*message['dst_r']-message['src_r']
+				pushed_q = 2*int(message['dst_q'])-int(message['src_q'])
+				pushed_r = 2*int(message['dst_r'])-int(message['src_r'])
 				broadcast({'action': 'tokenMoved', 'id': pushed['id'], 'color': pushed['color'].real, \
 					'src_q': message['dst_q'], 'src_r': message['dst_r'], 'dst_q': pushed_q, \
 					'dst_r': pushed_r, 'name': pushed['name']})
@@ -184,7 +184,7 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'battle':
 		if getNameBySocket(socket) == game['current_player']:
 			player = cv.getCurrentPlayer()
-			performBattle(message['token'], player['color'])
+			performBattle(int(message['token']), player['color'])
 		else:
 			sendError(socket, 'notYourTurn')
 	elif act == 'getBoard':
@@ -251,7 +251,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 		cv.performBattle()
 	else:
 		cv.actionTokenBattle(tokenActionId, color)
-		# currentTurn()
+		currentTurn()
 	#ustawic zycie graczom
 	life = {}
 	for col in (1,2,3,4):
@@ -260,7 +260,7 @@ def performBattle(tokenActionId=-1, color=Color.NONE):
 	board = getBoard()
 
 	# znalezienie hq i przypisanie ich zycia odpowiedniemu kolorowi
-	for tok in board.itervalues():
+	for tok in board:
 		#print tok['token']
 		if 'hq' in tok['token']['name']:
 			life[tok['token']['color']] = tok['token']['life']
