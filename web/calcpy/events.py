@@ -120,6 +120,7 @@ def messageFromPlayer(request, socket, context, message):
 				token = cv.getTokenBoard(message['q'], message['r'])
 				broadcast({'action': 'tokenAdded', 'color': color.real, 'id': message['id'],\
 					'name': token['name'],'q': message['q'], 'r': message['r'], 'angle': message['angle']})
+				currentTurn()
 			else:
 				sendError(socket, 'addFailed')
 		else:
