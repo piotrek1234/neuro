@@ -112,10 +112,10 @@ angular.module('popupDirective', [])
 
 				function closePopupHandler (event, data) {
 					var $popup = $scope.$popup;
-					var $overlay = document.querySelectorAll(".overlay");
+					var $overlay = document.getElementById("main-overlay");
 
 					$popup.parentElement.removeChild($popup);
-					$overlay[1].style.visibility = "hidden";
+					$overlay.style.visibility = "hidden";
 				};
 
 				function setPopupDisabled () {
