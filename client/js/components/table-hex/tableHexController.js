@@ -79,13 +79,12 @@ angular.module('tableHexController', [])
 		 	function playerTurnChangeHandler (login, tokens, tokensCount) {
 		 		$scope.players.forEach(function (player) {
 		 			if (player.name === login) {
+		 				player.tokensCount = tokensCount;
 		 				player.turn = true;
 		 				player.tokens = tokens;
 		 			} else {
 		 				player.turn = false;
 		 			}
-
-		 			player.tokensCount = tokensCount;
 		 		});
 
 		 		$scope.$broadcast('tableHex:players', $scope.players);

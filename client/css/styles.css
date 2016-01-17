@@ -209,9 +209,23 @@ svg {
     stroke-width: 2;
 }
 
-.end-turn-back {
+.end-turn-background {
     fill: #523B24;
     opacity: 0.6;
+    stroke: black;
+    stroke-width: 2;
+}
+
+.end-turn-background-active {
+    fill: #3DD451;
+    opacity: 0.6;
+    stroke: black;
+    stroke-width: 2;
+}
+
+.end-turn-background-disabled {
+    fill: #898C8C;
+    opacity: 0.9;
     stroke: black;
     stroke-width: 2;
 }
