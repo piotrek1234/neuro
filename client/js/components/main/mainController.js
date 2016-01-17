@@ -31,6 +31,6 @@ angular.module('mainController', [])
 			};
 
 			function newPlayersList (event, data) {
-				console.log(data);
+				$scope.$broadcast('tableHex:newPlayersList', data);
 			};
 		 }]);

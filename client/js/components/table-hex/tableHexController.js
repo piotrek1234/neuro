@@ -7,12 +7,17 @@ angular.module('tableHexController', [])
 		 	$scope.players = [];
 
 		 	$scope.$on("tableHex:endTurn", endTurnHandler);
+		 	$scope.$on("tableHex:newPlayersList", newPlayersListHandler);
 
 		 	subscribeOnPlayerList(playerListChangeHandler);
 		 	subscribeOnTurn(playerTurnChangeHandler);
 
 		 	function playerListChangeHandler (players) {
 		 		getPlayersList(players);
+		 	};
+
+		 	function newPlayersListHandler (event, data) {
+		 		getPlayersList(data.players);
 		 	};
 
 		 	function getPlayersList (players) {
@@ -25,11 +30,13 @@ angular.module('tableHexController', [])
 		 			if (currentPlayerName !== singlePlayer) {
 		 				$scope.players[index].name = singlePlayer;
 		 				$scope.players[index].color = decodeColor(players[singlePlayer].color);
+		 				$scope.players[index].life = players[singlePlayer].life;
 		 				index++;
 		 			} else {
 		 				//ostatni element to gracz aktualny
 		 				$scope.players[$scope.players.length-1].name = singlePlayer;
 		 				$scope.players[$scope.players.length-1].color = decodeColor(players[singlePlayer].color);
+		 				$scope.players[$scope.players.length-1].life = players[singlePlayer].life;
 		 			}
 		 		}		 		
 
@@ -38,10 +45,10 @@ angular.module('tableHexController', [])
 
 		 	function playersSetDefaultValue () {
 				$scope.players = [
-			 		{ name: "", color: "", turn: false, tokens: [] },
-			 		{ name: "", color: "", turn: false, tokens: [] },
-			 		{ name: "", color: "", turn: false, tokens: [] },
-			 		{ name: "", color: "", turn: false, tokens: [] }
+			 		{ name: "", color: "", turn: false, tokens: [], toknesCount: 0, life: 0 },
+			 		{ name: "", color: "", turn: false, tokens: [], toknesCount: 0, life: 0 },
+			 		{ name: "", color: "", turn: false, tokens: [], toknesCount: 0, life: 0 },
+			 		{ name: "", color: "", turn: false, tokens: [], toknesCount: 0, life: 0 }
 			 	];
 		 	};
 
@@ -77,6 +84,8 @@ angular.module('tableHexController', [])
 		 			} else {
 		 				player.turn = false;
 		 			}
+
+		 			player.tokensCount = tokensCount;
 		 		});
 
 		 		$scope.$broadcast('tableHex:players', $scope.players);

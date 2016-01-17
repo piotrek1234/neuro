@@ -124,7 +124,7 @@ angular.module('userBoardDirective', [])
 						$scope.boardClassName = "board-empty";
 					}
 				});
-
+				
 				$scope.$watch("player.tokens", function (newTokens) {
 					var $tokens = $scope.$userBoard.querySelectorAll("polygon");
 
