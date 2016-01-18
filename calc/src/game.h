@@ -1,6 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+//4003: makro CALC_DLL teoretycznie ma za mało argumentów
+//4251: coś z eksportem szablonów z STL, mimo to wszystko działa jak powinno
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#endif
+
 #include "player.h"
 #include "board.h"
 #include <vector>

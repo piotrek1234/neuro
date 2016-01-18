@@ -4,6 +4,11 @@
 #ifndef HEX_H
 #define HEX_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#endif
+
 #ifdef CALC_EXPORTS
 #define CALC_DLL(X) __declspec(dllexport)X
 #else

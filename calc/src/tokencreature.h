@@ -1,6 +1,12 @@
 #ifndef TOKENCREATURE_H
 #define TOKENCREATURE_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#pragma warning(disable:4800)   // rzutowanie unsigned int na bool
+#endif
+
 #include "tokenputable.h"
 #include "utils.h"
 #include <boost/property_tree/xml_parser.hpp>

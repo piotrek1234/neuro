@@ -1,6 +1,11 @@
 #ifndef TOKENFACTORY_H
 #define TOKENFACTORY_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#endif
+
 #include <string>
 #include <vector>
 #include <map>

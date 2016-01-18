@@ -10,6 +10,7 @@
 #pragma warning(disable:4244)
 #pragma warning(disable:4267)
 #pragma warning(disable:4512)
+ #pragma warning(disable:4003)
 #endif
 
 

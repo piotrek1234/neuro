@@ -96,14 +96,9 @@ Token* TokenCreature::create(ptree xmlnode, Color color)
         }
         if(label == "additional_action")
         {
-            token->setAdditionalAction(xmlnode.get<unsigned int>("additional_action"));
+            token->setAdditionalAction(static_cast<bool>(xmlnode.get<unsigned int>("additional_action")));
             //break;
         }
-        /*if(label ==  "movable")
-        {
-            token->setMovable(xmlnode.get<unsigned int>("movable"));
-            //break;
-        }*/
         if(label == "life")
         {
             token->setLife(xmlnode.get<unsigned int>("life"));

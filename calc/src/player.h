@@ -1,6 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#endif
+
 #include "stack.h"
 #include <string>
 #include <vector>

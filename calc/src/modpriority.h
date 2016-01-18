@@ -1,6 +1,11 @@
 #ifndef MODPRIORITY_H
 #define MODPRIORITY_H
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1400)
+#pragma warning(disable:4003)
+#pragma warning(disable:4251)
+#endif
+
 #include "mod.h"
 #include "utils.h"
 #include <boost/property_tree/xml_parser.hpp>
