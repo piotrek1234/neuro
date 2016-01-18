@@ -178,9 +178,17 @@ svg {
     cursor: pointer;
 }
 
+.token-to-move:hover {
+    stroke: green;
+}
+
 .hex-move-destination {
     fill: #F28911;
     cursor: pointer;
+}
+
+.hex-move-destination:hover {
+    fill: green;
 }
 
 .hex-occupied {
