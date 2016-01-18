@@ -130,6 +130,20 @@ var on_received = function(data)
 				console.log('Board contents:');
 				console.log(data.board);
 				break;
+			case 'moves':
+				console.log('Available moves:');
+				console.log(data.moves);
+				movesEvents.forEach(function (callback) {
+					callback(data.moves);
+				});
+				break;
+			case 'pushes':
+				console.log('Available pushes:');
+				console.log(data.pushes);
+				pushesEvents.forEach(function (callback) {
+					callback(data.pushes);
+				});
+				break;
 			case 'error':
 				handleError(data.errCont);
 				errorEvents.forEach(function (callback) {
@@ -218,6 +232,12 @@ var socketServer = {
 	},
 	setReady: function (is_ready) {
 		socket.send({'action': 'ready', 'is_ready': is_ready})
+	},
+	getMoves: function (q, r) {
+		socket.send({'action': 'getMoves', 'q': q, 'r': r});
+	},
+	getPushes: function (q, r) {
+		socket.send({'action': 'getPushes', 'q': q, 'r': r});
 	}
 };
 
@@ -233,6 +253,8 @@ var tokenMovedEvents = [];
 var afterBattleEvents = [];
 var gameEndEvents = [];
 var getBoardEvents = [];
+var pushesEvents = [];
+var movesEvents = [];
 
 var errorEvents = [];
 var addFailedEvents = [];
@@ -266,6 +288,12 @@ function subscribeOnGameEnd (callback) {
 };
 function subscribeOnGetBoard (callback) {
 	getBoardEvents.push(callback);
+};
+function subscribeOnGetMoves (callback) {
+	movesEvents.push(callback);
+};
+function subscribeOnGetPushes (callback) {
+	pushesEvents.push(callback);
 };
 
 function subscribeOnError (callback) {

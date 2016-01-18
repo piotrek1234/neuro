@@ -234,3 +234,29 @@ void Game::performBattle()
 {
     BattleHandler::getInstance().handleBattle();
 }
+
+
+std::vector<Hex> Game::getMoves(Hex src)
+{
+    std::vector<Hex> moves;
+    if(board_->getToken(src) != nullptr)
+    {
+        for(int i=0; i<6; ++i)
+        {
+            if(board_->getNeighbourToken(src, i) == nullptr)
+            {
+                Hex neighbor = src.getNeighbor(i);
+                if(neighbor.isValid())
+                    moves.push_back(neighbor);
+            }
+        }
+    }
+
+    return moves;
+}
+
+
+std::vector<Hex> Game::getPushes(Hex src)
+{
+
+}
