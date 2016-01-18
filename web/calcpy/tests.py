@@ -113,15 +113,19 @@ class CalcPyLibraryTestCase(django.test.TestCase):
         
         player = cmdmgr.getNextPlayer()
         self.assertEqual(player["name"], "player1")
-        self.assertEqual(player["tokens"], [2, 3, 4])
-        self.assertTrue(cmdmgr.throwToken(2, calc.Color.BLUE))
+        self.assertEqual(len(player["tokens"]), 3)
+        self.assertTrue(cmdmgr.throwToken(player["tokens"][0], calc.Color.BLUE))
         player = cmdmgr.getCurrentPlayer()
         self.assertEqual(player["stack_size"], 5)
-        self.assertEqual(player["tokens"], [3, 4])
+        self.assertEqual(len(player["tokens"]), 2)
     
     def test04getBoard(self):
         board = cmdmgr.getBoard()
-        self.assertEqual(board,  {(1, -1, 0): 1, (0, -1, 1): 1})
+        self.assertEqual(board,  {
+        (0, -1): {'angle': 0, 'color': calc.Color.RED, 'id': 1, 'life': 20, 'name': 'hq1', 'type': 'putable'},
+        (1, -1): {'angle': 0, 'color': calc.Color.BLUE, 'id': 1, 'life': 20, 'name': 'hq1', 'type': 'putable'}
+        })
+
     
     def test05actionTokens(self):
         pass

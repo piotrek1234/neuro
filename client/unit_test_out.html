@@ -19,9 +19,10 @@
 <script src="bower_components/angular-translate/angular-translate.min.js"></script>
 <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script type ="text/javascript" src="js/d3.v3.min.js" data-cover></script>
 
 <script type="text/javascript" src="js/hexagonLibrary.js" data-cover></script>
+<script type="text/javascript" src="js/svgOperationsLibrary.js" data-cover></script>
 <script type="text/javascript" src="js/socket.io.js" data-cover></script>
 
 <!-- Components paths -->
@@ -29,47 +30,28 @@
 <script type="text/javascript" src="js/components/hex/hexDirective.js" data-cover></script>
 <script type="text/javascript" src="js/components/hex-token/hexTokenDirective.js" data-cover></script>
 <script type="text/javascript" src="js/components/user-board/userBoardDirective.js" data-cover></script>
+<script type="text/javascript" src="js/components/popup/popupDirective.js" data-cover></script>
+<script type="text/javascript" src="js/components/table-hex/tableHexDirective.js" data-cover></script>
+<script type="text/javascript" src="js/components/operation-board/operationBoardDirective.js" data-cover></script>
+<script type="text/javascript" src="js/components/end-game/endGameDirective.js" data-cover></script>
+<script type="text/javascript" src="js/components/battle/battleDirective.js" data-cover></script>
 
-<<<<<<< HEAD
 <script type="text/javascript" src="js/components/main/mainController.js" data-cover></script>
-=======
->>>>>>> bad023f930dfd7382b1869282b81ffad9f5246ac
 <script type="text/javascript" src="js/components/operation-board/operationBoardController.js" data-cover></script>
+<script type="text/javascript" src="js/components/popup/popupController.js" data-cover></script>
+<script type="text/javascript" src="js/components/table-hex/tableHexController.js" data-cover></script>
+<script type="text/javascript" src="js/components/hex-map/hexMapController.js" data-cover></script>
+<script type="text/javascript" src="js/components/battle/battleController.js" data-cover></script>
+<script type="text/javascript" src="js/components/end-game/endGameController.js" data-cover></script>
+<script type="text/javascript" src="js/actions/actionController.js" data-cover></script>
 
 <script type="text/javascript" src="js/version.js" data-cover></script>
 <script type="text/javascript" src="js/app.js" data-cover></script>
 <script type="text/javascript" src="js/services.js" data-cover></script>
 <script type="text/javascript" src="js/controllers.js" data-cover></script>
-
+<script type="text/javascript" src="js/sockets.js" data-cover></script>
 
 <link rel="stylesheet" type="text/css" href="css/styles.css" />
-
-<script type="text/javascript">
-var polaczenie = function()
-{
-	//socket.subscribe("ch1");
-}
-
-var odbior = function(data)
-{
-	alert(data.odp);
-}
-
-var wyslij = function(data)
-{
-	socket.send({'tresc': data});
-}
-
-function jazda()
-{
-socket = new io.Socket();
-socket.connect();
-socket.on('connect', polaczenie);
-socket.on('message', odbior);
-}
-window.onload = jazda;
-</script>
-
         <!-- above are elements copied automatically using file_include.py script -->
 
         <script src="tests/test01_basic.js" data-cover></script>
@@ -87,15 +69,6 @@ window.onload = jazda;
 
         <!-- below are elements copied automatically using file_include.py script -->
 <!-- this file contains sections included during build into html body of test and static html page" -->
-
-<div class="container" ng-controller="settingsController">
-  <ul id="icons_ul">
-	<li ng-repeat="lang in langs">
-	  <a id="a_lang_{{lang}}" ng-click="changeLanguage(lang)"><img ng-src="pict/{{lang}}.png" /></a>
-	</li>
-  </ul>
-<a href="javascript:void(0)" onclick="wyslij('123');">wyślij</a>
-</div>
 
 <div id="content" class="container" ng-view>
 </div>
