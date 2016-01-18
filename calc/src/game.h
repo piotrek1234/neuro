@@ -25,7 +25,7 @@
 #include "battlehandler.h"
 
 /**
- * @brief The Game class in a main class with interface for handling game
+ * @brief The Game class is a main class with interface for handling game
  */
 class CALC_DLL()Game {
 public:

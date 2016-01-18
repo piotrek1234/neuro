@@ -255,8 +255,25 @@ std::vector<Hex> Game::getMoves(Hex src)
     return moves;
 }
 
-
 std::vector<Hex> Game::getPushes(Hex src)
 {
+    std::vector<Hex> pushes;
+    TokenPutable* pusher = board_->getToken(src);
+    if(pusher != nullptr)
+    {
+        for(int i=0; i<6; ++i)
+        {
+            TokenPutable* neighbor = board_->getNeighbourToken(src, i);
+            if(neighbor != nullptr)
+                if(neighbor->getColor() != pusher->getColor())
+                {
+                    TokenPutable* dst = board_->getNeighbourToken(neighbor->getPosition(), i);
+                    if(neighbor->getPosition().getNeighbor(i).isValid())    //cel leży na planszy?
+                        if(dst == nullptr)  //i jest wolny?
+                            pushes.push_back(neighbor->getPosition());
+                }
+        }
+    }
 
+    return pushes;
 }

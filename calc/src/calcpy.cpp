@@ -169,7 +169,15 @@ public:
 
     boost::python::list getPushes(int q, int r)
     {
-
+        boost::python::list pushes;
+        for(Hex hex : Game::getInstance().getPushes(Hex(q, r)))
+        {
+            boost::python::dict push;
+            push["q"] = hex.getQ();
+            push["r"] = hex.getR();
+            pushes.append(push);
+        }
+        return pushes;
     }
 	
 private:

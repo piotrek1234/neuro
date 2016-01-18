@@ -189,7 +189,6 @@ def messageFromPlayer(request, socket, context, message):
 	elif act == 'getPushes':
 		socket.send({'action': 'pushes', 'pushes': cv.getPushes(int(message['q']), int(message['r']))})
 	elif act == 'getMoves':
-		print cv.getMoves(0,0)
 		socket.send({'action': 'moves', 'moves': cv.getMoves(int(message['q']), int(message['r']))})
 	elif act == 'getBoard':
 		socket.send({'action': 'board', 'board': getBoard()})
