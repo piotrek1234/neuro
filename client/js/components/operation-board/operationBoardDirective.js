@@ -161,12 +161,12 @@ angular.module('operationBoardDirective', [])
 
 					switch ($scope.action) {
 						case "move":
-						console.log("clickActionButtonHandler#move");
+						$scope.$emit('action:move', { tokenId: tokenId });
 						break;
 
 
 						case "push":
-						console.log("clickActionButtonHandler#push");
+						$scope.$emit('action:push', { tokenId: tokenId });
 						break;
 
 						case "battle":

@@ -12,6 +12,7 @@ angular.module('mainController', [])
 
 		 	$scope.userBoard = userBoard;
 
+		 	document.querySelector("svg").style.MozUserSelect="none";
 		 	$scope.$on('token:select', selectTokenHandler);
 			$scope.$on('token:unselect', unselectTokenHandler);
 

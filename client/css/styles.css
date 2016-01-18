@@ -2,7 +2,6 @@
  * \file styles.css
  * \brief application styles
  */
-
 h1 {
     text-align: center;
 }
@@ -171,6 +170,15 @@ svg {
     fill: #2F3233;
     stroke: black;
     opacity: 0.6;
+}
+
+.token-to-move {
+    stroke-width: 10;
+    stroke: #F28911;
+}
+
+.hex-move-destination {
+    fill: #F28911;
 }
 
 .hex-occupied {

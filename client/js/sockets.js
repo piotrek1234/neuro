@@ -8,6 +8,7 @@
  *		 'tokens': lista intów - żetonów na ręku gracza
  *		}
  */
+
 var on_connected = function()
 {
 	sessionStorage.clear();
@@ -272,4 +273,30 @@ function subscribeOnError (callback) {
 };
 function subscribeOnAddFailed (callback) {
 	addFailedEvents.push(callback);
+};
+
+function decodeColor (colorId) {
+	var result = "";
+
+	colorId = parseInt(colorId);
+
+	switch (colorId) {
+		case 1:
+			result = "blue";
+			break;
+	
+		case 2:
+			result = "red";
+			break;
+
+		case 3:
+			result = "yellow";
+			break;
+
+		case 4:
+			result = "green";
+			break;
+	}
+
+	return result;
 };
