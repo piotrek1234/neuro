@@ -98,6 +98,8 @@ var on_received = function(data)
 				//komunikat odbierany po pomyślnym przesunięciu lub pchnięciu
 				console.log('Token have been moved: color('+data.color+'), id('+data.id+'), name('+data.name+
 					'), from('+data.src_q+','+data.src_r+'), to('+data.dst_q+','+data.dst_r+').');
+				
+				socketServer.getBoard();
 				//przesunąć
 				//odblokować interfejs
 				tokenMovedEvents.forEach(function (callback) {
@@ -202,10 +204,26 @@ var socketServer = {
 		//zablokować interfejs
 	},
 	moveToken: function (tokenActionId, src_q, src_r, dst_q, dst_r) {
+		console.log(tokenActionId + ' ' + src_q + ' ' + src_r + ' ' + dst_q + ' '+ dst_r);
+
+		tokenActionId = parseInt(tokenActionId);
+		src_q = parseInt(src_q);
+		src_r = parseInt(src_r);
+		dst_q = parseInt(dst_q);
+		dst_r = parseInt(dst_r);
+
 		socket.send({'action': 'move', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
 			'dst_q': dst_q, 'dst_r': dst_r});
 	},
 	pushToken: function (tokenActionId, src_q, src_r, dst_q, dst_r) {
+		console.log(tokenActionId + ' ' + src_q + ' ' + src_r + ' ' + dst_q + ' '+ dst_r);
+
+		tokenActionId = parseInt(tokenActionId);
+		src_q = parseInt(src_q);
+		src_r = parseInt(src_r);
+		dst_q = parseInt(dst_q);
+		dst_r = parseInt(dst_r);
+
 		socket.send({'action': 'push', 'token': tokenActionId, 'src_q': src_q, 'src_r': src_r,
 			'dst_q': dst_q, 'dst_r': dst_r});
 	},
@@ -323,6 +341,32 @@ function decodeColor (colorId) {
 
 		case 4:
 			result = "green";
+			break;
+	}
+
+	return result;
+};
+
+function getColorPrefix (colorId) {
+	var result = "";
+
+	colorId = parseInt(colorId);
+
+	switch (colorId) {
+		case 1:
+			result = "bl";
+			break;
+	
+		case 2:
+			result = "rd";
+			break;
+
+		case 3:
+			result = "yl";
+			break;
+
+		case 4:
+			result = "gr";
 			break;
 	}
 

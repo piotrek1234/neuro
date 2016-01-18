@@ -175,10 +175,12 @@ svg {
 .token-to-move {
     stroke-width: 10;
     stroke: #F28911;
+    cursor: pointer;
 }
 
 .hex-move-destination {
     fill: #F28911;
+    cursor: pointer;
 }
 
 .hex-occupied {
