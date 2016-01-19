@@ -163,7 +163,7 @@ svg {
 
 .token-selected {
     stroke: #33E842;
-    stroke-width: 20;
+    stroke-width: 10;
 }
 
 .hex-empty {
