@@ -182,6 +182,16 @@ svg {
     stroke: green;
 }
 
+.token-opponent {
+    stroke-width: 10;
+    stroke: #FF00CC;
+    cursor: pointer;
+}
+
+.token-opponent:hover {
+    stroke: green;
+}
+
 .hex-move-destination {
     fill: #F28911;
     cursor: pointer;

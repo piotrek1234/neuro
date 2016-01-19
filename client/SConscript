@@ -86,13 +86,13 @@ file_include.file_substitution(in_file=in_index,
 env.SideEffect(out_index, in_index )
 env.SideEffect('file_include.pyc', in_index )
 
-in_test = 'unit_test.html'
-out_test = 'unit_test_out.html'
-file_include.file_substitution(in_file=in_test,
-                               out_file=out_test,
-                               inc_dir=os.path.normpath('.'))
-env.SideEffect(out_test, in_test )
-env.SideEffect('file_include.pyc', in_test )
+#in_test = 'unit_test.html'
+#out_test = 'unit_test_out.html'
+#file_include.file_substitution(in_file=in_test,
+#                               out_file=out_test,
+#                               inc_dir=os.path.normpath('.'))
+#env.SideEffect(out_test, in_test )
+#env.SideEffect('file_include.pyc', in_test )
 
 #build lighttpd config
 lighttd_conf = 'lighttpd.develop'
