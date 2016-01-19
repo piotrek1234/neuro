@@ -15,13 +15,16 @@ angular.module('hexMapController', [])
 					q: parseInt(data.q),
 					r: parseInt(data.r),
 					id: parseInt(data.id),
-					angle: parseInt(data.angle)
+					angle: (-1)*parseInt(data.angle)
 				}
-
+				console.log("hexMapController#putTokenHandler");
+				console.log(msg);
 				socketServer.putToken(msg);
 			};
 
 			function addTokenHandler (data) {
+				data.angle *= -1;
+				console.log(data);
 				if (data.color !== sessionStorage.playerColor) {
 					$scope.$broadcast("hexMap:setSingleToken", data);
 				}	
@@ -34,12 +37,13 @@ angular.module('hexMapController', [])
 
 			function getBoardHandler (tokens) {
 				var msg = [];
-
+				console.log("hexMapController#getBoardHandler");
+				console.log(tokens);
 				tokens.forEach(function (singleToken) {
 					var params = {
 						q: singleToken.q,
 						r: singleToken.r,
-						angle: singleToken.token.angle,
+						angle: (-1)*singleToken.token.angle,
 						name: singleToken.token.name,
 						id: singleToken.token.id
 					};
