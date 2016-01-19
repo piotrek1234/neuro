@@ -37,7 +37,10 @@ public:
 		std::cout<<"add player"<<std::endl;
 		return Game::getInstance().addPlayer(name);
 	}
-	
+    /**
+     * @brief getPlayersNames
+     * @return vector of strings containing all players' names
+     */
 	boost::python::list getPlayersNames()
 	{
 		std::vector<std::string> players = Game::getInstance().getPlayersNames();
@@ -53,7 +56,10 @@ public:
 	{
 		Game::getInstance().removeAllPlayers();
 	}
-	
+    /**
+     * @brief getPlayers
+     * @return python list of player dictionaries
+     */
 	boost::python::list getPlayers()
 	{
 		std::vector<Player*> players = Game::getInstance().getPlayers();
@@ -65,7 +71,12 @@ public:
 		}
 		return out;
 	}
-	
+    /**
+     * @brief getBoard
+     * @return dictionary containing details on board's contents.
+     * Key is python tuple containing position (as in Hex class).
+     * Value contains token dictionary.
+     */
 	boost::python::dict getBoard()
 	{
 		boost::python::dict out;
@@ -84,77 +95,148 @@ public:
 		}
 		return out;
 	}
-	
+    /**
+     * @brief restartGame
+     * Deletes all players and reverts game state to initial.
+     */
 	void restartGame()
 	{
 		Game::getInstance().restartGame();
 	}
 	
-	
+    /**
+     * @brief addToken
+     * Moves token from player's hand onto board.
+     * @param tokenId id of player's token
+     * @param color color of player
+     * @param q first position of token
+     * @param r second position of token
+     * @param angle angle of token
+     * @return true if token was added successfully, false otherwise
+     */
     bool addToken(int tokenId, Color color, int q, int r, int angle)
 	{
 		return Game::getInstance().addToken(tokenId, color, Hex(q, r), angle);
 	}
-	
+    /**
+     * @brief throwToken destroys token from player's hand
+     * @param tokenId id of player's token
+     * @param color color of player
+     * @return true if token was successfully destroyed, false otherwise
+     */
     bool throwToken(int tokenId, Color color)
 	{
 		return Game::getInstance().throwToken(tokenId, color);	
 	}
-	
+    /**
+     * @brief getNextPlayer end current turn
+     * @return python dictionary with next player's details
+     */
 	boost::python::dict getNextPlayer()
 	{
 		Player* p=Game::getInstance().getNextPlayer();
 		return playerDict(p);
 	}
-	
+    /**
+     * @brief getCurrentPlayer
+     * @return python dictionary with current player's details
+     */
 	boost::python::dict getCurrentPlayer()
 	{
 		Player* p=Game::getInstance().getCurrentPlayer();
 		return playerDict(p);
 	}
-    
+    /**
+     * @brief killPlayer removes player from players' list
+     * @param color color of player
+     * @return true if removal was successfull, false otherwise
+     */
     bool killPlayer(Color color)
 	{
 		return Game::getInstance().killPlayer(color);
 	}
-	
+    /**
+     * @brief addTokenConfigPath specifies tokens' configuration file for given color
+     * @param color color of tokens
+     * @param path path to xml
+     */
     void addTokenConfigPath(Color color, std::string path)
 	{
 		Game::getInstance().addTokenConfigPath(color, path);
 	}
-
+    /**
+     * @brief performBattle performs battle
+     */
     void performBattle()
     {
         Game::getInstance().performBattle();
     }
-
+    /**
+     * @brief actionTokenBattle performs battle caused by action token (and destroys token)
+     * @param tokenId id of action token
+     * @param color color of player
+     * @return true if battle was performed, false otherwise
+     */
 	bool actionTokenBattle(int tokenId, Color color)
 	{
 		return Game::getInstance().actionTokenBattle(tokenId, color);
 	}
-	
+    /**
+     * @brief actionTokenMove moves token caused by action token (and destroys action token)
+     * @param tokenId id of action token
+     * @param color color of player
+     * @param fromQ first coordinate of source position
+     * @param fromR second coordinate of source position
+     * @param toQ first coordinate of destination position
+     * @param toR second coordinate of destination position
+     * @return true if token was successfully moved, false otherwise
+     */
     bool actionTokenMove(int tokenId, Color color, int fromQ, int fromR, int toQ, int toR)
 	{
 		return Game::getInstance().actionTokenMove(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
 	}
-	
+    /**
+     * @brief actionTokenPush pushes hostile token (and destroys action token)
+     * @param tokenId id of action token
+     * @param color color of player
+     * @param fromQ first coordinate of pusher's position
+     * @param fromR second coordinate of pusher's position
+     * @param toQ first coordinate of enemy's position
+     * @param toR second coordinate of enemy's position
+     * @return true if token was successfully pushed, false otherwise
+     */
     bool actionTokenPush(int tokenId, Color color, int fromQ, int fromR, int toQ, int toR)
 	{
 		return Game::getInstance().actionTokenPush(tokenId, color, Hex(fromQ, fromR), Hex(toQ, toR));
 	}
-
+    /**
+     * @brief getTokenHand
+     * @param tokenId id of token on hand
+     * @param color color of player
+     * @return python dictionary containing details of given token from hand
+     */
     boost::python::dict getTokenHand(int tokenId, Color color)
     {
         Token* token = Game::getInstance().getTokenHand(tokenId, color);
         return tokenDict(token);
     }
-
+    /**
+     * @brief getTokenBoard
+     * @param q first coordinate on board
+     * @param r second coordinate on board
+     * @return python dictionary containing details of given token from board
+     */
     boost::python::dict getTokenBoard(int q, int r)
     {
         Token* token = Game::getInstance().getTokenBoard(Hex(q, r));
         return tokenDict(token);
     }
-
+    /**
+     * @brief getMoves
+     * @param q first coordinate on board
+     * @param r second coordinate on board
+     * @return python list of possible move destinations for given token
+     */
     boost::python::list getMoves(int q, int r)
     {
         boost::python::list moves;
@@ -167,7 +249,12 @@ public:
         }
         return moves;
     }
-
+    /**
+     * @brief getPushes
+     * @param q first coordinate on board
+     * @param r second coordinate on board
+     * @return python list of possible pushes destinations for given token
+     */
     boost::python::list getPushes(int q, int r)
     {
         boost::python::list pushes;
@@ -192,7 +279,12 @@ private:
 		}
 		return out;
 	}	
-	
+    /**
+     * @brief playerDict contains details on given player as dictionary.
+     * name (string), color(Color), tokens(list of int), stack_size(int)
+     * @param p pointer to Player
+     * @return python dictionary
+     */
 	boost::python::dict playerDict(Player* p)
 	{
 		boost::python::dict player;
@@ -205,7 +297,14 @@ private:
 		}
 		return player;
 	}
-
+    /**
+     * @brief tokenDict contains details on given token as dictionary.
+     * id(int), color(Color), name(string), type(string) - can be "putable" or "action".
+     * If token is putable, it contains also: life(int), angle(int). If it is action, it
+     * contains type(string), which can be "battle", "move" or "push".
+     * @param t pointer to Token
+     * @return python dicitionary
+     */
     boost::python::dict tokenDict(Token* t)
     {
         boost::python::dict token;

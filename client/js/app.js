@@ -2,7 +2,7 @@
 /// @brief main client module, AngularJS application with routing
 
 angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers', 'myAppServices', 
-                            'hexDirective', 'hexMapDirective', 'hexTokenDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective', 'operationBoardDirective', 'battleDirective', 'endGameDirective',
+                            'hexDirective', 'hexMapDirective', 'userBoardDirective', 'popupDirective', 'tableHexDirective', 'operationBoardDirective', 'battleDirective', 'endGameDirective',
                             'mainController', 'operationBoardController', 'popupController', 'tableHexController', 'hexMapController', 'battleController', 'endGameController', 'actionController'] )
     .config(['$routeProvider', '$translateProvider',
              function($routeProvider, $translateProvider) {
@@ -12,9 +12,5 @@ angular.module('myApp', ['ngRoute', 'pascalprecht.translate', 'myAppControllers'
                  $routeProvider.otherwise( {
                      redirectTo: '/main'
                  });
-                 $translateProvider.useStaticFilesLoader({
-                      prefix: 'lang/',
-                      suffix: '.json' });
-                 $translateProvider.preferredLanguage('en');
              }]);
 
