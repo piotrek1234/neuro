@@ -53,7 +53,6 @@ angular.module('actionController', [])
 
 		 	function getAllUserTokens () {
 		 		$scope.$userHexs = [];
-		 		//uwaga na blokadę gdy brak tokenów usera
 
 		 		[].forEach.call($scope.$hexs, function ($hex) {
 		 			if (!checkIsEmptyHex($hex) 
@@ -168,14 +167,25 @@ angular.module('actionController', [])
 		 	};
 
 		 	function getMovePlaces (hexs) {
-		 		// TODO - reakcja na pusta tablice
+		 		if (hexs.length === 0)
+		 			undoAction();
+
 		 		selectHexs(hexs);
 		 		selectAllUserTokens("hex-move-destination");
 		 	};
 
 		 	function getPushPlaces (hexs) {
+		 		if (hexs.length === 0)
+		 			undoAction();
+
 		 		selectHexs(hexs);
 		 		selectAllUserTokens("token-opponent");
+		 	};
+
+		 	function undoAction () {
+		 		unselectAllUserTokens("token-to-move");
+		 		$scope.$userHexs = [];
+		 		$scope.$broadcast('userBoard:enable');
 		 	};
 
 		 	function selectHexs (hexs) {
