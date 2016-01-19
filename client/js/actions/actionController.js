@@ -3,6 +3,7 @@ angular.module('actionController', [])
 		['$scope',
 		 function ($scope) {
 		 	subscribeOnGetMoves(getMovePlaces);
+		 	subscribeOnGetPushes(getPushPlaces);
 
 		 	$scope.$on('action:move', moveActionHandler);
 		 	$scope.$on('action:push', pushActionHandler);
@@ -10,6 +11,7 @@ angular.module('actionController', [])
 		 	$scope.$hexMap = null;
 		 	$scope.$hexs = null;
 
+		 	$scope.action = null;
 		 	$scope.tokenId = null;
 
 		 	$scope.srcTokenCoordinate = null;
@@ -20,19 +22,22 @@ angular.module('actionController', [])
 		 		$scope.$hexs = $scope.$hexMap.querySelectorAll(".hex");
 
 		 		$scope.tokenId = data.tokenId;
+		 		$scope.action = "push";
 
 		 		//blokowanie interfejsu
 		 		$scope.$broadcast('userBoard:disable');
 
-		 		console.log('actionController#pushActionHandler');
+		 		getAllUserTokens();
+		 		selectAllUserTokens("token-to-move");
+		 		setHexMapClickListener();
 		 	};
 
 		 	function moveActionHandler (event, data) {
-		 		console.log("tutut");
 		 		$scope.$hexMap = document.body.querySelector(".hex-map");
 		 		$scope.$hexs = $scope.$hexMap.querySelectorAll(".hex");
 
 		 		$scope.tokenId = data.tokenId;
+				$scope.action = "move";		 		
 
 		 		//blokowanie interfejsu
 		 		$scope.$broadcast('userBoard:disable');
@@ -87,7 +92,19 @@ angular.module('actionController', [])
 		 		return (userColor === urlIdPrefix);
 		 	};
 
-
+		 	function sendActionMessage () {
+		 		if ($scope.action === "move") {
+		 			socketServer.getMoves(
+		 				$scope.srcTokenCoordinate.q,
+		 				$scope.srcTokenCoordinate.r
+		 			);
+		 		} else if ($scope.action === "push") {
+		 			socketServer.getPushes(
+		 				$scope.srcTokenCoordinate.q,
+		 				$scope.srcTokenCoordinate.r
+		 			);
+		 		}
+		 	};
 
 		 	function hexMapClickHandler (event) {
 		 		var _eventSrc = d3.select(event.target);
@@ -102,11 +119,7 @@ angular.module('actionController', [])
 		 				r: _eventSrc.attr('r')
 		 			};
 
-		 			socketServer.getMoves(
-		 				$scope.srcTokenCoordinate.q,
-		 				$scope.srcTokenCoordinate.r
-		 			);
-
+		 			sendActionMessage();
 		 		} else if (_eventSrc.classed("hex-move-destination")) {
 		 			// wysłanie do serwera eventu pusha		 			
 		 			$scope.destTokenCoordinate = {
@@ -120,13 +133,32 @@ angular.module('actionController', [])
 		 			$scope.$userHexs = [];
 		 			$scope.$broadcast('userBoard:enable');
 		 			//$scope.$hexMap.removeEventListener("click", hexMapClickHandler);
+		 		} else if (_eventSrc.classed("token-opponent")) {
+		 			$scope.destTokenCoordinate = {
+		 				q: _eventSrc.attr('q'),
+		 				r: _eventSrc.attr('r')
+		 			};
+
+		 			sendPushTokenMsg();
+
+		 			unselectAllUserTokens("token-opponent");
+		 			$scope.$userHexs = [];
+		 			$scope.$broadcast('userBoard:enable');
 		 		}
 		 	};
 
 		 	function sendMoveTokenMsg () {
-		 		console.log("actionController#sendPushTokenMsg");
-
 		 		socketServer.moveToken(
+		 			$scope.tokenId,
+		 			$scope.srcTokenCoordinate.q,
+		 			$scope.srcTokenCoordinate.r,
+		 			$scope.destTokenCoordinate.q,
+		 			$scope.destTokenCoordinate.r
+		 		);
+		 	};
+
+		 	function sendPushTokenMsg () {
+		 		socketServer.pushToken(
 		 			$scope.tokenId,
 		 			$scope.srcTokenCoordinate.q,
 		 			$scope.srcTokenCoordinate.r,
@@ -137,7 +169,16 @@ angular.module('actionController', [])
 
 		 	function getMovePlaces (hexs) {
 		 		// TODO - reakcja na pusta tablice
-		 		
+		 		selectHexs(hexs);
+		 		selectAllUserTokens("hex-move-destination");
+		 	};
+
+		 	function getPushPlaces (hexs) {
+		 		selectHexs(hexs);
+		 		selectAllUserTokens("token-opponent");
+		 	};
+
+		 	function selectHexs (hexs) {
 		 		[].forEach.call($scope.$hexs, function ($singleHex) {
 		 			var _singleHex = d3.select($singleHex);
 		 			var hexCoordinate = {
@@ -149,10 +190,7 @@ angular.module('actionController', [])
 			 			$scope.$userHexs.push($singleHex);
 		 			}
 		 		});
-
-		 		selectAllUserTokens("hex-move-destination");
 		 	};
-
 
 		 	function checkCoordinate (coordinates, hexs) {
 		 		var result = false;
