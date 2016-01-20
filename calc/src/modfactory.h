@@ -18,6 +18,9 @@
 #include <string>
 #include "utils.h"
 
+/**
+ * @brief The ModFactory class creates mods from XML
+ */
 class CALC_DLL()ModFactory
 {
     public:

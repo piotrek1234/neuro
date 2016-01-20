@@ -28,16 +28,11 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-#    'django.contrib.staticfiles',
-    'version',
-    'current',
     'calcpy',
     'django_socketio'
 )
 
 MIDDLEWARE_CLASSES = (
-    #'corsheaders.middleware.CorsMiddleware',
-    #'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

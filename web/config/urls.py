@@ -11,9 +11,6 @@ web_srv_prefix = version.models.getWebSrvPrefix()
 
 urlpatterns = patterns('',
                        url("", include('django_socketio.urls')),
-                       url(r'^' + web_srv_prefix + '/ajax/(?P<module>\w+)/(?P<function>\w+)/', views.ajax, name='ajax'),
                        url(r'^$', views.index, name='index')
 )
-
-
 

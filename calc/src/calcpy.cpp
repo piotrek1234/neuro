@@ -27,14 +27,15 @@
 using namespace boost::python;
 using namespace std;
 
-/** Python intreface to CommandManager
+/**
+ * @brief The CommandManagerPy class exports methods needed to perform game to Python library.
  */
 class CommandManagerPy {
 public:
 	
 	bool addPlayer(std::string name)
 	{
-		std::cout<<"add player"<<std::endl;
+        //std::cout<<"add player"<<std::endl;
 		return Game::getInstance().addPlayer(name);
 	}
     /**

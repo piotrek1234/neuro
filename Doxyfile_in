@@ -365,7 +365,7 @@ LOOKUP_CACHE_SIZE      = 0
 # Private class members and static file members will be hidden unless 
 # the EXTRACT_PRIVATE and EXTRACT_STATIC tags are set to YES
 
-EXTRACT_ALL            = NO
+EXTRACT_ALL            = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES all private members of a class 
 # will be included in the documentation.
@@ -574,7 +574,7 @@ SHOW_FILES             = YES
 # Namespaces page.  This will remove the Namespaces entry from the Quick Index 
 # and from the Folder Tree View (if specified). The default is YES.
 
-SHOW_NAMESPACES        = YES
+SHOW_NAMESPACES        = NO
 
 # The FILE_VERSION_FILTER tag can be used to specify a program or script that 
 # doxygen should invoke to get the current version for each file (typically from 
@@ -734,7 +734,8 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is 
 # run.
 
-EXCLUDE                =
+EXCLUDE                = client/ \
+			web/config/
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 
@@ -751,7 +752,13 @@ EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */bower_components/* \
                          */pict/* \
 						 */lang/* \
-                         bower.json
+                         bower.json \
+			__init__.py \
+			SConscript \
+			SConstruct \
+			*.xml \
+			manage.py \
+			wsgi.py
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names 
 # (namespaces, classes, functions, etc.) that should be excluded from the 

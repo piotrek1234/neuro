@@ -21,6 +21,9 @@
 #include <boost/foreach.hpp>
 #include <iostream>
 
+/**
+ * @brief The TokenFactory class creates tokens from XML
+ */
 class CALC_DLL()TokenFactory
 {
     public:

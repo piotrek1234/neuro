@@ -23,7 +23,7 @@ Token* TokenFactory::create(boost::property_tree::ptree::value_type const& xmlno
     {
         ptree tokenNode = xmlnode.second;
         std::string type=xmlnode.second.get<std::string>("type");
-        std::cout<<type<<std::endl;
+        //std::cout<<type<<std::endl;
         std::map<std::string,TokenCreateFun>::const_iterator it=creators.find(type);
         if(it != creators.end() )
             return it->second(tokenNode, color);

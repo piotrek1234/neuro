@@ -11,20 +11,6 @@ configPath="calc/config.xml"
 
 class CalcPyLibraryTestCase(django.test.TestCase):
     """integration test, call C++ library interface from Python"""
-
-    """def test01getNumber(self):
-        self.assertEqual( calc.getNumber(), 1234 )
-
-    def test02command(self):
-        cmdmgr = calc.CommandManager()
-        cmd_id = cmdmgr.start()
-        self.assertNotEqual( cmdmgr.getState(cmd_id), calc.DONE )
-        for i in range(100):
-            time.sleep(0.1)
-            if cmdmgr.getState(cmd_id) == calc.DONE:
-                break
-        self.assertEqual( cmdmgr.getState(cmd_id), calc.DONE )
-        self.assertEqual( len(cmdmgr.getIds()), 1 )"""
     
     def test01AddAndKillPlayer(self):
         cmdmgr.addTokenConfigPath(calc.Color.BLUE, configPath)
@@ -125,28 +111,4 @@ class CalcPyLibraryTestCase(django.test.TestCase):
         (0, -1): {'angle': 0, 'color': calc.Color.RED, 'id': 1, 'life': 20, 'name': 'hq1', 'type': 'putable'},
         (1, -1): {'angle': 0, 'color': calc.Color.BLUE, 'id': 1, 'life': 20, 'name': 'hq1', 'type': 'putable'}
         })
-
-    
-    def test05actionTokens(self):
-        pass
-        
-
-"""class CalcPyViewTestCase(django.test.TestCase):
-
-    def test01getNumber(self):
-        self.assertEqual( views.getNumber({}), {'number': 1234})
-
-    def test02getCommands(self):
-        self.assertEqual( views.getCommands({}),
-                          {1: {'progress': 0.995, 'state': 'DONE'}})
-        dict1 = views.getCommands({})
-        views.startCommand({});
-        dict2 = views.getCommands({})
-        self.assertEqual( len(dict1) + 1, len(dict2) )"""
-
-
-
-
-
-
 

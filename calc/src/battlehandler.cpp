@@ -2,7 +2,7 @@
 
 void BattleHandler::handleBattle()
 {
-    std::cout << "> handleBattle() start" << std::endl;
+    //std::cout << "> handleBattle() start" << std::endl;
     int lastPriority = 100;
 
     while(lastPriority > 0)
@@ -57,7 +57,7 @@ void BattleHandler::handleBattle()
             }
         }
         int priority = maxPriority>0?maxPriority:0;
-        std::cout << "> priority: " << priority << std::endl;
+        //std::cout << "> priority: " << priority << std::endl;
 
         //teraz w currentCreatures siedzą TokenCreature dla aktualnej inicjatywy,
         //żetony z currentCreatures atakują wrogich sąsiadów
@@ -129,7 +129,7 @@ void BattleHandler::handleBattle()
             }
         }
 
-        std::cout << "> deleting killed tokens" << std::endl;
+        //std::cout << "> deleting killed tokens" << std::endl;
         //usunięcie zabitych żetonów z *oryginalnej* planszy
         for(auto it=tmpBoard->getMapBegin(); it!=tmpBoard->getMapEnd(); ++it)
         {
@@ -141,7 +141,7 @@ void BattleHandler::handleBattle()
 
         delete tmpBoard;
     }
-    std::cout << "> end of battle" << std::endl;
+    //std::cout << "> end of battle" << std::endl;
     //bitwa zakończona
     //po bitwie warto sprwadzić czy został tylko 1 gracz, wtedy jest koniec gry
     //jeśli to była bitwa uruchomiona przez wyczerpanie stosu któregoś gracza,
